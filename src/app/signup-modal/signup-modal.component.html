@@ -1,0 +1,28 @@
+<div class="signup-component-wrapper">
+    <div class="background-wrapper"></div>
+
+    <div class="form-wrapper">
+        <h3>Sign Up Here</h3>
+        <form (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <mat-label>Enter username (Display name)</mat-label>
+                <input type="text" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Enter new password</mat-label>
+                <input type="password" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>confirm new password</mat-label>
+                <input type="password" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Enter your email</mat-label>
+                <input type="email" matInput required>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
