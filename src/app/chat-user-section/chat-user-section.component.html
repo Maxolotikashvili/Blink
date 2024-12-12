@@ -1,0 +1,45 @@
+<div class="user-section-component-wrapper">
+    <div class="profile-wrapper">
+        <img src="maxo-lotikashvili.jpeg" class="avatar-img-medium" alt="avatar">
+        <h3 class="bk-heading-h3">{{user.username | titlecase}}</h3>
+        <span class="bk-info-secondary moto">&#64;Will I am</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="themes-wrapper">
+        <h4 class="bk-heading-h4">Themes</h4>
+
+        <div class="buttons-wrapper">
+            <button *ngFor="let theme of themeNameList" (click)="changeTheme(theme.key)">
+                <div class="circle" [ngStyle]="{'background': theme.background}">{{theme.displayName[0]}}</div>
+                <span class="bk-info-primary">{{theme.displayName}}</span>
+            </button>
+        </div>
+    </div>
+
+    <mat-divider aria-label="divider"></mat-divider>
+
+    <div class="chats-wrapper">
+        <h4 class="bk-heading-h4">Chats</h4>
+
+        <mat-tab-group class="chat-tab" mat-stretch-tabs="true" animationDuration="230">
+            <mat-tab label="All" labelClass="labels">
+                    <button class="chat-wrapper" *ngFor="let chat of [].constructor(4); let i = index">
+                        <div class="img-name-wrapper">
+                            <img class="avatar-img-small" src="maxo-lotikashvili.jpeg" alt="avatar">
+                            <div class="text-wrapper">
+                                <h5 class="bk-heading-h5">Maxo</h5>
+                                <p class="bk-info-secondary">You: see you soon</p>
+                            </div>
+                        </div>
+                        
+                        <span class="bk-date-primary">10:35</span>
+                    </button>
+            </mat-tab>
+
+            <mat-tab label="New" labelClass="labels">content 2</mat-tab>
+            <mat-tab label="Closed" labelClass="labels">content 3</mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

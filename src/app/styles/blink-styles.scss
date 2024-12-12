@@ -1,0 +1,218 @@
+@use "./mixins.scss" as *;
+@use "./themes.scss" as *;
+@use "./fonts.scss" as *;
+
+.bk-heading-h1 {
+    font-size: 54px;
+    font-family: 'Roboto';   
+    font-weight: 500;
+    color: var(--static-heading-color);
+}
+
+.bk-heading-h2 {
+    font-size: 40px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    color: var(--static-heading-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-heading-h3 {
+    font-size: 22px;
+    font-weight: 600;
+    font-family: 'Roboto';
+    color: var(--active-primary-text-color);
+    letter-spacing: 1px;
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-heading-h4 {
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Roboto';
+    color: var(--active-primary-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-heading-h5 {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Roboto';
+    color: var(--active-primary-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-heading-h6 {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Roboto';
+    color: var(--active-primary-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-info-primary {
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Roboto';
+    color: var(--active-primary-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-info-secondary {
+    font-size: 14px;
+    font-weight: 300;
+    font-family: 'Roboto';
+    color: var(--active-secondary-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-date-primary {
+    font-size: 10px;
+    font-weight: 400;
+    font-family: 'Roboto';
+    color: var(--active-secondary-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-date-secondary {
+    font-size: 10px;
+    font-weight: 300;
+    font-family: 'Roboto';
+    color: var(--active-secondary-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-nav-link-primary {
+    font-family: "Roboto";
+    font-weight: 300;
+    line-height: 27px;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: var(--static-nav-link-primary-color);
+    transition: color var(--global-transition-parameters);
+    cursor: pointer;
+}
+
+.bk-nav-link-primary:hover {
+    color: var(--static-nav-link-primary-color-hover);
+}
+
+.bk-nav-link-secondary {
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Roboto';
+    color: var(--static-nav-link-secondary-color);
+    transition: color var(--global-transition-parameters);
+    cursor: pointer;
+}
+
+.bk-nav-link-secondary:hover {
+    color: var(--static-nav-link-secondary-color-hover);
+}
+
+.bk-article-text {
+    font-family: "Roboto";
+    font-weight: 300;
+    line-height: 27px;
+    font-size: 16px;
+    color: var(--static-article-text-color);
+    transition: color var(--global-transition-parameters);
+}
+
+
+
+// 
+.round-button-big {
+    @include button();
+    min-width: 140px !important;
+    min-height: 50px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+}
+
+.round-button-medium {
+    @include button();
+    min-width: 120px !important;
+    min-height: 40px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+}
+
+.round-button-small {
+    @include button();
+    min-width: 100px !important;
+    min-height: 30px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+}
+
+.square-button-medium {
+    @include button();
+    min-width: 120px !important;
+    min-height: 40px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+    border-radius: 6px !important;
+}
+
+.square-button-big {
+    @include button();
+    min-width: 140px !important;
+    min-height: 50px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+    border-radius: 6px !important;
+}
+
+.square-button-small {
+    @include button();
+    min-width: 100px !important;
+    min-height: 30px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+    border-radius: 6px !important;
+}
+
+.round-button-small-static {
+    @include button-static();
+    min-width: 100px !important;
+    min-height: 30px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);        
+}
+
+.round-button-medium-static {
+    @include button-static();
+    min-width: 120px !important;
+    min-height: 40px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+}
+
+.round-button-big-static {
+    @include button-static();
+    min-width: 140px !important;
+    min-height: 50px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+}
+
+.round-button-small[disabled],
+.round-button-medium[disabled],
+.round-button-big[disabled],
+.round-button-small-static[disabled],
+.round-button-medium-static[disabled],
+.round-button-big-static[disabled]
+{
+    background: rgb(211, 211, 211) !important;
+}
+
+//
+.avatar-img-big {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+} 
+
+.avatar-img-medium  {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+} 
+
+.avatar-img-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+} 

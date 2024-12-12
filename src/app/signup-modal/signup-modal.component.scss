@@ -1,22 +1,68 @@
-@import '../global.scss';
+@use '../styles/global-styles.scss' as *;
+@use '../styles/mixins.scss' as *;
+@use '../styles/material-reset.scss' as *;
+
+$input-width: 70%;
+$margin-between-inputs: 30px;
 
 .signup-component-wrapper {
-    .background-wrapper {
-        width: 50%;
-    }
+    @include flex-center();
+    height: 100%;
 
-    .form-wrapper {
-        width: 50%;
-        @include flex-center();
-        flex-flow: column;
+    .modal-wrapper {
+        position: relative;
+        display: flex;
+        width: 85%;
+        height: 95%;
+        overflow: hidden;
+        border-radius: var(--widget-border-radius);
+        box-shadow:  0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
 
-        form {
-            margin-top: $margin-between-wrappers;
+        .background-wrapper {
+            @include flex-center();
+            flex-flow: column;
+            width: 50%;
+            height: 100%;
+            background-image: url("../../../public/wall-background.png");
+            background-repeat: no-repeat;
+            background-color: currentColor;
+            background-position-y: center;
+        }
 
-            mat-form-field {
+        .form-wrapper {
+            width: 50%;
+            position: relative;
+            @include flex-center();
+            flex-flow: column;
+            background-color: white;
+
+            h3 {
+                color: var(--static-heading-color);
+                margin-bottom: 40px;
+            }
+
+            form {
                 width: 100%;
+                @include flex-center();
+                flex-flow: column;
+                gap: $margin-between-inputs;
+
+                mat-form-field {
+                    width: $input-width;
+                    background: transparent !important;
+                }
+
+                .button-wrapper {
+                    @include flex-center();
+                    flex-flow: column;
+                    width: 100%;
+
+                    button {
+                        width: $input-width;
+                        margin: $margin-between-inputs 0 calc($margin-between-inputs / 2) 0;
+                    }
+                }
             }
         }
     }
-
 }

@@ -1,0 +1,24 @@
+@use './themes.scss' as *;
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-flow: column;
+}
+
+@mixin button {
+    background: var(--active-button-background-color) !important;
+    color: var(--active-button-text-color) !important;
+    letter-spacing: 1px !important;
+}
+
+@mixin button-static {
+    background: var(--static-button-background-color) !important;
+    color: var(--static-button-color) !important;
+    letter-spacing: 1px !important;
+}

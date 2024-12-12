@@ -1,0 +1,4 @@
+<button class="x-mark-wrapper" [ngClass]="{'x-mark-wrapper-for-burger': isForBurger}" [ngStyle]="{'width':  getXmarkWidth()}" (click)="handleClick()">
+    <div class="line-1" [ngStyle]="{'background-color': color || 'black'}"></div>
+    <div class="line-2" [ngStyle]="{'background-color': color || 'black'}"></div>
+</button>

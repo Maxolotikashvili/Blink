@@ -1,0 +1,57 @@
+<div class="blur-content-wrapper" [ngStyle]="{'filter': (isModalOpened$ | async) ? 'blur(5px)' : ''}">
+    <header ng-cloak>
+        <a href="">Blink</a>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="" class="bk-nav-link-primary">Home</a>
+                </li>
+                <li>
+                    <a href="#aboutUs" class="bk-nav-link-primary">About us</a>
+                </li>
+
+                <li>
+                    <a href="#contributors" class="bk-nav-link-primary">Contributors</a>
+                </li>
+                <li> 
+                    <button class="round-button-small-static" mat-flat-button (click)="openSignInPage()">Get started</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="home-section about-app-section" ng-cloak>
+        <div class="heading-wrapper">
+            <h1 class="bk-heading-h1">About Blink</h1>
+            <p class="bk-article-text">Blink is a free, fast and lightweight web chat application designed to provide effective
+                communication, it ensures a great user experience for real-time conversations.</p>
+        </div>
+        <img src="about-us.svg" class="background-image" alt="about-us">
+    </section>
+
+    <section class="home-section about-us-section" id="aboutUs" ng-cloak>
+        <article class="heading-wrapper">
+            <h2 class="bk-heading-h2">About us</h2>
+            <p class="bk-article-text">We are university students who decided to build something meaningful. In a world of
+                rapidly advancing technology, we believe that speed and aesthetics are the most crucial elements in
+                delivering a quality web product. Our goal is to create an experience that's not only fast but also
+                visually
+                stunning—something that captures the eye and leaves a lasting impression</p>
+        </article>
+        <img src="about-blink.svg" class="background-image" alt="about-blink">
+    </section>
+
+    <section class="home-section contributors-section" id="contributors" ng-cloak>
+        <h2 class="bk-heading-h2">Contributors</h2>
+        <div class="contributors-wrapper">
+            <div class="contributor" *ngFor="let contributor of contributorsList">
+                <img class="avatar-img-big" [src]="contributor.imageUrl">
+                <div class="text-wrapper">
+                    <h5 class="bk-heading-h5">{{contributor.name}}</h5>
+                    <span class="bk-info-primary">{{contributor.occupation}}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

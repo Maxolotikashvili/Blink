@@ -1,0 +1,129 @@
+// @use "../styles/global-styles.scss" as *;
+@use "../styles/blink-styles.scss" as *;
+@use "../styles/mixins.scss" as *;
+
+$margin-from-divider: 30px;
+
+.friend-section-component-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: var(--chat-widgets-padding);
+    border-radius: var(--widget-border-radius);
+    background: transparent;
+    border: 1px var(--active-widget-border-type) var(--active-widget-border-color-friend);
+    transition: border-color var(--global-transition-parameters);
+    user-select: none;
+
+    .profile-wrapper {
+        @include flex-center();
+        flex-flow: column;
+
+        img {
+            margin-bottom: 10px;
+        }
+
+        .moto {
+            margin-top: 5px;
+        }
+    }
+
+    .friend-utility-wrapper {
+        margin: $margin-from-divider 0;
+        padding: 0 5px;
+
+        ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+
+            li {
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                width: 40px;
+                gap: 4px;
+
+                button {
+                    @include flex-center();
+                    width: 40px;
+                    height: 40px;
+                    border: none;
+                    background: var(--active-button-background-color);
+                    border-radius: 50%;
+                    transition: background var(--global-transition-parameters);
+
+                    .icon {
+                        width: 60%;
+                        height: 60%;
+                        border-radius: 50%;
+                    }
+                }
+
+                span {
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .friend-info-wrapper {
+        margin: $margin-from-divider 0;
+
+        ul {
+            display: flex;
+            flex-flow: column;
+            gap: 20px;
+
+        }
+    }
+
+    .friend-shared-files-wrapper {
+        margin-top: $margin-from-divider;
+
+        .heading-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .shared-files-wrapper {
+            display: flex;
+            flex-flow: column;
+            gap: 20px;
+            height: 20vh;
+            overflow-y: auto;
+
+            .shared-file {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .image-text-wrapper {
+                    display: flex;
+                    gap: 5px;
+
+                    .image-wrapper {
+                        width: 40px;
+                        height: 40px;
+                        background-color: aliceblue;
+                        border-radius: 4px;
+                    }
+
+                    .text-wrapper {
+                        display: flex;
+                        flex-flow: column;
+                        justify-content: space-between;
+                        padding: 2px 0;
+
+                        span, h6 {
+                            width: 10vw;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+<div class="text-area-component-wrapper">
+    <div class="text-area-wrapper">
+        <div class="message" *ngFor="let item of chatList">{{ item.text }}</div>
+    </div>
+    
+    <div class="input-area-wrapper">
+        <img class="emoji" src="emoji.png" alt="">
+        <div class="divider"></div>
+        <textarea name="textarea" cdkTextareaAutosize="true" rows="1" placeholder="Type here" (keypress)="handleTextSend(textArea, $event)" #textArea></textarea>
+
+        <button mat-flat-button class="square-button-small" type="button" (click)="handleTextSend(textArea, $event)">
+            <span class="send-text">Send</span>
+            <img class="icon" src="send.png" alt="send">
+        </button>
+    </div>
+</div>

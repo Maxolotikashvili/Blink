@@ -1,0 +1,36 @@
+@use '../styles/mixins.scss' as *;
+@use '../styles/global-styles.scss' as *;
+@use '../styles/themes.scss' as *;
+
+.sidebar-component-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--active-sidebar-background-color);
+    border-radius: var(--widget-border-radius);
+    transition: background var(--global-transition-parameters), transform 0.4s ease;
+    padding: 40px 10px;
+
+    .top-side-buttons-wrapper {
+        width: 100%;
+        @include flex-center();
+        flex-flow: column;
+        gap: 40px;
+    }
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        img {
+            width: 30px;
+            background: var(--active-sidebar-svg-colors);
+            border-radius: 50%;
+        }
+    }
+}

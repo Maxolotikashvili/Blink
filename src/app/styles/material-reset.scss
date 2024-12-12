@@ -1,0 +1,57 @@
+mat-form-field {
+    width: 100%; 
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mat-mdc-notch-piece {
+        border-color: #ff0000 !important;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-floating-label {
+        color: #ff0000 !important;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-line-ripple::before {
+        border-bottom-color: #ff0000 !important;
+    }
+
+    .mat-mdc-form-field-error {
+        color: #ff0000;
+    }
+
+    .mat-mdc-text-field-wrapper {
+        background-color: transparent !important;
+    }
+}
+
+mat-dialog-container {
+    .mdc-dialog__container {
+        .mat-mdc-dialog-surface {
+            background: transparent;
+        }
+    }
+}
+
+mat-card {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs>.mat-mdc-tab-header .mat-mdc-tab {
+    flex-grow: 0 !important;
+    min-width: 15% !important;
+    padding: 0 10px !important;
+    margin: 10px 0px !important;
+    height: 30px !important;
+    margin-top: 5px;
+}
+
+.mdc-tab__text-label {
+    font-weight: 400 !important;
+}
+
+.mat-mdc-tab-labels {
+    height: 40px !important;
+}
+
+.mdc-snackbar {
+    border-radius: 5px;
+}

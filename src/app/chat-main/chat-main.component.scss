@@ -1,0 +1,13 @@
+@use '../styles/themes.scss' as *;
+@use '../styles/global-styles.scss' as *;
+
+.theme-background-wrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5% 25% 43% 25%;
+    height: 100%;
+    padding: 10px;
+    grid-column-gap: calc(2% / 3);
+    background: var(--active-wallpaper-color);
+    transition: background var(--global-transition-parameters);
+}

@@ -1,0 +1,47 @@
+@use "../styles/global-styles.scss" as *;
+@use "../styles/mixins.scss" as *;
+@use "../styles/material-reset.scss" as *;
+
+$margin-between-inputs: 20px;
+
+.signin-component-wrapper {
+    @include flex-center();
+    height: 100%;
+
+    .modal-wrapper {
+        position: relative;
+        @include flex-center();
+        flex-flow: column;
+        width: 35%;
+        padding: 40px;
+        border-radius: var(--widget-border-radius);
+        box-shadow:  0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+        gap: $margin-between-inputs * 2;
+        background-color: #ffffff;
+
+        h3 {
+            color: var(--static-heading-color);
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-flow: column;
+            gap: $margin-between-inputs;
+        
+            button {
+                width: 100%;
+                
+                .mdc-button__label {
+                    letter-spacing: 1px;
+                }
+            }
+
+            a {
+                font-size: 14px;
+            }
+        }
+    }
+}

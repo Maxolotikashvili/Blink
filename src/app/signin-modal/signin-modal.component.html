@@ -1,1 +1,28 @@
-<p>signin-modal works!</p>
+<div class="signin-component-wrapper">
+    <div class="modal-wrapper">
+        <app-loader *ngIf="isUserLoginPending"></app-loader>
+        <app-x-mark [isForBurger]="false" [size]="'default'"></app-x-mark>
+        <h3 class="bk-heading-h3">Login</h3>
+
+        <form [formGroup]="loginForm" (ngSubmit)="handleSignin()">
+            <mat-form-field appearance="outline">
+                <mat-label>Email address</mat-label>
+                <input matInput type="email" formControlName="email">
+                <mat-error *ngIf="email?.errors?.['required']">Input mandatory</mat-error>
+                <mat-error *ngIf="email?.errors?.['email']">Input valid email</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error *ngIf="password?.errors?.['required']">Input mandatory</mat-error>
+            </mat-form-field>
+            
+            <mat-checkbox (change)="rememberUserForFutureLogins($event)" aria-label="remember user for future logins">Remember me</mat-checkbox>
+
+            <button class="round-button-medium-static" mat-flat-button [disabled]="loginForm.status === 'INVALID'">Login</button>
+
+            <a class="bk-nav-link-primary" (click)="openRegisterPage()">I don't have an account</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+// Static homepage and modal colors
+:root {
+    --static-nav-link-primary-color: #023788;
+    --static-nav-link-primary-color-hover: #8539ff;
+    --static-nav-link-secondary-color: #791e94;
+    --static-nav-link-secondary-color-hover: #023788;
+    --static-heading-color: #000;
+    --static-article-text-color: #b1b1b1;
+    --static-button-background-color: linear-gradient(90deg, #023788 0%, #F6019D 100%);
+    --static-button-color: #ffffff;
+}
+
+// Active theme
+:root {
+    --active-primary-text-color: var(--synthwave-primary-text-color);
+    --active-secondary-text-color: var(--synthwave-secondary-text-color);
+    --active-button-background-color: var(--synthwave-button-background-color);
+    --active-button-text-color: var(--synthwave-button-text-color);
+    --active-wallpaper-color: var(--synthwave-wallpaper-color);
+    --active-widget-border-type: var(--synthwave-widget-border-type);
+    --active-widget-border-color-user: var(--synthwave-widget-border-color-user);
+    --active-widget-border-color-friend: var(--synthwave-widget-border-color-friend);
+    --active-widget-dividers-color: var(--synthwave-widget-dividers-color);
+    --active-mat-tab-list-hover-background-color: var(--synthwave-mat-tab-list-hover-background-color);
+    --active-mat-tab-label-color: var(--synthwave-mat-tab-label-color);
+    --active-mat-tab-label-color-active: var(--synthwave-mat-tab-label-color-active);
+    --active-mat-tab-underline-color: vaR(--synthwave-mat-tab-underline-color)
+    --active-textarea-background-color: var(--synthwave-textarea-background-color);
+    --active-textarea-color: var(--synthwave-textarea-color);
+    --active-textarea-caret-color: var(--synthwave-textarea-caret-color);
+    --active-textarea-message-background-color-user: var(--synthwave-textarea-message-background-color-user);
+    --active-textarea-message-background-color-friend: var(--synthwave-textarea-message-background-color-friend);
+    --active-textarea-message-color: var(--synthwave-textarea-message-color);
+    --active-textarea-border-color: var(--synthwave-textarea-border-color);
+    --active-sidebar-background-color: var(--synthwave-sidebar-background-color);
+    --active-sidebar-svg-colors: var(--synthwave-sidebar-svg-colors);
+}
+
+:root {
+    // synthwave
+    --synthwave-primary-text-color: var(--light-text-primary-color);
+    --synthwave-secondary-text-color: var(--light-text-secondary-color);
+    --synthwave-wallpaper-color: linear-gradient(90deg, #2de2d6 0%, #650d89 50%, #0d0221 100%);
+    --synthwave-button-background-color: linear-gradient(0deg, #023788 0%, #F6019D 100%);
+    --synthwave-button-text-color: var(--light-text-primary-color);
+    --synthwave-widget-border-type: solid;
+    --synthwave-widget-border-color-user: #00ffee;
+    --synthwave-widget-border-color-friend: #b500ff;
+    --synthwave-widget-dividers-color: var(--synthwave-mat-tab-list-hover-background-color);
+    --synthwave-mat-tab-list-hover-background-color: #ffffff26;
+    --synthwave-mat-tab-label-color: var(--light-text-primary-color);
+    --synthwave-mat-tab-label-color-active: #2de2e6;
+    --synthwave-mat-tab-underline-color: #023788;
+    --synthwave-textarea-background-color: #ffffff;
+    --synthwave-textarea-color: #000;
+    --synthwave-textarea-caret-color: var(--synthwave-widget-border-color-friend);
+    --synthwave-textarea-message-background-color-user: #023788;
+    --synthwave-textarea-message-background-color-friend: #f6019d;
+    --synthwave-textarea-message-color: var(--light-text-primary-color);
+    --synthwave-textarea-border-color: #dddddd;
+    --synthwave-sidebar-background-color: #0d0221;
+    --synthwave-sidebar-svg-colors: #ffffff;
+}
+
+:root {
+    // Dark mode
+    --darkmode-primary-text-color: var(--light-text-primary-color);
+    --darkmode-secondary-text-color: var(--light-text-secondary-color);
+    --darkmode-wallpaper-color: #111111;
+    --darkmode-button-background-color: #1a1c20;
+    --darkmode-button-text-color: var(--light-text-primary-color);
+    --darkmode-widget-border-type: solid;
+    --darkmode-widget-border-color-user: var(--darkmode-widget-border-color-friend);
+    --darkmode-widget-border-color-friend: #2e2e2e;
+    --darkmode-widget-dividers-color: #222327;
+    --darkmode-mat-tab-list-hover-background-color: var(--darkmode-widget-dividers-color);
+    --darkmode-mat-tab-label-color: var(--light-text-primary-color);
+    --darkmode-mat-tab-label-color-active: #505050;
+    --darkmode-mat-tab-underline-color: #737373;
+    --darkmode-textarea-background-color: #000000;
+    --darkmode-textarea-color: var(--light-text-primary-color);
+    --darkmode-textarea-caret-color: #ffffff;
+    --darkmode-textarea-message-background-color-user: #c6c6c6;
+    --darkmode-textarea-message-background-color-friend: #ffffff;
+    --darkmode-textarea-message-color: #000;
+    --darkmode-textarea-border-color: #424242c7;
+}
+
+:root {
+    --light-text-primary-color: #ffffff;
+    --light-text-secondary-color: #c8c8c8;
+}

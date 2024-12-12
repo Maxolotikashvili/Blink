@@ -1,0 +1,8 @@
+<div class="theme-background-wrapper" ng-cloak>
+    <app-chat-sidebar></app-chat-sidebar>
+    <app-chat-user-section></app-chat-user-section>
+    <app-chat-text-area></app-chat-text-area>
+    <app-chat-friend-section></app-chat-friend-section>
+
+    <app-loader *ngIf="isLoading$ | async"></app-loader>
+</div>
