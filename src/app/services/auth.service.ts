@@ -16,8 +16,8 @@ export class AuthService {
         username: '', 
         outgoingRequestsList: []
     }
-    private user: BehaviorSubject<User> = new BehaviorSubject<User>(this.initialUserValue);
-    readonly user$: Observable<User> = this.user as Observable<User>;
+    private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.initialUserValue);
+    readonly user$: Observable<User> = this.userSubject as Observable<User>;
 
     constructor(private http: HttpClient) { }
 
@@ -34,6 +34,6 @@ export class AuthService {
     }
 
     public updateUser(user: User) {
-        this.user.next(user);
+        this.userSubject.next(user);
     }
 }

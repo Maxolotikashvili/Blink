@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class NotificationWebSocketService {
   private socket: WebSocket | null = null;
-  private notifications: any[] = [];  // Store notifications
   public pendingRequests: number = 0;  // Store the count of pending friend requests
 
   constructor() { }
@@ -22,14 +21,8 @@ export class NotificationWebSocketService {
       const notification = JSON.parse(event.data);
       console.log('Received notification:', notification);
 
-      // Add the notification to the list
-      this.notifications.push(notification);
-      
-      // Update the count of pending friend requests
-      this.pendingRequests += 1;
-
-      // Call a method to update the notification bell icon (UI)
-      this.updateNotificationUI();
+      // You can implement logic here to display the notification in your UI
+      this.handleNewNotification(notification);
     }
 
     this.socket.onerror = (error) => {
@@ -37,13 +30,22 @@ export class NotificationWebSocketService {
     }
   }
 
-  // Method to update the notification UI
-  updateNotificationUI() {
-    console.log(`You have ${this.pendingRequests} new friend requests!`);
-    // Here you can trigger the UI update. For example, using a service to show/hide the notification bell.
+  // This method is called when a new notification is received
+  handleNewNotification(notification: any) {
+    console.log('Handling new notification:', notification);
+
+    // Update the count of pending friend requests if it's a friend request
+    if (notification.type === 'friend-request') {
+      this.pendingRequests += 1;
+    }
+
+    // Here you can implement the logic to update the notification UI (e.g., show a badge, etc.)
+    this.updateNotificationUI();
   }
 
-  getNotifications() {
-    return this.notifications;
+  // Method to update the notification UI (e.g., show a notification bell)
+  updateNotificationUI() {
+    console.log(`You have ${this.pendingRequests} new friend requests!`);
+    // Trigger UI update (e.g., change notification bell icon, etc.)
   }
 }

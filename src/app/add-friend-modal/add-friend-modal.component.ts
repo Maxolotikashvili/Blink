@@ -24,6 +24,8 @@ export class AddFriendModalComponent {
   ) {}
 
   addFriend() {
+    if (this.friendName.trim() === '') return;
+    
     this.isLoading = true;
     this.addfriendService.addFriend(this.friendName).subscribe({
       next: (res: {message: string}) => {

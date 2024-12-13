@@ -23,9 +23,22 @@
     }
 
     button {
+        position: relative;
         background: none;
         border: none;
         cursor: pointer;
+
+        .notification-size {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+        }
 
         img {
             width: 30px;

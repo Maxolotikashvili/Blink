@@ -1,8 +1,9 @@
 <div #sidebarComponentWrapper class="sidebar-component-wrapper"
     [ngStyle]="{'transform': 'translateX(' + sidebarLocationX + 'px)'}">
     <div class="top-side-buttons-wrapper">
-        <button>
-            <img (click)="addFriend()" src="emoji.png" alt="image">
+        <button (click)="addFriend()">
+            <div class="notification-size" *ngIf="userNotificationsLength$ | async as userNotificationsLength">{{userNotificationsLength}}</div>
+            <img src="emoji.png" alt="image">
         </button>
         <button>
             <img src="emoji.png" alt="image">

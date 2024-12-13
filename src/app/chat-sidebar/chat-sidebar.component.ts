@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService } from '../services/modal.service';
 import { AddFriendModalComponent } from '../add-friend-modal/add-friend-modal.component';
+import { AuthService } from '../services/auth.service';
+import { User } from '../model/auth.model';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chat-sidebar',
@@ -13,11 +16,20 @@ import { AddFriendModalComponent } from '../add-friend-modal/add-friend-modal.co
 export class ChatSidebarComponent implements OnInit {
   sidebarLocationX: number = 0;
   isSidebarShrinked: boolean = false;
+  userNotificationsLength$!: Observable<number>;
 
-  constructor(private router: Router, private modalService: ModalService) { }
+  constructor(
+    private router: Router, 
+    private modalService: ModalService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.getUserNotificationsSize();
+  }
 
+  getUserNotificationsSize() {
+    this.userNotificationsLength$ = this.authService.user$.pipe(map((user) => user.notifications.length));
   }
 
   moveSidebar() {
