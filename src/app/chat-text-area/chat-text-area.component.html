@@ -1,6 +1,6 @@
 <div class="text-area-component-wrapper">
     <div class="messages-wrapper" #messagesWrapper> 
-        <div class="message" [ngClass]="{'friend-message': message.sender === friend.username}" *ngFor="let message of chatList; let i = index">
+        <div class="message" [ngClass]="{'friend-message': message.sender !== 'user'}" *ngFor="let message of chatList; let i = index">
             <div class="date-separator" *ngIf="shouldShowDateSeparator(i)">
                 <div class="line"></div>
                 <span class="date">{{ getDateSeparator(message.timeStamp) }}</span>
@@ -21,9 +21,9 @@
         </div>
     </div>
 
-    <div *ngIf="!friend" class="bk-heading-h4 no-selected-friend-text">Select a friend to start messaging</div>
+    <div *ngIf="!friend && !groupChat" class="bk-heading-h4 no-selected-friend-text">Select a chat to start messaging</div>
     
-    <div class="input-area-wrapper" *ngIf="friend">
+    <div class="input-area-wrapper" *ngIf="friend || groupChat">
         <img class="emoji" src="emoji.png" alt="">
         <div class="divider"></div>
         <textarea name="textarea" [(ngModel)]="textareaValue" cdkTextareaAutosize="true" rows="1" placeholder="Type here" (keypress)="handleTextSend($event)" #textArea></textarea>

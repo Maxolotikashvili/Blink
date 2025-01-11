@@ -7,12 +7,12 @@
     <h3 class="bk-heading-h3" *ngIf="data.friend"> {{data.friend.username}} </h3>
     <ng-container *ngIf="groupChat">
         <div class="groupchat-heading-wrapper">
-            <h3 class="bk-heading-h3" *ngFor="let friend of groupChat?.users; let last = last">
+            <h3 class="bk-heading-h3" *ngFor="let friend of groupChat.users; let last = last">
                 {{friend.username}}<span *ngIf="!last">,</span>
             </h3>
         </div>
     </ng-container>
-
+    
     <p class="bk-info-secondary moto" *ngIf="data.friend">&#64;Will I am</p>
 </div>
 

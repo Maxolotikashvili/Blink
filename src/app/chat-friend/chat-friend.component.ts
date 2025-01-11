@@ -1,10 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Friend } from '../model/friend.model';
 import { GroupChat } from '../model/user.model';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../services/auth.service';
-import { map, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { matSnackDuration } from '../styles/active-theme-variables';
 
@@ -14,34 +14,26 @@ import { matSnackDuration } from '../styles/active-theme-variables';
   templateUrl: './chat-friend.component.html',
   styleUrl: './chat-friend.component.scss'
 })
-export class ChatFriendComponent implements OnInit, OnDestroy {
+export class ChatFriendComponent implements OnDestroy, OnChanges {
   @Input() data!: { friend?: Friend, groupChat?: GroupChat };
   private subscription: Subscription = new Subscription();
-  
+
   public groupChat: GroupChat | undefined;
-  
+
   constructor(private authService: AuthService, private matSnack: MatSnackBar) { }
 
-  ngOnInit(): void {
-    this.assignGroupChat();
-    this.getUser();
+  ngOnChanges(): void {
+    this.getGroupChat();
   }
 
-  private assignGroupChat() {
-    this.groupChat = this.data.groupChat;
-  }
-
-  private getUser() {
-    const subscription = this.authService.user$.pipe(map((user) => user.userId)).subscribe((userId)=> {
-      if (this.groupChat && this.data.groupChat) {
-        this.groupChat = {
-          ...this.data.groupChat,
-          users: this.data.groupChat.users.filter((users) => users.userId !== userId)
-        }
+  private getGroupChat() {
+    if (this.data.groupChat) {
+      this.groupChat = {
+        ...this.data.groupChat,
+        users: this.data.groupChat.users.filter((users) => users.username !== 'user')
       }
-    });
-
-    this.subscription.add(subscription);
+      console.log(this.groupChat);
+    }
   }
 
   public controlFriendNotificationsSound() {

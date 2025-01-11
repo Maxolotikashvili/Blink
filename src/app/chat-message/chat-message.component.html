@@ -8,9 +8,9 @@
                 <h5 class="bk-heading-h5"> {{friend.username}} </h5>
                 <p class="bk-info-secondary" *ngIf="friend.messages.length === 0">No messages yet</p>
                 <p class="bk-info-secondary last-sent-text-wrapper" *ngIf="friend.messages.length > 0">
-                    <span class="last-sent-text-author" *ngIf="friend.messages[friend.messages.length -1].sender === data.username">You: </span>
-                    <span class="last-sent-text-author" [ngStyle]="{'font-weight': !friend.messages[friend.messages.length - 1].isSeen ? '800' : ''}" *ngIf="friend.messages[friend.messages.length -1].sender === friend.username">{{friend.username}}: </span>
-                    <span class="last-sent-text" [ngStyle]="{'font-weight': !friend.messages[friend.messages.length - 1].isSeen && friend.messages[friend.messages.length -1].sender !== data.username ? '800' : ''}">{{friend.messages[friend.messages.length -1].text}}</span>
+                    <span class="last-sent-text-author" *ngIf="friend.messages[friend.messages.length -1].sender === 'user'">You: </span>
+                    <span class="last-sent-text-author" [ngStyle]="{'font-weight': !friend.messages[friend.messages.length - 1].isSeen ? '800' : ''}" *ngIf="friend.messages[friend.messages.length -1].sender !== 'user'">{{friend.username}}: </span>
+                    <span class="last-sent-text" [ngStyle]="{'font-weight': !friend.messages[friend.messages.length - 1].isSeen && friend.messages[friend.messages.length -1].sender !== 'user' ? '800' : ''}">{{friend.messages[friend.messages.length -1].text}}</span>
                 </p>
             </div>
         </div>
@@ -29,14 +29,14 @@
             <div class="text-wrapper">
                 <div class="heading-wrapper dots">
                     <h5 class="bk-heading-h5" *ngFor="let users of groupChat.users">
-                        <span *ngIf="users.username !== data.username">{{users.username}},</span>
-                        <span *ngIf="users.username === data.username"> You</span>
+                        <span *ngIf="users.username !== 'user'">{{users.username}},</span>
+                        <span *ngIf="users.username === 'user'"> You</span>
                     </h5>
                 </div>
                 <p class="bk-info-secondary no-messages" *ngIf="groupChat.messages.length === 0">No messages yet</p>
                 <p class="bk-info-secondary last-seen-text-wrapper" *ngIf="groupChat.messages.length > 0">
-                    <span class="last-sent-text-author" *ngIf="groupChat.messages[groupChat.messages.length -1].sender === data.username">You: </span>
-                    <span class="last-sent-text" [ngStyle]="{'font-weight': !groupChat.messages[groupChat.messages.length - 1].isSeen && groupChat.messages[groupChat.messages.length -1].sender !== data.username ? '800' : ''}">{{groupChat.messages[groupChat.messages.length -1].text}}</span>
+                    <span class="last-sent-text-author" *ngIf="groupChat.messages[groupChat.messages.length -1].sender === 'user'">You: </span>
+                    <span class="last-sent-text" [ngStyle]="{'font-weight': !groupChat.messages[groupChat.messages.length - 1].isSeen && groupChat.messages[groupChat.messages.length -1].sender !== 'user' ? '800' : ''}">{{groupChat.messages[groupChat.messages.length -1].text}}</span>
                 </p>
             </div>
         </div>

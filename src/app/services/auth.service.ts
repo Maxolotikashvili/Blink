@@ -171,9 +171,9 @@ export class AuthService {
                 const isFriendMuted = currentUser.friendsList.find((friend) => friend.username === notification.friendName)?.isMuted;
 
                 const message: Message = notification.message as Message;
-                if (message.sender === currentUser.username) {
+                if (message.sender === 'user') {
                     this.soundService.playMessageSentSound();
-                } else if (message.sender !== currentUser.username && !isFriendMuted) {
+                } else if (message.sender !== 'user' && !isFriendMuted) {
                     this.soundService.playIncomingMessageSound();
                 }
 
