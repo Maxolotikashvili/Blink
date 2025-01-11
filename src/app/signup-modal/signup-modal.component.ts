@@ -23,22 +23,22 @@ import { matSnackDuration } from '../styles/active-theme-variables';
   encapsulation: ViewEncapsulation.None
 })
 export class SignupModalComponent implements OnInit {
-  signupForm!: FormGroup;
-  isUserRegistrationPending: boolean = false;
+  public signupForm!: FormGroup;
+  public isUserRegistrationPending: boolean = false;
 
-  get userName(): AbstractControl | null {
+  public get userName(): AbstractControl | null {
     return this.signupForm.get('username');
   }
 
-  get email(): AbstractControl | null {
+  public get email(): AbstractControl | null {
     return this.signupForm.get('email');
   }
 
-  get password(): AbstractControl | null {
+  public get password(): AbstractControl | null {
     return this.signupForm.get('password');
   }
 
-  get confirmPassword(): AbstractControl | null {
+  public get confirmPassword(): AbstractControl | null {
     return this.signupForm.get('confirmPassword');
   }
 
@@ -53,7 +53,7 @@ export class SignupModalComponent implements OnInit {
     this.initializeUserSignUpForm();
   }
 
-  initializeUserSignUpForm() {
+  private initializeUserSignUpForm() {
     this.signupForm = this.fb.group({
       username: new FormControl<string>('', Validators.required),
       email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -62,11 +62,11 @@ export class SignupModalComponent implements OnInit {
     }, { validators: passwordMatchValidator })
   }
 
-  openLoginPage() {
+  public openLoginPage() {
     this.modalService.openModal(SigninModalComponent);
   }
 
-  handleSignupFormSubmit() {
+  public handleSignupFormSubmit() {
     if (this.signupForm.status !== 'VALID') return;
     this.isUserRegistrationPending = true;
     
@@ -89,7 +89,7 @@ export class SignupModalComponent implements OnInit {
     })
   }
 
-  handleRegistrationErrors(err: HttpErrorResponse) {
+  private handleRegistrationErrors(err: HttpErrorResponse) {
     if (err.status === 400) {
       if (err.error.detail === 'Username already taken') {
         console.error(`Registration failed with status code of ${err.status}: ${err.error.detail}`)

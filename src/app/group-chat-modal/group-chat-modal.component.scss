@@ -1,0 +1,135 @@
+@use '../styles/mixins.scss' as *;
+
+.group-chat-modal-component-wrapper {
+    width: 100%;
+    height: 100%;
+    @include flex-center();
+
+    .modal-wrapper {
+        position: relative;
+        @include flex-center();
+        flex-flow: column;
+        justify-content: space-between;
+        width: 50%;
+        gap: 50px;
+        padding: 30px;
+        border-radius: var(--widget-border-radius);
+        background: var(--active-modal-background-color);
+
+        .form-wrapper {
+            width: 100%;
+            @include flex-center();
+            flex-flow: column;
+
+            mat-form-field,
+            button {
+                width: 100%;
+
+                mat-label {
+                    color: var(--active-textarea-color);
+                }
+
+                input {
+                    color: var(--active-textarea-color);
+                }
+            }
+        }
+
+        .friends-list-wrapper {
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            gap: 15px;
+
+            mat-form-field {
+                width: 80%;
+                align-self: center;
+            }
+
+            .friends-wrapper {
+                display: flex;
+                flex-flow: column;
+                gap: 10px;
+                height: 42vh;
+                overflow-y: scroll;
+
+                .friend {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 5px;
+                    border-radius: 10px;
+
+                    .img-name-wrapper {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .add-button,
+                    .added {
+                        position: relative;
+                        width: 40px;
+                        height: 40px;
+                        border: none;
+                        border-radius: 50%;
+                        background: var(--active-modal-button-background-color);
+                        font-size: 24px;
+                        font-weight: 300;
+                        color: var(--active-textarea-message-background-color-friend);
+                        cursor: pointer;
+                        transition: all 0.2s linear;
+                    }
+
+                    .add-button::before {
+                        content: "+";
+                        @include position-center();
+                        transition: all 0.2s linear;
+                    }
+
+                    .add-button:hover {
+                        background: var(--active-textarea-message-background-color-friend);
+                        color: var(--active-modal-button-background-color);
+                    }
+
+                    .added {
+                        background-color: transparent;
+                    }
+
+                    .added::before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 30%;
+                        width: 8px;
+                        height: 18px;
+                        border-bottom: 3px solid var(--active-textarea-message-background-color-friend);
+                        border-right: 3px solid var(--active-textarea-message-background-color-friend);
+                        transform: rotate(45deg) translate(-50%, -50%);
+                        transition: all 0.2s linear;
+                    }
+
+                    .added:hover {
+                        background: unset;
+                    }
+                }
+            }
+
+            .create-button {
+                width: 40%;
+                height: 44px;
+                align-self: center;
+                border: none;
+                background: none;
+                border-radius: 5px;
+                background: var(--active-textarea-message-background-color-friend);
+                color:  var(--light-text-primary-color);
+                transition: background .3s linear;
+            }
+
+            .create-button:disabled {
+                background: var(--synthwave-modal-button-background-color);
+            }
+        }
+    }
+}

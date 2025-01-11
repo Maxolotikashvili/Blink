@@ -1,61 +1,9 @@
 <div class="friend-section-component-wrapper">
-    <div class="profile-wrapper">
-        <img class="avatar-img-medium" src="maxo-lotikashvili.jpeg" alt="friend-avatar">
-        <h3 class="bk-heading-h3">Tekle Lotikashvili</h3>
-        <p class="bk-info-secondary moto">&#64;Will I am</p>
-    </div>
+    <ng-container *ngIf="friend$ | async as friend">
+        <app-chat-friend [data]="{ friend: friend }"></app-chat-friend>
+    </ng-container>
 
-    <div class="friend-utility-wrapper">
-        <ul>
-            <li *ngFor="let buttonAction of buttonActionsList">
-                <button>
-                    <img class="icon" [src]="buttonAction.imgUrl" [alt]="buttonAction.imgUrl">
-                </button>
-                <span class="bk-info-primary">{{buttonAction.title}}</span>
-            </li>
-        </ul>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div class="friend-info-wrapper">
-        <ul>
-            <li>
-                <h6 class="bk-heading-h6">Phone</h6>
-                <span class="bk-info-secondary">511 13 80 72</span>
-            </li>
-            <li>
-                <h6 class="bk-heading-h6">Email</h6>
-                <span class="bk-info-secondary">maxolotilashvili401gmail.com</span>
-            </li>
-            <li>
-                <h6 class="bk-heading-h6">Gender</h6>
-                <span class="bk-info-secondary">Male</span>
-            </li>
-        </ul>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div class="friend-shared-files-wrapper">
-        <div class="heading-wrapper">
-            <h4 class="bk-heading-h4">Shared Files</h4>
-            <a href="#" class="bk-nav-link-secondary">View all</a>
-        </div>
-
-        <div class="shared-files-wrapper">
-            <div class="shared-file">
-                <div class="image-text-wrapper">
-                    <div class="image-wrapper"></div>
-
-                    <div class="text-wrapper">
-                        <h6 class="bk-heading-h6">some very very important shared file.txt</h6>
-                        <span class="bk-date-secondary">some shared file description text</span>
-                    </div>
-                </div>
-
-                <div class="bk-info-primary">1.9Mb</div>
-            </div>
-        </div>
-    </div>
+    <ng-container *ngIf="groupChat$ | async as groupChat">
+        <app-chat-friend [data]="{ groupChat: groupChat }"></app-chat-friend>
+    </ng-container>
 </div>

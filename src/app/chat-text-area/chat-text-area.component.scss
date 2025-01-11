@@ -1,7 +1,10 @@
 @use "../styles/global-styles.scss" as *;
 @use "../styles/themes.scss" as *;
 
+$transition: all 0.12s linear;
+
 .text-area-component-wrapper {
+    position: relative;
     width: 100%;
     height: 100%;
     padding: var(--chat-widgets-padding);
@@ -10,28 +13,127 @@
     transition: background var(--global-transition-parameters);
     user-select: text;
 
-    .text-area-wrapper {
-        height: 90%;
+    .no-selected-friend-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max-content;
+        font-weight: 800;
+        transform: translate(-50%, -50%);
+        color: var(--active-mat-tab-underline-color);
+        font-family: 'Roboto';
+    }
+
+    .messages-wrapper {
+        height: 86.5vh;
+        width: 100%;
         padding-bottom: 20px;
         display: flex;
         flex-flow: column;
-        justify-content: flex-end;
+        overflow: auto;
         gap: 2px;
 
         .message {
-            display: inline-block;
-            max-width: 80%;
-            width: fit-content;
-            padding: 7px 20px;
-            background: var(--active-textarea-message-background-color-friend);
-            color: var(--active-textarea-message-color);
-            font-size: 14px;
-            font-weight: 300;
-            border-radius: 8px;
-            border-bottom-left-radius: 0;
-            word-wrap: break-word;
-            letter-spacing: 1px;
-            line-height: 22px;
+            display: flex;
+            flex-flow: column;
+            color: var(--active-secondary-text-color);
+
+            .date-separator {
+                width: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                white-space: nowrap;
+                margin: 40px auto;
+
+                .line {
+                    width: 100%;
+                    height: 1px;
+                    background: var(--active-secondary-text-color);
+                }
+
+                .date {
+                    margin: 0 10px;
+                    font-size: 14px;
+                }
+            }
+
+            .text-timestamp-wrapper {
+                display: flex;
+                align-items: center;
+                width: 70%;
+
+                .date {
+                    width: 0;
+                    transform: scaleY(0);
+                    transform-origin: bottom;
+                    transition: $transition;
+                }
+
+                .date-active {
+                    width: unset;
+                    transform: scaleY(1);
+                }
+
+                .text {
+                    width: fit-content;
+                    padding: 7px 20px;
+                    background: var(--active-textarea-message-background-color-user);
+                    color: var(--active-textarea-message-color);
+                    font-size: 14px;
+                    font-weight: 300;
+                    border-radius: 8px;
+                    border-bottom-left-radius: 0;
+                    word-wrap: break-word;
+                    letter-spacing: 1px;
+                    line-height: 22px;
+                    text-align: left;
+                    transition: $transition;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                .text-active {
+                    transform: translateX(5px);
+                }
+            }
+
+            .seen {
+                margin: 0 5px;
+            }
+        }
+
+        .friend-message {
+            .text-timestamp-wrapper {
+                align-self: flex-end;
+                flex-direction: row-reverse;
+                width: 70%;
+
+                .date {
+                    width: 0;
+                    transform: scaleY(0);
+                    transform-origin: bottom;
+                    transition: $transition
+                }
+
+                .date-active {
+                    width: unset;
+                    transform: scaleY(1);
+                }
+
+                .text {
+                    background: var(--active-textarea-message-background-color-friend);
+                    border-radius: 8px;
+                    border-bottom-right-radius: 0;
+                    border: none;
+                    text-align: right;
+                    cursor: pointer;
+                }
+
+                .text-active {
+                    transform: translateX(-5px);
+                }
+            }
         }
     }
 
@@ -59,7 +161,6 @@
 
         textarea {
             width: 100%;
-            // height: 20px !important;
             max-height: 40px;
             border: none;
             background: transparent;

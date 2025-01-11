@@ -1,14 +1,15 @@
-<div #sidebarComponentWrapper class="sidebar-component-wrapper"
+<div class="sidebar-component-wrapper"
     [ngStyle]="{'transform': 'translateX(' + sidebarLocationX + 'px)'}">
     <div class="top-side-buttons-wrapper">
-        <button (click)="addFriend()">
-            <div class="notification-size" *ngIf="userNotificationsLength$ | async as userNotificationsLength">{{userNotificationsLength}}</div>
+        <button (click)="openAddFriendModal()">
+            <div class="notification-size" *ngIf="userNotificationsLength$ | async as notificationsLength">{{notificationsLength}}</div>
             <img src="emoji.png" alt="image">
         </button>
-        <button>
+        <button (click)="openNotificationsModal()">
+            <div class="notification-size" *ngIf="userOutgoingRequestsListSize$ | async as outgoingRequestsListSize">{{outgoingRequestsListSize}}</div>
             <img src="emoji.png" alt="image">
         </button>
-        <button>
+        <button (click)="openGroupChatModal()">
             <img src="emoji.png" alt="image">
         </button>
     </div>

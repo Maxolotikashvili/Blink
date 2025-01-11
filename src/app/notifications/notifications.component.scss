@@ -1,0 +1,141 @@
+@use '../styles/mixins.scss' as *;
+
+$gap-between-notifications: 20px;
+
+.notifications-component-wrapper {
+    @include modal();
+
+    .modal-wrapper {
+        position: relative;
+        @include flex-center();
+        flex-flow: column;
+        justify-content: flex-start;
+        width: 60%;
+        height: 80%;
+        padding: 20px;
+        border-radius: var(--widget-border-radius);
+        background: var(--active-modal-background-color);
+
+        .notifications-wrapper {
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: $gap-between-notifications;
+            margin-top: 50px;
+
+            .delete-button {
+                width: 30px;
+                height: 30px;
+                position: relative;
+                background: none;
+                border: none;
+                background: var(--active-modal-button-background-color);
+                border-radius: 4px;
+                transition: background-color .1s linear;
+                cursor: pointer;
+
+                .line-1,
+                .line-2 {
+                    width: 2px;
+                    height: 50%;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    background: var(--active-primary-text-color);
+                    transition: inherit;
+                }
+
+                .line-1 {
+                    transform: translate(-50%, -50%) rotate(-45deg);
+                }
+
+                .line-2 {
+                    transform: translate(-50%, -50%) rotate(45deg);
+                }
+            }
+
+            .delete-button:hover {
+                background-color: var(--active-secondary-text-color);
+
+                .line-1,
+                .line-2 {
+                    background: var(--active-textarea-message-background-color-friend);
+                }
+            }
+
+            .notification-wrapper {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                border-bottom: 1px solid var(--active-textarea-background-color);
+                padding-bottom: $gap-between-notifications;
+
+                .notification {
+                    display: flex;
+                    flex-flow: column;
+                    flex: 1;
+                    gap: 6px;
+
+                    .notification-type {
+                        background: #0098cd;
+                        padding: 4px 10px;
+                        border-radius: 4px;
+                        width: fit-content;
+                        letter-spacing: .6px;
+                        font-weight: 600;
+                    }
+                }
+
+                .buttons-wrapper {
+                    display: flex;
+                    gap: 10px;
+
+                    button {
+                        @include flex-center();
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        border: none;
+                        border: 1px solid var(--active-modal-button-background-color);
+                        background: transparent;
+                        font-size: 30px;
+                        transition: .2s linear;
+                        cursor: pointer;
+
+                        .check {
+                            height: 24px;
+                            width: 12px;
+                            border-bottom: 5px solid rgb(0, 159, 0);
+                            border-right: 5px solid rgb(0, 159, 0);
+                            transform: rotate(45deg);
+                        }
+                    }
+
+                    .x-mark {
+                        color: #ff0000;
+                        font-size: 24px;
+                    }
+
+                    button:hover {
+                        background: var(--active-textarea-background-color);
+                    }
+                }
+            }
+
+            .no-notifications-text {
+                @include position-center();
+                color: var(--active-secondary-text-color);
+                letter-spacing: 0.6px;
+            }
+        }
+    }
+
+    .not-visible {
+        opacity: 0;
+        cursor: default;
+        pointer-events: none;
+    }
+}

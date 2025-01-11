@@ -1,0 +1,84 @@
+<div class="profile-wrapper">
+    <img class="avatar-img-medium" src="maxo-lotikashvili.jpeg" alt="friend-avatar" *ngIf="data.friend">
+
+    <div class="img-wrapper" [ngClass]="{'two-images-wrapper': groupChat.users.length < 3, 'many-images-wrapper': groupChat.users.length > 2}" *ngIf="groupChat">
+        <img *ngFor="let image of groupChat.users | slice: 0:3" src="maxo-lotikashvili.jpeg" alt="friend-avatar">
+    </div>
+    <h3 class="bk-heading-h3" *ngIf="data.friend"> {{data.friend.username}} </h3>
+    <ng-container *ngIf="groupChat">
+        <div class="groupchat-heading-wrapper">
+            <h3 class="bk-heading-h3" *ngFor="let friend of groupChat?.users; let last = last">
+                {{friend.username}}<span *ngIf="!last">,</span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <p class="bk-info-secondary moto" *ngIf="data.friend">&#64;Will I am</p>
+</div>
+
+<div class="friend-utility-wrapper">
+    <ul>
+        <li>
+            <button (click)="controlFriendNotificationsSound()">
+                <div class="icon" *ngIf="groupChat" [ngClass]="{'is-muted': groupChat.isMuted, 'not-muted': !groupChat.isMuted}"></div>
+                <div class="icon" *ngIf="data.friend" [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
+            </button>
+            <span class="label bk-info-primary">{{data.friend?.isMuted || groupChat?.isMuted ? 'Unmute' : 'Mute'}}</span>
+        </li>
+        <li>
+            <button>
+                    <div class="icon mark-as-seen"></div>
+            </button>
+            <span class="label bk-info-primary">Mark as seen</span>
+        </li>
+        <li>
+            <button (click)="clearChat()">
+                    <div class="icon delete-chat"></div>
+            </button>
+            <span class="label bk-info-primary">Clear chat</span>
+        </li>
+        <li *ngIf="data.friend">
+            <button (click)="deleteFriend()">
+                <div class="icon delete-friend"></div>
+            </button>
+            <span class="label bk-info-primary">Remove friend</span>
+        </li>
+        <li *ngIf="groupChat">
+            <button (click)="removeUserFromGroupChat()">
+                <div class="icon delete-friend"></div>
+            </button>
+            <span class="label bk-info-primary">Leave chat</span>
+        </li>
+    </ul>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="friend-info-wrapper">
+    <ul>
+        <li>
+            <h6 class="bk-heading-h6">Phone</h6>
+            <span class="bk-info-secondary" *ngIf="data.friend">511 13 80 72</span>
+            <ng-container *ngIf="groupChat">
+                <p class="groupchat-info-wrapper dots">
+                    <span class="bk-info-secondary" *ngFor="let friend of groupChat.users; let last = last">
+                        511 13 80 72 80 27 23 80 80<span *ngIf="!last">,</span>
+                    </span>
+                </p>
+            </ng-container>
+        </li>
+        <li>
+            <h6 class="bk-heading-h6">Email</h6>
+            <span class="bk-info-secondary" *ngIf="data.friend">maxolotilashvili401gmail.com</span>
+            <ng-container *ngIf="groupChat">
+                <p class="groupchat-info-wrapper dots">
+                    <span class="bk-info-secondary" *ngFor="let friend of groupChat.users; let last = last">
+                        {{friend.email}}<span *ngIf="!last">,</span>
+                    </span>
+                </p>
+            </ng-container>
+        </li>
+    </ul>
+</div>
+
+<mat-divider></mat-divider>

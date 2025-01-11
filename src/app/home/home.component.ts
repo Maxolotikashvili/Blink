@@ -26,7 +26,7 @@ export class HomeComponent {
     this.isModalOpened$ = modalService.isModalOpened$;
   }
 
-  openSignInPage() {
+  public openSignInPage() {
     this.modalService.openModal(SigninModalComponent);
   }
 }

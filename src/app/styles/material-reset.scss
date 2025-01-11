@@ -44,6 +44,15 @@ mat-card {
     margin-top: 5px;
 }
 
+.mat-mdc-tab-body {
+    height: 43vh;
+
+    .mat-mdc-tab-body-content {
+        position: relative;
+        height: 95%;
+    }
+}
+
 .mdc-tab__text-label {
     font-weight: 400 !important;
 }

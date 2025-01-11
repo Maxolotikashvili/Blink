@@ -1,0 +1,45 @@
+<div class="notifications-component-wrapper">
+
+    <div class="modal-wrapper bk-modal">
+        <h3 class="bk-modal-heading">Notifications</h3>
+        <app-x-mark [size]="'default'" [color]="'var(--active-textarea-message-background-color-friend)'"
+            [isForBurger]="false"></app-x-mark>
+
+        <div class="notifications-wrapper" *ngIf="notifications$ | async as notifications">
+            <div class="notification-wrapper" *ngFor="let notification of notifications">
+                <button class="delete-button" [ngClass]="{'not-visible': notification.isIncoming && notification.status === 'pending'}" (click)="deleteNotification(notification)" #deletebutton>
+                    <div class="line-1"></div>
+                    <div class="line-2"></div>
+                </button>
+
+                <div class="notification">
+                    <ng-container *ngIf="notification.type === 'friend-request'">
+                        <span class="notification-type bk-info-primary">Connect</span>
+                        <p class="bk-modal-text" *ngIf="notification.isIncoming">
+                            <span class="bk-important-word">{{notification.sender.username}} </span>
+                            <span *ngIf="notification.status === 'pending'">wants to be your friend</span>
+                            <span *ngIf="notification.status === 'complete'">accepted your friend request</span>
+                        </p>
+
+                        <p class="bk-modal-text" *ngIf="!notification.isIncoming">
+                            <span>friend request sent to <span class="bk-important-word">{{notification.receiver.username}}</span></span>
+                        </p>
+                        <span class="bk-modal-date">Nov 29, 18:45</span>
+                    </ng-container>
+                </div>
+
+                <div class="buttons-wrapper" *ngIf="notification.isIncoming && notification.status === 'pending'">
+                    <button (click)="respondToFriendRequest(notification.sender.email, true)">
+                        <div class="check"></div>
+                    </button>
+                    <button class="x-mark" (click)="respondToFriendRequest(notification.sender.email, false)">
+                        &#10005;
+                    </button>
+                </div>
+            </div>
+
+            <h2 class="no-notifications-text" *ngIf="notifications.length === 0">No notifications to display</h2>
+        </div>
+
+    </div>
+</div>

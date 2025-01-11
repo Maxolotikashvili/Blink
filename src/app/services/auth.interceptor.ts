@@ -14,17 +14,17 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
       headers: req.headers.set('Authorization', `Bearer ${authToken}`)
     });
   }
-  
+
   return next(cloned).pipe(
     catchError((error) => {
       if (error.status === 401) {
         console.log("Unauthorized, clearing token...");
         localStorage.removeItem('access_token');
         sessionStorage.removeItem('access_token');
-        router.navigate(['/home']); // Redirect to home or login
+        router.navigate(['/home']);
       }
       return throwError(error);
     })
   );
-  
+
 }

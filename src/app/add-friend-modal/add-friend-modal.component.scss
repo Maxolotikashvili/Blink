@@ -14,11 +14,7 @@
         height: 50%;
         padding: var(--chat-widgets-padding);
         border-radius: var(--widget-border-radius);
-        background: var(--active-wallpaper-color);
-
-        h3 {
-            color: var(--active-primary-text-color);
-        }
+        background: var(--active-modal-background-color);
 
         .form-wrapper {
             width: 70%;
@@ -29,11 +25,11 @@
                 width: 100%;
 
                 mat-label {
-                    color: var(--active-primary-text-color);
+                    color: var(--active-textarea-color);
                 }
 
                 input {
-                    color: var(--active-primary-text-color);
+                    color: var(--active-textarea-color);
                 }
             }
         }

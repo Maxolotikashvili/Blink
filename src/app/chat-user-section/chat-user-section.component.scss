@@ -1,4 +1,3 @@
-// @use "../styles/global-styles.scss" as *;
 @use "../styles/blink-styles.scss" as *;
 @use "../styles/mixins.scss" as *;
 @use "../styles/material-reset.scss" as *;
@@ -6,6 +5,7 @@
 $margin-between-cards: 20px;
 
 .user-section-component-wrapper {
+    position: relative;
     height: 100%;
     padding: var(--chat-widgets-padding);
     border-radius: var(--widget-border-radius);
@@ -83,38 +83,10 @@ $margin-between-cards: 20px;
             }
 
             .mat-mdc-tab-body-content {
+                display: flex;
+                flex-flow: column;
+                gap: 5px;
                 margin-top: $margin-between-cards;
-
-                .chat-wrapper {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 18px 8px;
-                    border-radius: 10px;
-                    border: none;
-                    background: none;
-                    transition: background .1s linear;
-                    cursor: pointer;
-
-                    .img-name-wrapper {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-
-                        .text-wrapper {
-                            display: flex;
-                            align-items: baseline;
-                            flex-flow: column;
-                            gap: 4px;
-                        }
-                    }
-
-                }
-
-                .chat-wrapper:hover {
-                    background: var(--active-mat-tab-list-hover-background-color);
-                }
             }
 
             .mdc-tab-indicator__content--underline {

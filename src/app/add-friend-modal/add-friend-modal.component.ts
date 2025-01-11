@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AddFriendService } from '../services/addFriend.service';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { XMarkComponent } from "../x-mark/x-mark.component";
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from "../loader/loader.component";
-import { matSnackDuration } from '../styles/active-theme-variables';
+import { SocketService } from '../services/socket.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-friend-modal',
@@ -14,30 +13,25 @@ import { matSnackDuration } from '../styles/active-theme-variables';
   templateUrl: './add-friend-modal.component.html',
   styleUrl: './add-friend-modal.component.scss'
 })
-export class AddFriendModalComponent {
-  isLoading: boolean = false;
-  friendName: string = "";
+export class AddFriendModalComponent implements OnInit {
+  public isLoading$!: Observable<boolean>;
 
-  constructor(
-    private addfriendService: AddFriendService, 
-    private matSnack: MatSnackBar,
-  ) {}
+  constructor(private socketService: SocketService) { }
 
-  addFriend() {
-    if (this.friendName.trim() === '') return;
-    
-    this.isLoading = true;
-    this.addfriendService.addFriend(this.friendName).subscribe({
-      next: (res: {message: string}) => {
-        this.matSnack.open(res.message, 'Dismiss', {duration: matSnackDuration});
-        this.isLoading = false;
-      },
+  ngOnInit(): void {
+    this.getLoadingState();
+  }
 
-      error: (error) => {
-        this.isLoading = false;
-        this.matSnack.open(error.error.detail, 'Dismiss', {duration: matSnackDuration});
-        console.log(error);
-      }
-    });
+  private getLoadingState() {
+    this.isLoading$ = this.socketService.isSocketLoading$;
+  }
+
+  public addFriend(input: HTMLInputElement, event?: KeyboardEvent) {
+    if (input.value.trim() === '' || event && event?.key !== 'Enter') {
+      return;
+    } else {
+      this.socketService.addFriend(input.value);
+      input.value = '';
+    };
   }
 }

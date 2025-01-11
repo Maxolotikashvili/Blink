@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { ModalService } from '../services/modal.service';
 import { AddFriendModalComponent } from '../add-friend-modal/add-friend-modal.component';
 import { AuthService } from '../services/auth.service';
-import { User } from '../model/auth.model';
 import { map, Observable } from 'rxjs';
+import { NotificationsComponent } from '../notifications/notifications.component';
+import { GroupChatModalComponent } from '../group-chat-modal/group-chat-modal.component';
 
 @Component({
   selector: 'app-chat-sidebar',
@@ -17,19 +18,25 @@ export class ChatSidebarComponent implements OnInit {
   sidebarLocationX: number = 0;
   isSidebarShrinked: boolean = false;
   userNotificationsLength$!: Observable<number>;
-
+  userOutgoingRequestsListSize$!: Observable<number>;
+  
   constructor(
     private router: Router, 
     private modalService: ModalService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     this.getUserNotificationsSize();
+    this.getOutgoingRequestsSize();
   }
 
   getUserNotificationsSize() {
-    this.userNotificationsLength$ = this.authService.user$.pipe(map((user) => user.notifications.length));
+    this.userNotificationsLength$ = this.authService.user$.pipe(map((user) => user.notifications.filter((notification) => notification.isIncoming).length));
+  }
+
+  getOutgoingRequestsSize() {
+    this.userOutgoingRequestsListSize$ = this.authService.user$.pipe(map((user) => user.notifications.filter((notification) => !notification.isIncoming).length));
   }
 
   moveSidebar() {
@@ -43,7 +50,15 @@ export class ChatSidebarComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  addFriend() {
+  openNotificationsModal() {
+    this.modalService.openModal(NotificationsComponent);
+  }
+
+  openAddFriendModal() {
     this.modalService.openModal(AddFriendModalComponent)
+  }
+
+  openGroupChatModal() {
+    this.modalService.openModal(GroupChatModalComponent);
   }
 }

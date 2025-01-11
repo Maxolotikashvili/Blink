@@ -1,14 +1,34 @@
 <div class="text-area-component-wrapper">
-    <div class="text-area-wrapper">
-        <div class="message" *ngFor="let item of chatList">{{ item.text }}</div>
+    <div class="messages-wrapper" #messagesWrapper> 
+        <div class="message" [ngClass]="{'friend-message': message.sender === friend.username}" *ngFor="let message of chatList; let i = index">
+            <div class="date-separator" *ngIf="shouldShowDateSeparator(i)">
+                <div class="line"></div>
+                <span class="date">{{ getDateSeparator(message.timeStamp) }}</span>
+                <div class="line"></div>
+            </div>
+
+            <div class="text-timestamp-wrapper" (mouseleave)="clickedTextIndex = null">
+                <span class="bk-info-secondary date" [ngClass]="{'date-active': clickedTextIndex === i + 1}"> {{message.timeStamp | date: 'hh:mm'}} </span>
+              
+                <button class="text" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="clickedTextIndex = i + 1">
+                    <p> {{message.text}} </p>
+                </button>  
+            </div>
+
+            <ng-container *ngIf="lastSeenMessageIndex$ | async as lastSeenMessageIndex">
+                <div class="bk-info-secondary seen" *ngIf="lastSeenMessageIndex === i + 1">seen</div>
+            </ng-container>
+        </div>
     </div>
+
+    <div *ngIf="!friend" class="bk-heading-h4 no-selected-friend-text">Select a friend to start messaging</div>
     
-    <div class="input-area-wrapper">
+    <div class="input-area-wrapper" *ngIf="friend">
         <img class="emoji" src="emoji.png" alt="">
         <div class="divider"></div>
-        <textarea name="textarea" cdkTextareaAutosize="true" rows="1" placeholder="Type here" (keypress)="handleTextSend(textArea, $event)" #textArea></textarea>
+        <textarea name="textarea" [(ngModel)]="textareaValue" cdkTextareaAutosize="true" rows="1" placeholder="Type here" (keypress)="handleTextSend($event)" #textArea></textarea>
 
-        <button mat-flat-button class="square-button-small" type="button" (click)="handleTextSend(textArea, $event)">
+        <button mat-flat-button class="square-button-small" type="button" (click)="handleTextSend($event)">
             <span class="send-text">Send</span>
             <img class="icon" src="send.png" alt="send">
         </button>

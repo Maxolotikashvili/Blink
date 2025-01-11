@@ -20,7 +20,10 @@ export const activeVariables: string[] = [
     '--active-textarea-message-color',
     '--active-textarea-border-color',
     '--active-sidebar-background-color',
-    '--active-sidebar-svg-colors'
+    '--active-sidebar-svg-colors',
+    '--active-modal-background-color',
+    '--active-modal-texts-color',
+    '--active-modal-button-background-color'
 ];
 
 export const matSnackDuration: number = 4000;

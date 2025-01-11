@@ -34,6 +34,9 @@
     --active-textarea-border-color: var(--synthwave-textarea-border-color);
     --active-sidebar-background-color: var(--synthwave-sidebar-background-color);
     --active-sidebar-svg-colors: var(--synthwave-sidebar-svg-colors);
+    --active-modal-background-color: var(--synthwave-modal-background-color);
+    --active-modal-texts-color: var(--synthwave-modal-texts-color);
+    --active-modal-button-background-color: var(--synthwave-modal-button-background-color);
 }
 
 :root {
@@ -60,6 +63,9 @@
     --synthwave-textarea-border-color: #dddddd;
     --synthwave-sidebar-background-color: #0d0221;
     --synthwave-sidebar-svg-colors: #ffffff;
+    --synthwave-modal-background-color: #eff1f7;
+    --synthwave-modal-texts-color: #5b5b5b;
+    --synthwave-modal-button-background-color: #dde4ea;
 }
 
 :root {
@@ -84,6 +90,9 @@
     --darkmode-textarea-message-background-color-friend: #ffffff;
     --darkmode-textarea-message-color: #000;
     --darkmode-textarea-border-color: #424242c7;
+    --darkmode-modal-background-color: #111111;
+    --darkmode-modal-texts-color: #aaaaaa;
+    --darkmode-modal-button-background-color: #7e7e7e;
 }
 
 :root {

@@ -22,15 +22,15 @@ import { matSnackDuration } from '../styles/active-theme-variables';
   encapsulation: ViewEncapsulation.None
 })
 export class SigninModalComponent implements OnInit {
-  loginForm!: FormGroup;
-  isUserLoginPending: boolean = false;
-  isRememberMeChecked: boolean = false;
+  public loginForm!: FormGroup;
+  public isUserLoginPending: boolean = false;
+  private isRememberMeChecked: boolean = false;
 
-  get email(): AbstractControl | null {
+  public get email(): AbstractControl | null {
     return this.loginForm.get('email');
   }
 
-  get password(): AbstractControl | null {
+  public get password(): AbstractControl | null {
     return this.loginForm.get('password');
   }
 
@@ -43,29 +43,29 @@ export class SigninModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.redirectToChatIfUserHasToken();
+    this.redirectToChatPageIfUserHasToken();
     this.initializeUserForm();
   }
 
-  redirectToChatIfUserHasToken() {
+  private redirectToChatPageIfUserHasToken() {
     if (localStorage.getItem('access_token') || sessionStorage.getItem('access_token')) {
       this.modalService.closeAllPages();
       this.router.navigate(['/chat-main']);
     }
   }
 
-  initializeUserForm() {
+  private initializeUserForm() {
     this.loginForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required)
     })
   }
 
-  openRegisterPage() {
+  public openRegisterPage() {
     this.modalService.openModal(SignupModalComponent);
   }
 
-  rememberUserForFutureLogins(event: MatCheckboxChange) {
+  public rememberUserForFutureLogins(event: MatCheckboxChange) {
     if (event.checked) {
       this.isRememberMeChecked = true;
     } else {
@@ -73,7 +73,7 @@ export class SigninModalComponent implements OnInit {
     }
   }
 
-  handleSignin() {
+  public handleSignin() {
     if (this.loginForm.status !== 'VALID') return;
     this.isUserLoginPending = true;
 
@@ -100,7 +100,6 @@ export class SigninModalComponent implements OnInit {
         console.error(error)
 
         this.isUserLoginPending = false;
-
         this.matSnack.open(error.error.detail, 'Dismiss', { duration: matSnackDuration });
       }
     })

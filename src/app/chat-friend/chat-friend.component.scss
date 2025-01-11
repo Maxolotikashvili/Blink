@@ -1,0 +1,178 @@
+@use "../styles/blink-styles.scss" as *;
+@use "../styles/mixins.scss" as *;
+
+$margin-from-divider: 30px;
+$image-size: 80px;
+
+.profile-wrapper {
+    @include flex-center();
+    flex-flow: column;
+
+    .groupchat-heading-wrapper {
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: center;
+
+        h3 {
+            display: inline-block;
+            width: $image-size;
+        }
+
+        h3:not(:nth-child(1)) {
+            margin-left: 8px;
+        }
+    }
+
+    .img-wrapper {
+        @include flex-center();
+        width: 100%;
+        gap: 10px;
+        margin-bottom: 10px;
+
+        img {
+            width: $image-size;
+            height: $image-size;
+            border-radius: 50%;
+        }
+    }
+
+    .many-images-wrapper {
+        position: relative;
+        height: $image-size;
+
+        img {
+            position: absolute;
+            top: 50%;
+        }
+
+        img:nth-child(1) {
+            left: 20%;
+            transform: translate(0, -50%);
+            z-index: 3;
+        }
+
+        img:nth-child(2) {
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        img:nth-child(3) {
+            left: 70%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+    }
+
+    img {
+        margin-bottom: 10px;
+    }
+
+    .moto {
+        margin-top: 5px;
+    }
+}
+
+.friend-utility-wrapper {
+    margin: $margin-from-divider 0;
+    padding: 0 5px;
+
+    ul {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        li {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            width: 50px;
+            gap: 4px;
+
+            button {
+                @include flex-center();
+                width: 45px;
+                height: 45px;
+                border: none;
+                background: var(--active-button-background-color);
+                background-color: transparent;
+                border-radius: 50%;
+                transition: background var(--global-transition-parameters);
+                cursor: pointer;
+
+                .icon {
+                    width: 37px;
+                    height: 37px;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    transition: background-image 0.2s ease;
+                }
+
+                .is-muted {
+                    background-image: unset;
+                    background-image: url('/mute.png');
+                }
+
+                .not-muted {
+                    background-image: url('/sound.png');
+                }
+
+                .mark-as-seen {
+                    background-image: url('/mark-as-seen.png');
+                }
+
+                .delete-chat {
+                    background-image: url('/delete-chat.png');
+                }
+
+                .delete-friend {
+                    background-image: url('/delete-friend.svg');
+                }
+            }
+
+            span {
+                text-align: center;
+            }
+
+            .label {
+                white-space: nowrap;
+                opacity: 0;
+                transform: translateY(-5px);
+                transition: transform 0.2s ease-out;
+            }
+
+        }
+
+        li:hover {
+            .label {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
+.friend-info-wrapper {
+    margin: $margin-from-divider 0;
+
+    ul {
+        display: flex;
+        flex-flow: column;
+        gap: 20px;
+
+        li {
+            .groupchat-info-wrapper {
+                display: inline-block;
+                width: 100%;
+                color: var(--active-primary-text-color);
+                
+                span:not(:nth-child(1)) {
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+}

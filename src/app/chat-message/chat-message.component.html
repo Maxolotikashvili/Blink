@@ -1,0 +1,46 @@
+@if (friendsList) {
+    <button class="chat-wrapper" *ngFor="let friend of friendsList" (click)="updateLastSelectedFriend(friend)">
+        <div class="avatar-name-wrapper">
+            <div class="avatar-img-small friend-image" [ngStyle]="{'background-image': 'url('+'maxo-lotikashvili.jpeg'+')'}">
+                <div class="green-circle" *ngIf="friend.isOnline"></div>
+            </div>
+            <div class="text-wrapper">
+                <h5 class="bk-heading-h5"> {{friend.username}} </h5>
+                <p class="bk-info-secondary" *ngIf="friend.messages.length === 0">No messages yet</p>
+                <p class="bk-info-secondary last-sent-text-wrapper" *ngIf="friend.messages.length > 0">
+                    <span class="last-sent-text-author" *ngIf="friend.messages[friend.messages.length -1].sender === data.username">You: </span>
+                    <span class="last-sent-text-author" [ngStyle]="{'font-weight': !friend.messages[friend.messages.length - 1].isSeen ? '800' : ''}" *ngIf="friend.messages[friend.messages.length -1].sender === friend.username">{{friend.username}}: </span>
+                    <span class="last-sent-text" [ngStyle]="{'font-weight': !friend.messages[friend.messages.length - 1].isSeen && friend.messages[friend.messages.length -1].sender !== data.username ? '800' : ''}">{{friend.messages[friend.messages.length -1].text}}</span>
+                </p>
+            </div>
+        </div>
+            
+        <span class="bk-date-primary" *ngIf="friend.messages.length > 0 && !(friend.messages | unseenTextsLength)">{{friend.messages[friend.messages.length - 1].timeStamp | chatDate}}</span>
+        <div class="bk-notification-circle" *ngIf="friend.messages | unseenTextsLength">{{friend.messages | unseenTextsLength}} </div>
+    </button>
+
+} @else {
+    <button class="chat-wrapper" *ngFor="let groupChat of data.groupChatList" (click)="updateLastSelectedGroupChat(groupChat)">
+        <div class="avatar-name-wrapper groupchat-avatar-name-wrapper">
+            <div class="avatar-wrapper">
+                <div class="avatar-img-small friend-image" *ngFor="let avatar of groupChat.users | slice: 0:3" [ngStyle]="{'background-image': 'url('+'maxo-lotikashvili.jpeg'+')'}"></div>
+            </div>
+            
+            <div class="text-wrapper">
+                <div class="heading-wrapper dots">
+                    <h5 class="bk-heading-h5" *ngFor="let users of groupChat.users">
+                        <span *ngIf="users.username !== data.username">{{users.username}},</span>
+                        <span *ngIf="users.username === data.username"> You</span>
+                    </h5>
+                </div>
+                <p class="bk-info-secondary no-messages" *ngIf="groupChat.messages.length === 0">No messages yet</p>
+                <p class="bk-info-secondary last-seen-text-wrapper" *ngIf="groupChat.messages.length > 0">
+                    <span class="last-sent-text-author" *ngIf="groupChat.messages[groupChat.messages.length -1].sender === data.username">You: </span>
+                    <span class="last-sent-text" [ngStyle]="{'font-weight': !groupChat.messages[groupChat.messages.length - 1].isSeen && groupChat.messages[groupChat.messages.length -1].sender !== data.username ? '800' : ''}">{{groupChat.messages[groupChat.messages.length -1].text}}</span>
+                </p>
+            </div>
+        </div>
+
+        <span class="bk-date-primary" *ngIf="groupChat.messages.length > 0">{{groupChat.messages[groupChat.messages.length - 1].timeStamp | chatDate}}</span>
+    </button>
+}

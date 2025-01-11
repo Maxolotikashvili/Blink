@@ -11,6 +11,19 @@
     flex-flow: column;
 }
 
+@mixin position-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin modal {
+    width: 100%;
+    height: 100%;
+    @include flex-center();
+}
+
 @mixin button {
     background: var(--active-button-background-color) !important;
     color: var(--active-button-text-color) !important;

@@ -1,10 +1,10 @@
-// @use "../styles/global-styles.scss" as *;
 @use "../styles/blink-styles.scss" as *;
 @use "../styles/mixins.scss" as *;
 
 $margin-from-divider: 30px;
 
 .friend-section-component-wrapper {
+    position: relative;
     width: 100%;
     height: 100%;
     padding: var(--chat-widgets-padding);
@@ -40,27 +40,67 @@ $margin-from-divider: 30px;
                 display: flex;
                 flex-flow: column;
                 align-items: center;
-                width: 40px;
+                width: 50px;
                 gap: 4px;
 
                 button {
                     @include flex-center();
-                    width: 40px;
-                    height: 40px;
+                    width: 45px;
+                    height: 45px;
                     border: none;
                     background: var(--active-button-background-color);
+                    background-color: transparent;
                     border-radius: 50%;
                     transition: background var(--global-transition-parameters);
+                    cursor: pointer;
 
                     .icon {
-                        width: 60%;
-                        height: 60%;
-                        border-radius: 50%;
+                        width: 37px;
+                        height: 37px;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        transition: background-image 0.2s ease;
+                    }
+
+                    .is-muted {
+                        background-image: unset;
+                        background-image: url('/mute.png');
+                    }
+
+                    .not-muted {
+                        background-image: url('/sound.png');
+                    }
+
+                    .mark-as-seen {
+                        background-image: url('/mark-as-seen.png');
+                    }
+
+                    .delete-chat {
+                        background-image: url('/delete-chat.png');
+                    }
+
+                    .delete-friend {
+                        background-image: url('/delete-friend.svg');
                     }
                 }
 
                 span {
                     text-align: center;
+                }
+
+                .label {
+                    white-space: nowrap;
+                    opacity: 0;
+                    transform: translateY(-5px);
+                    transition: transform 0.2s ease-out;
+                }
+
+            }
+
+            li:hover {
+                .label {
+                    opacity: 1;
+                    transform: translateY(0);
                 }
             }
         }
@@ -76,54 +116,9 @@ $margin-from-divider: 30px;
 
         }
     }
+}
 
-    .friend-shared-files-wrapper {
-        margin-top: $margin-from-divider;
-
-        .heading-wrapper {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .shared-files-wrapper {
-            display: flex;
-            flex-flow: column;
-            gap: 20px;
-            height: 20vh;
-            overflow-y: auto;
-
-            .shared-file {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                .image-text-wrapper {
-                    display: flex;
-                    gap: 5px;
-
-                    .image-wrapper {
-                        width: 40px;
-                        height: 40px;
-                        background-color: aliceblue;
-                        border-radius: 4px;
-                    }
-
-                    .text-wrapper {
-                        display: flex;
-                        flex-flow: column;
-                        justify-content: space-between;
-                        padding: 2px 0;
-
-                        span, h6 {
-                            width: 10vw;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
-                        }
-                    }
-                }
-            }
-        }
-    }
+.no-friend {
+    @include position-center();
+    width: max-content;
 }
