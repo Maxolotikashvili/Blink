@@ -72,6 +72,19 @@ $margin-between-cards: 20px;
                 }
             }
 
+            .empty-message-wrapper {
+                width: 100%;
+                @include flex-center();
+                @include position-center();
+                flex-flow: column;
+                gap: 20px;
+            
+                button {
+                    min-width: 60% !important;
+                    color: var(--active-mat-tab-label-color-active);
+                }
+            }
+
             .mdc-tab--active {
                 .mdc-tab__text-label {
                     color: var(--active-mat-tab-label-color-active);

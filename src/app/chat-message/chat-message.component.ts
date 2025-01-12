@@ -1,4 +1,4 @@
-import { Component, input, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Friend } from '../model/friend.model';
 import { GroupChat, User } from '../model/user.model';
 import { CommonModule } from '@angular/common';
@@ -6,35 +6,32 @@ import { UnseenTextsLength } from '../pipes/unseen-texts-length.pipe';
 import { ChatDatePipe } from '../pipes/chat-date.pipe';
 import { ChatService } from '../services/chat.service';
 import { SocketService } from '../services/socket.service';
+import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-chat-message',
-  imports: [CommonModule, UnseenTextsLength, ChatDatePipe],
+  imports: [CommonModule, UnseenTextsLength, ChatDatePipe, MatButtonModule],
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.scss'
 })
-export class ChatMessageComponent implements OnInit {
-  @Input() data!: {username: User['username'], friendsList?: Friend[], groupChatList?: GroupChat[], isOnline?: boolean};
-  
-  public friendsList!: Friend[];
+export class ChatMessageComponent {
+  @Input() data!: { username: User['username'], friendsList?: Friend[], groupChatList?: GroupChat[], isOnline?: boolean };
 
-  constructor(private chatService: ChatService, private socketService: SocketService) {}
-
-  ngOnInit(): void {
-    this.assignProperValueToFriendsList();
-  }
-
-  private assignProperValueToFriendsList() {
-    if (this.data.friendsList && this.data.isOnline) {
-      this.friendsList = this.data.friendsList.filter((friend) => friend.isOnline);
-    } else if (this.data.friendsList) {
-      this.friendsList = this.data.friendsList;
-    }
-  }
+  constructor(
+    private chatService: ChatService, 
+    private socketService: SocketService,
+    private authService: AuthService
+  ) { }
 
   public updateLastSelectedFriend(friend: Friend) {
     this.chatService.updateLastSelectedFriend(friend);
-    this.socketService.hasSeen(friend.userId);
+
+    if (friend.messages.length > 0 && friend.messages[friend.messages.length -1].isIncoming) {
+      this.socketService.hasSeen(friend.userId);
+    } else {
+      this.authService.findLastSeenMessageIndex(friend.username);
+    }
   }
 
   public updateLastSelectedGroupChat(groupChat: GroupChat) {

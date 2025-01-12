@@ -115,11 +115,12 @@ export class AuthService {
 
     public updateUserNotifications(notification: Notification) {
         const currentUser: User = this.userSubject.value;
-        console.log(notification)
 
         if (currentUser.userId && notification.type === 'connection') {
-            currentUser.friendsList.find((friend) => friend.username === notification.friendName)!.isOnline = notification.isOnline!;
-            this.userSubject.next({ ...currentUser });
+            if (currentUser.friendsList) {
+                currentUser.friendsList.find((friend) => friend.username === notification.friendName)!.isOnline = notification.isOnline!;
+                this.userSubject.next({ ...currentUser });
+            }
         }
 
         if (notification.type === 'friend-request') {
@@ -206,23 +207,20 @@ export class AuthService {
 
         const currentUser = this.userSubject.value;
 
-        const friend = currentUser.friendsList.find(
-            (friend) => friend.username === notification.friendName
-        );
+        const friend = currentUser.friendsList.find((friend) => friend.username === notification.friendName);
 
-        if (!friend) {
-            console.error("Friend not found for hasSeen notification");
-            return;
-        }
+        if (!friend) return;
 
         friend.messages.forEach((message) => {
-            message.isSeen = notification.isSeen!;
+            if (typeof notification.isSeen !== 'undefined') {
+                message.isSeen = notification.isSeen;
+            }
         });
         this.findLastSeenMessageIndex(notification.friendName!);
         this.userSubject.next({ ...currentUser });
     }
 
-    private findLastSeenMessageIndex(friendsName: Friend['username']) {
+    public findLastSeenMessageIndex(friendsName: Friend['username']) {
         if (!friendsName) return;
 
         const currentUser = this.userSubject.value;

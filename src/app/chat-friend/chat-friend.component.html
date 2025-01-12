@@ -3,6 +3,7 @@
 
     <div class="img-wrapper" [ngClass]="{'two-images-wrapper': groupChat.users.length < 3, 'many-images-wrapper': groupChat.users.length > 2}" *ngIf="groupChat">
         <img *ngFor="let image of groupChat.users | slice: 0:3" src="maxo-lotikashvili.jpeg" alt="friend-avatar">
+        <span class="bk-info-secondary" *ngIf="groupChat.users.length > 3">+{{groupChat.users.length - 3}}</span>
     </div>
     <h3 class="bk-heading-h3" *ngIf="data.friend"> {{data.friend.username}} </h3>
     <ng-container *ngIf="groupChat">

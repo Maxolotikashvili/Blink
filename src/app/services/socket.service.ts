@@ -20,9 +20,9 @@ export class SocketService {
 
   constructor(private matSnack: MatSnackBar) { }
 
-  public connect() {
+  public connect(state: 'connect' | 'disconnect') {
     if (this.connectSocket.OPEN === this.connectSocket.readyState) {
-      this.connectSocket.send('');
+      this.connectSocket.send(state);
     }
   }
 
@@ -73,5 +73,14 @@ export class SocketService {
 
   public updateSocketLoadingState(state: boolean) {
     this.isSocketLoadingSubject.next(state);
+  }
+
+  public disconnectFromAllSockets() {
+    this.connectSocket.close();
+    this.notificationSocket.close();
+    this.acceptFriendReqSocket.close();
+    this.chatSocket.close();
+    this.hasSeenSocket.close();
+    this.createGroupChatsocket.close();
   }
 }

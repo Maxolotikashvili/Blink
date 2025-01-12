@@ -21,7 +21,6 @@
             width: 80px;
             height: 40px;
             display: flex;
-            flex-wrap: wrap;
 
             .friend-image {
                 position: absolute;
@@ -109,29 +108,10 @@
     background: var(--active-widget-border-color-friend);
 }
 
-
 .chat-wrapper:hover {
     background: var(--active-mat-tab-list-hover-background-color);
 }
 
 .active-friend-chat:hover {
     background: var(--active-widget-border-color-friend);
-}
-
-.empty-friendslist-wrapper {
-    gap: 20px;
-    position: absolute;
-    display: flex;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    transform: translate(-50%, -50%);
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-
-    button {
-        min-width: 60% !important;
-        color: var(--active-mat-tab-label-color-active);
-    }
 }

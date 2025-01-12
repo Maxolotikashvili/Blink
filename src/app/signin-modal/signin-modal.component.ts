@@ -97,8 +97,6 @@ export class SigninModalComponent implements OnInit {
       },
 
       error: (error: HttpErrorResponse) => {
-        console.error(error)
-
         this.isUserLoginPending = false;
         this.matSnack.open(error.error.detail, 'Dismiss', { duration: matSnackDuration });
       }

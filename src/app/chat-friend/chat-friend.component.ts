@@ -32,7 +32,6 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
         ...this.data.groupChat,
         users: this.data.groupChat.users.filter((users) => users.username !== 'user')
       }
-      console.log(this.groupChat);
     }
   }
 

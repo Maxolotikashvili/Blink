@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { map, Observable } from 'rxjs';
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { GroupChatModalComponent } from '../group-chat-modal/group-chat-modal.component';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-chat-sidebar',
@@ -18,25 +19,20 @@ export class ChatSidebarComponent implements OnInit {
   sidebarLocationX: number = 0;
   isSidebarShrinked: boolean = false;
   userNotificationsLength$!: Observable<number>;
-  userOutgoingRequestsListSize$!: Observable<number>;
   
   constructor(
     private router: Router, 
     private modalService: ModalService,
+    private socketService: SocketService,
     private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     this.getUserNotificationsSize();
-    this.getOutgoingRequestsSize();
   }
 
   getUserNotificationsSize() {
     this.userNotificationsLength$ = this.authService.user$.pipe(map((user) => user.notifications.filter((notification) => notification.isIncoming).length));
-  }
-
-  getOutgoingRequestsSize() {
-    this.userOutgoingRequestsListSize$ = this.authService.user$.pipe(map((user) => user.notifications.filter((notification) => !notification.isIncoming).length));
   }
 
   moveSidebar() {
@@ -48,6 +44,7 @@ export class ChatSidebarComponent implements OnInit {
     localStorage.removeItem('access_token');
     sessionStorage.removeItem('access_token');
     this.router.navigate(['/home']);
+    this.socketService.disconnectFromAllSockets();
   }
 
   openNotificationsModal() {

@@ -1,5 +1,5 @@
-@if (friendsList) {
-    <button class="chat-wrapper" *ngFor="let friend of friendsList" (click)="updateLastSelectedFriend(friend)">
+@if (data.friendsList) {
+    <button class="chat-wrapper" *ngFor="let friend of data.friendsList" (click)="updateLastSelectedFriend(friend)">
         <div class="avatar-name-wrapper">
             <div class="avatar-img-small friend-image" [ngStyle]="{'background-image': 'url('+'maxo-lotikashvili.jpeg'+')'}">
                 <div class="green-circle" *ngIf="friend.isOnline"></div>
@@ -18,8 +18,9 @@
         <span class="bk-date-primary" *ngIf="friend.messages.length > 0 && !(friend.messages | unseenTextsLength)">{{friend.messages[friend.messages.length - 1].timeStamp | chatDate}}</span>
         <div class="bk-notification-circle" *ngIf="friend.messages | unseenTextsLength">{{friend.messages | unseenTextsLength}} </div>
     </button>
+} 
 
-} @else {
+@if (data.groupChatList) {
     <button class="chat-wrapper" *ngFor="let groupChat of data.groupChatList" (click)="updateLastSelectedGroupChat(groupChat)">
         <div class="avatar-name-wrapper groupchat-avatar-name-wrapper">
             <div class="avatar-wrapper">
@@ -43,4 +44,5 @@
 
         <span class="bk-date-primary" *ngIf="groupChat.messages.length > 0">{{groupChat.messages[groupChat.messages.length - 1].timeStamp | chatDate}}</span>
     </button>
+
 }

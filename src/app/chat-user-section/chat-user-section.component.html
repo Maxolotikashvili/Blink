@@ -1,4 +1,4 @@
-<ng-container *ngIf="user$ | async as user">
+<ng-container *ngIf="user">
     <div class="user-section-component-wrapper">
         <div class="profile-wrapper">
             <img src="maxo-lotikashvili.jpeg" class="avatar-img-medium" alt="avatar">
@@ -26,19 +26,25 @@
 
             <mat-tab-group class="chat-tab" mat-stretch-tabs="true" animationDuration="230">
                 <mat-tab label="Friends" labelClass="labels">
-                        <app-chat-message [data]="{username: user.username, friendsList: user.friendsList}"></app-chat-message>
-
-                        <div *ngIf="user.friendsList.length < 1" class="empty-friendslist-wrapper">
-                            <p class="bk-heading-h5">No friends to show</p>
-                            <button mat-button (click)="openAddFriendModal()">Add friends</button>
-                        </div>
+                    <app-chat-message *ngIf="user.friendsList" [data]="{username: user.username, friendsList: user.friendsList}"></app-chat-message>
+                    <div class="empty-message-wrapper" *ngIf="!user.friendsList">
+                        <p class="bk-heading-h5">No friends to show</p>
+                        <button mat-button (click)="openAddFriendModal()">Add friends</button>
+                    </div>
                 </mat-tab>
 
                 <mat-tab label="Online" labelClass="labels">
-                    <app-chat-message [data]="{username: user.username, friendsList: user.friendsList, isOnline: true}"></app-chat-message>
+                    <app-chat-message *ngIf="onlineFriendsList" [data]="{username: user.username, friendsList: onlineFriendsList, isOnline: true}"></app-chat-message>
+                    <div class="empty-message-wrapper" *ngIf="!onlineFriendsList">
+                        <p class="bk-heading-h5">No online friends</p>
+                    </div>
                 </mat-tab>
                 <mat-tab label="Group chats" labelClass="labels">
-                    <app-chat-message [data]="{username: user.username, groupChatList: user.groupChatsList}"></app-chat-message>
+                    <app-chat-message *ngIf="user.groupChatsList" [data]="{username: user.username, groupChatList: user.groupChatsList}"></app-chat-message>
+                    <div class="empty-message-wrapper" *ngIf="!user.groupChatsList">
+                        <p class="bk-heading-h5">No groupchats to show</p>
+                        <button mat-button (click)="openGroupChatModal()">Create groupchat</button>
+                    </div>
                 </mat-tab>
             </mat-tab-group>
         </div>

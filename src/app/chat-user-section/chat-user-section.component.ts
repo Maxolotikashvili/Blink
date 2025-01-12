@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { CommonModule } from '@angular/common';
 import { Theme, ThemeService } from '../services/theme.service';
 import { User } from '../model/user.model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { matSnackDuration } from '../styles/active-theme-variables';
 import { ModalService } from '../services/modal.service';
@@ -11,6 +11,8 @@ import { AddFriendModalComponent } from '../add-friend-modal/add-friend-modal.co
 import { AuthService } from '../services/auth.service';
 import { SocketService } from '../services/socket.service';
 import { ChatMessageComponent } from "../chat-message/chat-message.component";
+import { GroupChatModalComponent } from '../group-chat-modal/group-chat-modal.component';
+import { Friend } from '../model/friend.model';
 
 @Component({
   selector: 'app-chat-user-section',
@@ -18,11 +20,15 @@ import { ChatMessageComponent } from "../chat-message/chat-message.component";
   templateUrl: './chat-user-section.component.html',
   styleUrl: './chat-user-section.component.scss',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatUserSectionComponent implements OnInit, OnDestroy {
-  public user$!: Observable<User>;
+  public user!: User;
   private subscriptions: Subscription = new Subscription();
+  public onlineFriendsList!: Friend[] | undefined;
+
+  test(a: any) {
+    console.log(a, 'template')
+  }
 
   themeNameList: { displayName: string, key: Theme, background: string }[] = [
     { displayName: 'Synth', key: 'synthwave', background: 'var(--synthwave-button-background-color)' },
@@ -47,11 +53,26 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
   }
 
   private getUser() {
-    this.user$ = this.authService.user$;
+    const subscription = this.authService.user$.subscribe((user: User) => {
+      this.user = user;
+
+      this.filterOnlineFriends();
+    });
+
+    this.subscriptions.add(subscription);
+  }
+
+  private filterOnlineFriends() {
+    const onlineFriends = this.user.friendsList.filter((friend) => friend.isOnline);
+    if (onlineFriends.length > 0) {
+      this.onlineFriendsList = onlineFriends;
+    } else {
+      this.onlineFriendsList = undefined;
+    }
   }
 
   private getOnlineFriendsList() {
-    this.socketService.connect();
+    this.socketService.connect('connect');
   }
 
   private applyDefaultThemeOnStart() {
@@ -69,8 +90,16 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
     this.subscriptions.add(subscription);
   }
 
+  public shouldShowOnlineFriends(friendsList: Friend[]): boolean {
+    return friendsList.some((friends) => friends.isOnline);
+  }
+
   public openAddFriendModal() {
     this.modalService.openModal(AddFriendModalComponent);
+  }
+
+  public openGroupChatModal() {
+    this.modalService.openModal(GroupChatModalComponent)
   }
 
   ngOnDestroy(): void {

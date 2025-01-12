@@ -2,11 +2,10 @@
     [ngStyle]="{'transform': 'translateX(' + sidebarLocationX + 'px)'}">
     <div class="top-side-buttons-wrapper">
         <button (click)="openAddFriendModal()">
-            <div class="notification-size" *ngIf="userNotificationsLength$ | async as notificationsLength">{{notificationsLength}}</div>
             <img src="emoji.png" alt="image">
         </button>
         <button (click)="openNotificationsModal()">
-            <div class="notification-size" *ngIf="userOutgoingRequestsListSize$ | async as outgoingRequestsListSize">{{outgoingRequestsListSize}}</div>
+            <div class="notification-size" *ngIf="userNotificationsLength$ | async as notificationsLength">{{notificationsLength}}</div>
             <img src="emoji.png" alt="image">
         </button>
         <button (click)="openGroupChatModal()">
