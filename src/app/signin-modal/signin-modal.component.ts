@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { XMarkComponent } from "../x-mark/x-mark.component";
 import { ModalService } from '../services/modal.service';
@@ -39,7 +39,7 @@ export class SigninModalComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private matSnack: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {

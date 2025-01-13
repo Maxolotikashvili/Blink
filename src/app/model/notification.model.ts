@@ -1,6 +1,7 @@
 import { Friend, Message } from "./friend.model"
 
 export interface Notification {
+    id: string,
     notificationId: string,
     isSeenByUser: boolean,
     isSeen?: boolean,
@@ -20,6 +21,7 @@ export interface Notification {
     },
     newFriend?: Friend,
     message?: Message | string,
+    displayMessage?: string,
     status: 'pending' | 'complete' | 'rejected'
     timeStamp: string,
     friendName?: Friend['username'],

@@ -5,7 +5,7 @@
             <img src="emoji.png" alt="image">
         </button>
         <button (click)="openNotificationsModal()">
-            <div class="notification-size" *ngIf="userNotificationsLength$ | async as notificationsLength">{{notificationsLength}}</div>
+            <div class="bk-notification-circle notification-size" *ngIf="userNotificationsLength$ | async as userNotificationsLength">{{userNotificationsLength}}</div>
             <img src="emoji.png" alt="image">
         </button>
         <button (click)="openGroupChatModal()">

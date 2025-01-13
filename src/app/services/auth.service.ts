@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { ChangeDetectorRef, Injectable } from "@angular/core";
 import { API_URL } from '../api_url';
 import { LoginResponse, UserLogin, UserRegister } from "../model/auth.model";
 import { HttpClient } from "@angular/common/http";
@@ -34,7 +34,7 @@ export class AuthService {
         private http: HttpClient,
         private socketService: SocketService,
         private soundService: SoundService,
-        private chatService: ChatService
+        private chatService: ChatService,
     ) {
         chatService.lastSelectedFriend$.subscribe((friend) => {
             this.lastSelectedFriend = friend;
@@ -54,16 +54,26 @@ export class AuthService {
     }
 
     public updateUser(user: User) {
-        this.userSubject.next(user);
+        this.userSubject.next({...user});
     }
 
-    public deleteNotification(notificationId: Notification['notificationId']) {
+    public deleteNotification(id: Notification['id']): Observable<{message: string}> {
         const currentUser = this.userSubject.value;
         const updatedNotifications = currentUser.notifications.filter(
-            (notification) => notification.notificationId !== notificationId
+            (notification) => notification.id !== id
         );
         this.userSubject.next({ ...currentUser, notifications: updatedNotifications });
-        return this.http.delete<{ message: string }>(`${API_URL}/users/delete_notification?notification_id=${notificationId}`);
+        return this.http.delete<{ message: string }>(`${API_URL}/users/delete_notification?id=${id}`);
+    }
+
+    public markAllNotificationsAsSeen(): Observable<{message: string}> {    
+        return this.http.put<{message: string}>(`${API_URL}/users/mark_all_notifications_seen`, {})
+    }
+
+    public updateNotificationsAfterSeing() {
+        const currentUser = this.userSubject.value;
+        currentUser.notifications.forEach((notification) => {notification.isSeenByUser = true});
+        this.updateUser(currentUser);
     }
 
     public muteFriend(friendId: Friend['userId'], state: boolean) {
@@ -153,8 +163,6 @@ export class AuthService {
 
             // friend request sender accepted
             if (notification.status === 'complete' && isSenderIncomingRequest) {
-                // const matchingNotifications: Notification[] = currentUser.notifications.filter((element) => element.notificationId === notification.notificationId);
-                // currentUser.notifications = matchingNotifications.filter((item) => item.status !== 'pending');
 
                 const newFriend: Friend | undefined = currentUser.friendsList.find((friend) => friend.userId === notification.newFriend?.userId)
                 if (!newFriend && notification.newFriend) {

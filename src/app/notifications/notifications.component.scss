@@ -70,7 +70,7 @@ $gap-between-notifications: 20px;
                 width: 100%;
                 display: flex;
                 align-items: center;
-                gap: 30px;
+                gap: 20px;
                 border-bottom: 1px solid var(--active-textarea-background-color);
                 padding-bottom: $gap-between-notifications;
 
@@ -82,11 +82,13 @@ $gap-between-notifications: 20px;
 
                     .notification-type {
                         background: #0098cd;
-                        padding: 4px 10px;
+                        padding: 2px 6px;
                         border-radius: 4px;
+                        font-size: 12px;
                         width: fit-content;
-                        letter-spacing: .6px;
-                        font-weight: 600;
+                        letter-spacing: 0.6px;
+                        font-weight: 500;
+                        user-select: none;
                     }
                 }
 

@@ -32,7 +32,7 @@ export class ChatSidebarComponent implements OnInit {
   }
 
   getUserNotificationsSize() {
-    this.userNotificationsLength$ = this.authService.user$.pipe(map((user) => user.notifications.filter((notification) => notification.isIncoming).length));
+    this.userNotificationsLength$ = this.authService.user$.pipe(map((user) => user.notifications.filter((notification) => !notification.isSeenByUser).length));
   }
 
   moveSidebar() {
