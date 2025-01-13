@@ -27,7 +27,7 @@
             <mat-tab-group class="chat-tab" mat-stretch-tabs="true" animationDuration="230">
                 <mat-tab label="Friends" labelClass="labels">
                     <app-chat-message *ngIf="user.friendsList" [data]="{username: user.username, friendsList: user.friendsList}"></app-chat-message>
-                    <div class="empty-message-wrapper" *ngIf="!user.friendsList">
+                    <div class="empty-message-wrapper" *ngIf="user.friendsList && user.friendsList.length === 0">
                         <p class="bk-heading-h5">No friends to show</p>
                         <button mat-button (click)="openAddFriendModal()">Add friends</button>
                     </div>

@@ -115,10 +115,14 @@ export class AuthService {
 
     public updateUserNotifications(notification: Notification) {
         const currentUser: User = this.userSubject.value;
+        console.log(notification)
 
         if (currentUser.userId && notification.type === 'connection') {
             if (currentUser.friendsList) {
-                currentUser.friendsList.find((friend) => friend.username === notification.friendName)!.isOnline = notification.isOnline!;
+                const friend = currentUser.friendsList.find((friend) => friend.username === notification.friendName);
+                if (friend && friend.isOnline !== undefined && notification.isOnline !== undefined) {
+                    friend.isOnline = notification.isOnline;
+                }
                 this.userSubject.next({ ...currentUser });
             }
         }
@@ -149,8 +153,8 @@ export class AuthService {
 
             // friend request sender accepted
             if (notification.status === 'complete' && isSenderIncomingRequest) {
-                const matchingNotifications: Notification[] = currentUser.notifications.filter((element) => element.notificationId === notification.notificationId);
-                currentUser.notifications = matchingNotifications.filter((item) => item.status !== 'pending');
+                // const matchingNotifications: Notification[] = currentUser.notifications.filter((element) => element.notificationId === notification.notificationId);
+                // currentUser.notifications = matchingNotifications.filter((item) => item.status !== 'pending');
 
                 const newFriend: Friend | undefined = currentUser.friendsList.find((friend) => friend.userId === notification.newFriend?.userId)
                 if (!newFriend && notification.newFriend) {
