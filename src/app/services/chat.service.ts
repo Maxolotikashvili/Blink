@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { Friend } from "../model/friend.model";
-import { GroupChat } from "../model/user.model";
+import { GroupChat } from "../model/groupchat.model";
 
 @Injectable({
     providedIn: 'root'

@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Injectable } from "@angular/core";
 import { API_URL } from '../api_url';
 import { LoginResponse, UserLogin, UserRegister } from "../model/auth.model";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, find, last, Observable } from "rxjs";
+import { BehaviorSubject, find, last, Observable, Subscription, switchMap, takeUntil } from "rxjs";
 import { Notification } from "../model/notification.model";
 import { SocketService } from "./socket.service";
-import { GroupChat, User } from "../model/user.model";
+import { User } from "../model/user.model";
+import { GroupChat } from "../model/groupchat.model";
 import { Friend, Message } from "../model/friend.model";
 import { SoundService } from "./sound.service";
 import { ChatService } from "./chat.service";
@@ -23,12 +24,14 @@ export class AuthService {
         groupChatsList: [],
         theme: 'synthwave',
     }
-    private lastSelectedFriend!: Friend;
     private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.initialUserValue);
     readonly user$: Observable<User> = this.userSubject as Observable<User>;
 
     private lastSeenMessageIndexSubject: BehaviorSubject<number> = new BehaviorSubject(0);
     public lastseenMessageIndex$: Observable<number> = this.lastSeenMessageIndexSubject as Observable<number>;
+    private subscription: Subscription = new Subscription();
+    private lastSelectedFriend!: Friend | null;
+    private lastSelectedGroupChat!: GroupChat | null;
 
     constructor(
         private http: HttpClient,
@@ -36,9 +39,26 @@ export class AuthService {
         private soundService: SoundService,
         private chatService: ChatService,
     ) {
-        chatService.lastSelectedFriend$.subscribe((friend) => {
-            this.lastSelectedFriend = friend;
+        this.getLastSelectedFriendOrGroupChat();
+    }
+
+    private getLastSelectedFriendOrGroupChat() {
+        const subscription = this.chatService.lastSelectedFriend$.pipe(
+            switchMap((friend) => {
+                if (friend) {
+                    this.lastSelectedFriend = friend;
+                    this.lastSelectedGroupChat = null
+                }
+                return this.chatService.lastSelectedGroupChat$
+            })
+        ).subscribe((groupChat) => {
+            if (groupChat) {
+                this.lastSelectedGroupChat = groupChat;
+                this.lastSelectedFriend = null;
+            }
         })
+
+        this.subscription.add(subscription);
     }
 
     public getuserInfo() {
@@ -54,10 +74,10 @@ export class AuthService {
     }
 
     public updateUser(user: User) {
-        this.userSubject.next({...user});
+        this.userSubject.next({ ...user });
     }
 
-    public deleteNotification(id: Notification['id']): Observable<{message: string}> {
+    public deleteNotification(id: Notification['id']): Observable<{ message: string }> {
         const currentUser = this.userSubject.value;
         const updatedNotifications = currentUser.notifications.filter(
             (notification) => notification.id !== id
@@ -66,13 +86,13 @@ export class AuthService {
         return this.http.delete<{ message: string }>(`${API_URL}/users/delete_notification?id=${id}`);
     }
 
-    public markAllNotificationsAsSeen(): Observable<{message: string}> {    
-        return this.http.put<{message: string}>(`${API_URL}/users/mark_all_notifications_seen`, {})
+    public markAllNotificationsAsSeen(): Observable<{ message: string }> {
+        return this.http.put<{ message: string }>(`${API_URL}/users/mark_all_notifications_seen`, {})
     }
 
     public updateNotificationsAfterSeing() {
         const currentUser = this.userSubject.value;
-        currentUser.notifications.forEach((notification) => {notification.isSeenByUser = true});
+        currentUser.notifications.forEach((notification) => { notification.isSeenByUser = true });
         this.updateUser(currentUser);
     }
 
@@ -125,7 +145,7 @@ export class AuthService {
 
     public updateUserNotifications(notification: Notification) {
         const currentUser: User = this.userSubject.value;
-        console.log(notification)
+        console.log(notification);
 
         if (currentUser.userId && notification.type === 'connection') {
             if (currentUser.friendsList) {
@@ -192,15 +212,23 @@ export class AuthService {
 
                 this.userSubject.next({ ...currentUser });
             }
+          
             if (this.lastSelectedFriend && notification.message.sender === this.lastSelectedFriend.username) {
-                this.socketService.hasSeen(this.lastSelectedFriend.userId);
+                this.socketService.hasSeen({id: this.lastSelectedFriend.userId, type: 'friend'});
+            } else if (this.lastSelectedGroupChat && this.lastSelectedGroupChat.users.some((user) => {
+                if (typeof notification.message !== 'string' && notification.message?.sender === user.username) return 1; else return 0;
+            })) {
+                this.socketService.hasSeen({id: this.lastSelectedGroupChat.chatId, type: 'groupchat'});
             }
         }
-        if (notification.type === 'hasSeen' || notification.error) {
+
+        if (notification.type === 'hasSeen') {
             this.updateHasSeenState(notification);
+        } else if (notification.type === 'groupSeen') {
+            this.updateHasSeenStateForGroupChat(notification); 
         }
 
-        if (notification.message && notification.type !== 'message') {
+        if (notification.message && notification.type !== 'message' && notification.type !== 'groupMessage') {
             this.socketService.handleResponseMessages(notification.message as string);
             this.socketService.updateSocketLoadingState(false);
         }
@@ -209,11 +237,20 @@ export class AuthService {
             currentUser.groupChatsList.push(notification as any);
             this.userSubject.next(currentUser);
         }
+
+        if (notification.type === 'groupMessage') {
+            const groupChat = currentUser.groupChatsList.find((groupChat) => groupChat.chatId === notification.chatId);
+            if (notification.message && typeof notification.message !== 'string') {
+                groupChat?.messages.push(notification.message);
+            }
+
+            this.userSubject.next(currentUser);
+        }
     }
 
     private updateHasSeenState(notification: Notification) {
         if (notification.error) {
-            this.findLastSeenMessageIndex(notification.friendName!);
+            this.findLastSeenMessageIndex({id: notification.friendName!, type: 'friend'});
             return;
         }
 
@@ -228,15 +265,31 @@ export class AuthService {
                 message.isSeen = notification.isSeen;
             }
         });
-        this.findLastSeenMessageIndex(notification.friendName!);
+
+        this.findLastSeenMessageIndex({id: notification.friendName!, type: 'friend'});
         this.userSubject.next({ ...currentUser });
     }
 
-    public findLastSeenMessageIndex(friendsName: Friend['username']) {
-        if (!friendsName) return;
+    private updateHasSeenStateForGroupChat(notification: Notification) {
+        if (notification.error) {
+            return;
+        }
+        const currentUser = this.userSubject.value;
+        const groupChat: GroupChat = currentUser.groupChatsList.find((groupchat) => groupchat.chatId === notification.chatId)!;
+        
+        console.log(notification);
+    }
+
+    public findLastSeenMessageIndex(param: {id: Friend['username'] | GroupChat['chatId'], type: 'groupchat' | 'friend'}) {
+        if (!param) return;
+        let messages: Message[] = [];
 
         const currentUser = this.userSubject.value;
-        const messages: Message[] = currentUser.friendsList.find((friend) => friend.username === friendsName)?.messages!;
+        if (param.type === 'friend') {
+            messages = currentUser.friendsList.find((friend) => friend.username === param.id)?.messages!;
+        } else {
+            messages = currentUser.groupChatsList.find((groupChat) => groupChat.chatId === param.id)?.messages!;
+        }
 
         const reversedChatList = [...messages].reverse();
         const lastSeenMessage: Message = reversedChatList?.find((message) => !message.isIncoming && message.isSeen)!;

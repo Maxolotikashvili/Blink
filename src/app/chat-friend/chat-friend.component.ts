@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Friend } from '../model/friend.model';
-import { GroupChat } from '../model/user.model';
+import { GroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../services/auth.service';

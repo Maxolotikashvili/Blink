@@ -35,13 +35,13 @@
 
                 <mat-tab label="Online" labelClass="labels">
                     <app-chat-message *ngIf="onlineFriendsList" [data]="{username: user.username, friendsList: onlineFriendsList, isOnline: true}"></app-chat-message>
-                    <div class="empty-message-wrapper" *ngIf="!onlineFriendsList">
+                    <div class="empty-message-wrapper" *ngIf="onlineFriendsList.length === 0">
                         <p class="bk-heading-h5">No online friends</p>
                     </div>
                 </mat-tab>
                 <mat-tab label="Group chats" labelClass="labels">
                     <app-chat-message *ngIf="user.groupChatsList" [data]="{username: user.username, groupChatList: user.groupChatsList}"></app-chat-message>
-                    <div class="empty-message-wrapper" *ngIf="!user.groupChatsList">
+                    <div class="empty-message-wrapper" *ngIf="user.groupChatsList.length === 0">
                         <p class="bk-heading-h5">No groupchats to show</p>
                         <button mat-button (click)="openGroupChatModal()">Create groupchat</button>
                     </div>

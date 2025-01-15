@@ -24,7 +24,7 @@ import { Friend } from '../model/friend.model';
 export class ChatUserSectionComponent implements OnInit, OnDestroy {
   public user!: User;
   private subscriptions: Subscription = new Subscription();
-  public onlineFriendsList!: Friend[] | undefined;
+  public onlineFriendsList: Friend[] = [];
 
   test(a: any) {
     console.log(a, 'template')
@@ -51,11 +51,11 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
     this.applyDefaultThemeOnStart();
     this.getOnlineFriendsList();
   }
-
+  
   private getUser() {
     const subscription = this.authService.user$.subscribe((user: User) => {
       this.user = user;
-
+      
       this.filterOnlineFriends();
     });
 
@@ -67,7 +67,7 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
     if (onlineFriends.length > 0) {
       this.onlineFriendsList = onlineFriends;
     } else {
-      this.onlineFriendsList = undefined;
+      this.onlineFriendsList = [];
     }
   }
 

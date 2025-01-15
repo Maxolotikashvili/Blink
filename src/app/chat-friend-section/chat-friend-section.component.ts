@@ -4,7 +4,7 @@ import { MaterialModule } from '../shared-modules/materia.module';
 import { Observable } from 'rxjs';
 import { Friend } from '../model/friend.model';
 import { ChatService } from '../services/chat.service';
-import { GroupChat } from '../model/user.model';
+import { GroupChat } from '../model/groupchat.model';
 import { ChatFriendComponent } from "../chat-friend/chat-friend.component";
 
 @Component({

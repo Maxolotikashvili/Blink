@@ -1,5 +1,6 @@
 import { Theme } from "../services/theme.service";
-import { Friend, Message } from "./friend.model";
+import { Friend } from "./friend.model";
+import { GroupChat } from "./groupchat.model";
 import { Notification } from "./notification.model";
 
 export interface User {
@@ -11,18 +12,4 @@ export interface User {
     notifications: Notification[],
     friendsList: Friend[],
     groupChatsList: GroupChat[]
-}
-
-export interface GroupChat {
-    chatId: string,
-    users: GroupChatUser[],
-    messages: Message[],
-    isMuted: boolean
-}
-
-export interface GroupChatUser {
-    userId: string,
-    username: string,
-    avatar: string,
-    email: string,
 }

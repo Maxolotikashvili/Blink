@@ -1,23 +1,30 @@
 <div class="text-area-component-wrapper">
     <div class="messages-wrapper" #messagesWrapper> 
         <div class="message" [ngClass]="{'friend-message': message.sender !== 'user'}" *ngFor="let message of chatList; let i = index">
+         
             <div class="date-separator" *ngIf="shouldShowDateSeparator(i)">
                 <div class="line"></div>
-                <span class="date">{{ getDateSeparator(message.timeStamp) }}</span>
+                <span class="date bk-info-secondary">{{ getDateSeparator(message.timeStamp) }}</span>
                 <div class="line"></div>
             </div>
 
-            <div class="text-timestamp-wrapper" (mouseleave)="clickedTextIndex = null">
-                <span class="bk-info-secondary date" [ngClass]="{'date-active': clickedTextIndex === i + 1}"> {{message.timeStamp | date: 'hh:mm'}} </span>
-              
-                <button class="text" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="clickedTextIndex = i + 1">
-                    <p> {{message.text}} </p>
-                </button>  
+            <div class="text-wrapper">
+                <div class="groupchat-message-sender-wrapper" *ngIf="groupChat && message.sender !== 'user' && chatList[i]?.sender !== chatList[i-1]?.sender">
+                    <span class="bk-info-secondary">{{message.sender}}</span>
+                    <img class="avatar-img-small" src="maxo-lotikashvili.jpeg" alt="avatar">
+                </div>
+
+                <div class="timestamp-text-wrapper">
+                    <span class="bk-info-secondary date" [ngClass]="{'date-active': clickedTextIndex === i + 1}"> {{message.timeStamp | date: 'hh:mm'}} </span>
+                    
+                    <button class="text" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="showTextDeliveryTime(i)">{{message.text}}</button>  
+                </div>
+
+                <ng-container *ngIf="lastSeenMessageIndex$ | async as lastSeenMessageIndex">
+                    <div class="bk-info-secondary seen" *ngIf="lastSeenMessageIndex === i + 1">seen</div>
+                </ng-container>
             </div>
 
-            <ng-container *ngIf="lastSeenMessageIndex$ | async as lastSeenMessageIndex">
-                <div class="bk-info-secondary seen" *ngIf="lastSeenMessageIndex === i + 1">seen</div>
-            </ng-container>
         </div>
     </div>
 

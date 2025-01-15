@@ -3,10 +3,11 @@ import { Friend, Message } from "./friend.model"
 export interface Notification {
     id: string,
     notificationId: string,
+    chatId?: string,
     isSeenByUser: boolean,
     isSeen?: boolean,
     isIncoming: boolean,
-    type: 'friend-request' | 'message' | 'hasSeen' | 'connection' | 'group-chat-create',
+    type: 'friend-request' | 'message' | 'hasSeen' | 'connection' | 'group-chat-create' | 'groupMessage' | 'groupSeen',
     sender: {
         userId: string,
         username: string,

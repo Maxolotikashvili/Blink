@@ -15,3 +15,9 @@ export interface Message {
     timeStamp: Date,
     text: string
 }
+
+export interface FriendMessage {
+    type: 'friendText',
+    friendName: string,
+    text: string
+}

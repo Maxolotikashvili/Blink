@@ -2,12 +2,12 @@ import { CommonModule, formatDate } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { SocketService } from '../services/socket.service';
-import { Friend, Message } from '../model/friend.model';
+import { Friend, FriendMessage, Message } from '../model/friend.model';
 import { map, Observable, Subscription } from 'rxjs';
 import { ChatService } from '../services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { GroupChat, User } from '../model/user.model';
+import { GroupChat, GroupChatMessage } from '../model/groupchat.model';
 
 @Component({
   selector: 'app-chat-text-area',
@@ -25,9 +25,9 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   public friend!: Friend | undefined;
   public groupChat!: GroupChat | undefined;
   public textareaValue: string = '';
-  public lastSeenMessageIndex$!: Observable<number>;
+  public lastSeenMessageIndex$!: Observable<number> | undefined;
   public clickedTextIndex: number | null = null;
-  
+
   constructor(
     private chatService: ChatService,
     private socketService: SocketService,
@@ -76,7 +76,7 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     } else if ('chatId' in chat) {
       observable = this.authService.user$.pipe(map((user) => user.groupChatsList.find((groupChat) => groupChat.chatId === chat.chatId)?.messages));
     }
-    
+
     const subscription = observable?.subscribe((messages) => {
       this.chatList = messages!;
       this.findLastSeenMessageIndex();
@@ -86,7 +86,11 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   }
 
   private findLastSeenMessageIndex() {
-    this.lastSeenMessageIndex$ = this.authService.lastseenMessageIndex$;
+    if (this.friend) {
+      this.lastSeenMessageIndex$ = this.authService.lastseenMessageIndex$;
+    } else {
+      this.lastSeenMessageIndex$ = undefined;
+    }
   }
 
   public handleTextSend(event: MouseEvent | KeyboardEvent) {
@@ -100,19 +104,24 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
       return;
     }
 
+    let message!: FriendMessage | GroupChatMessage
+
     if (this.friend) {
-      const text = {
+      message = {
         type: 'friendText',
         friendName: this.friend.username,
         text: this.textareaValue
       }
-
-      this.socketService.chat(text);
     } else if (this.groupChat) {
-      const text = {
+      message = {
         type: 'groupChatText',
-
+        chatId: this.groupChat.chatId,
+        text: this.textareaValue
       }
+    }
+
+    if (message) {
+      this.socketService.chat(message);
     }
 
     this.scrollToBottomAndEmptyTextareaValue();
@@ -158,6 +167,14 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     }
 
     return formatDate(date, 'MMMM d', 'en-US');
+  }
+
+  showTextDeliveryTime(i: number) {
+    if (this.clickedTextIndex) {
+      this.clickedTextIndex = 0;
+    } else {
+      this.clickedTextIndex = i + 1;
+    }
   }
 
   ngOnDestroy(): void {

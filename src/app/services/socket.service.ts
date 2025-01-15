@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { matSnackDuration } from '../styles/active-theme-variables';
 import { Friend } from '../model/friend.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { GroupChatMessage } from '../model/groupchat.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,16 +45,23 @@ export class SocketService {
     }
   }
 
-  public chat(data: { friendName: Friend['username'], text: string }) {
+  public chat(data: { friendName: Friend['username'], text: string } | GroupChatMessage) {
     if (this.chatSocket.OPEN === this.chatSocket.readyState) {
       this.chatSocket.send(JSON.stringify(data));
     }
   }
 
-  public hasSeen(friend_id: Friend['userId']) {
+  public hasSeen(param: {id: Friend['userId'], type: 'groupchat' | 'friend'}) {
     if (this.hasSeenSocket.OPEN === this.hasSeenSocket.readyState) {
-      const message = {
-        friend_id: friend_id
+      let message;
+      if (param.type === 'friend') {
+        message = {
+          friend_id: param.id
+        }
+      } else {
+        message = {
+          chat_id: param.id
+        }
       }
       this.hasSeenSocket.send(JSON.stringify(message));
     }
