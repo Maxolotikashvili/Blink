@@ -119,24 +119,15 @@ export class AuthService {
         return this.http.delete<{ message: string }>(`${API_URL}/users/delete_friend?friendId=${friend.userId}`);
     }
 
-    public deleteChat(friend: Friend): Observable<{ message: string }> {
+    public deleteChat(param: Friend | GroupChat): Observable<{ message: string }> {
         const currentUser = this.userSubject.value;
-
-        const friendIndex = currentUser.friendsList.indexOf(friend);
-        currentUser.friendsList[friendIndex].messages = [];
+        const target = 'userId' in param ? currentUser.friendsList : currentUser.groupChatsList;
+        const url: string = 'userId' in param ? `delete_chat?friendId=${param.userId}` : `delete-group-chat?chatId=${param.chatId}`;
+        const index: number = target.indexOf(param as any);
+        target[index].messages = [];
 
         this.userSubject.next({ ...currentUser });
-        return this.http.delete<{ message: string }>(`${API_URL}/users/delete_chat?friendId=${friend.userId}`);
-    }
-
-    public deleteGroupChat(groupChat: GroupChat) {
-        const currentUser = this.userSubject.value;
-
-        const groupChatIndex = currentUser.groupChatsList.indexOf(groupChat);
-        currentUser.groupChatsList[groupChatIndex].messages = [];
-
-        this.userSubject.next({ ...currentUser });
-        return this.http.delete<{ message: string }>(`${API_URL}/users/delete_chat?groupChatId=${groupChat.chatId}`);
+        return this.http.delete<{ message: string }>(`${API_URL}/users/${url}`);
     }
 
     public updateLastSeenMessageIndex(lastSeenMessage: number) {

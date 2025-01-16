@@ -51,27 +51,17 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
   }
 
   public clearChat() {
-    if (this.data.friend && this.data.friend.messages.length !== 0) {
-      const subscription = this.authService.deleteChat(this.data.friend).subscribe({
+    if (this.data.friend && this.data.friend.messages.length > 0 || this.data.groupChat && this.data.groupChat.messages.length > 0) {
+      const target: Friend | GroupChat | undefined = this.data.friend ? this.data.friend : this.data.groupChat;
+
+      if (!target) return;
+
+      const subscription = this.authService.deleteChat(target).subscribe({
         error: (err) => {
           this.matSnack.open(err.detail ? err.detail : `Error deleting chat, try again later`, 'Dismiss', { duration: matSnackDuration });
           console.error(err);
         }
       });
-      this.subscription.add(subscription);
-
-    } else if (this.data.groupChat) {
-      this.clearGroupChat();
-    }
-  }
-
-  public clearGroupChat() {
-    if (this.data.groupChat && this.data.groupChat.messages.length !== 0) {
-      const subscription = this.authService.deleteGroupChat(this.data.groupChat).subscribe({
-        error: (err) => {
-          this.matSnack.open(err.detail ? err.detail : 'Error deleting chat, try again later', 'Dismiss', { duration: matSnackDuration });
-        }
-      })
 
       this.subscription.add(subscription);
     }
