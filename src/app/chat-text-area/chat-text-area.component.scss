@@ -35,8 +35,7 @@ $text-border-radius: 10px;
         overflow: auto;
         gap: 6px;
 
-        .message,
-        .friend-message {
+        .message, .friend-message {
             display: flex;
             flex-flow: column;
 
@@ -92,6 +91,12 @@ $text-border-radius: 10px;
                         transition: inherit;
                         cursor: default;
                     }
+
+                }
+
+                .is-seen-by-wrapper {
+                    display: flex;
+                    gap: 5px;
                 }
             }
         }

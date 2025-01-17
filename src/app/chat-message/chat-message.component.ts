@@ -1,18 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Friend } from '../model/friend.model';
 import { GroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
-import { UnseenTextsLength } from '../pipes/unseen-texts-length.pipe';
 import { ChatDatePipe } from '../pipes/chat-date.pipe';
 import { ChatService } from '../services/chat.service';
 import { SocketService } from '../services/socket.service';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../services/auth.service';
 import { User } from '../model/user.model';
+import { UnseenTextsLengthPipe } from '../pipes/unseen-texts-length.pipe';
 
 @Component({
   selector: 'app-chat-message',
-  imports: [CommonModule, UnseenTextsLength, ChatDatePipe, MatButtonModule],
+  imports: [CommonModule, ChatDatePipe, MatButtonModule, UnseenTextsLengthPipe],
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.scss'
 })
@@ -32,9 +32,9 @@ export class ChatMessageComponent {
 
     if (shouldShowSeen) {
       this.socketService.hasSeen({id: friend.userId, type: 'friend'});
-    } else {
-      this.authService.findLastSeenMessageIndex({id: friend.username, type: 'friend'});
-    }
+    } 
+    
+    this.authService.updateHasSeenState(friend.username);
   }
 
   public updateLastSelectedGroupChat(groupChat: GroupChat) {
@@ -44,8 +44,6 @@ export class ChatMessageComponent {
 
     if (shouldShowSeen) {
       this.socketService.hasSeen({id: groupChat.chatId, type: 'groupchat'});
-    } else {
-      this.authService.findLastSeenMessageIndex({id: groupChat.chatId, type: 'groupchat'});
     }
   }
 }

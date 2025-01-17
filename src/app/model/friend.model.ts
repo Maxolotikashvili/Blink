@@ -16,7 +16,7 @@ export interface Message {
     sender: 'user' | Friend['username'],
     timeStamp: Date,
     text: string
-    isSeenBy: {user_id: User['userId'], email: User['email']}[],
+    isSeenBy: {email: User['email'], username: User['username']}[],
 }
 export interface FriendMessage {
     type: 'friendText',

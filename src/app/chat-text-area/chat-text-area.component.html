@@ -20,11 +20,15 @@
                     <button class="text" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="showTextDeliveryTime(i)">{{message.text}}</button>  
                 </div>
 
-                <ng-container *ngIf="lastSeenMessageIndex$ | async as lastSeenMessageIndex">
-                    <div class="bk-info-secondary seen" *ngIf="lastSeenMessageIndex === i + 1">seen</div>
-                </ng-container>
-            </div>
+                <div class="bk-info-secondary seen" *ngIf="message.isSeen">seen</div>
 
+                <div class="is-seen-by-wrapper" *ngIf="message.isSeenBy && message.isSeenBy.length > 0">
+                    <span class="bk-info-secondary">seen by:</span>
+                    <div class="bk-info-secondary seen" *ngFor="let seenBy of message.isSeenBy; let last = last">
+                        <span>{{seenBy.username}}<span *ngIf="message.isSeenBy.length > 1 && !last">,</span></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -25,7 +25,6 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   public friend!: Friend | undefined;
   public groupChat!: GroupChat | undefined;
   public textareaValue: string = '';
-  public lastSeenMessageIndex$!: Observable<number> | undefined;
   public clickedTextIndex: number | null = null;
 
   constructor(
@@ -79,18 +78,9 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
 
     const subscription = observable?.subscribe((messages) => {
       this.chatList = messages!;
-      this.findLastSeenMessageIndex();
     })
 
     this.activeSubscriptions.add(subscription);
-  }
-
-  private findLastSeenMessageIndex() {
-    if (this.friend) {
-      this.lastSeenMessageIndex$ = this.authService.lastseenMessageIndex$;
-    } else {
-      this.lastSeenMessageIndex$ = undefined;
-    }
   }
 
   public handleTextSend(event: MouseEvent | KeyboardEvent) {

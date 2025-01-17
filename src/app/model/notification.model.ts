@@ -23,10 +23,11 @@ export interface Notification {
     },
     newFriend?: Friend,
     message?: Message | string,
+    messages?: Message[],
     displayMessage?: string,
     status: 'pending' | 'complete' | 'rejected'
     timeStamp: string,
-    friendName?: Friend['username'],
+    friendName?: Friend['username']
     error?: string
     isOnline?: boolean
 }

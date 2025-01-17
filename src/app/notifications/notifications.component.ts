@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { XMarkComponent } from "../x-mark/x-mark.component";
-import { map, Observable, Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { Notification } from '../model/notification.model';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
@@ -29,24 +29,6 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNotifications();
-    this.markAllNotificationsAsSeen();
-  }
-
-  private markAllNotificationsAsSeen() {
-    if (!this.notifications.some((notification) => !notification.isSeenByUser)) {
-      return;
-    }
-
-    this.authService.markAllNotificationsAsSeen().subscribe({
-      next: (res) => {
-        this.authService.updateNotificationsAfterSeing();
-      },
-      error: (err) => {
-        if (err.detail) {
-          this.matSnack.open(err.detai, 'Dismiss', { duration: matSnackDuration });
-        }
-      }
-    })
   }
 
   private getNotifications() {
