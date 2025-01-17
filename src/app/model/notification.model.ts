@@ -4,6 +4,7 @@ export interface Notification {
     id: string,
     notificationId: string,
     chatId?: string,
+    isSeenBy: Message['isSeenBy'],
     isSeenByUser: boolean,
     isSeen?: boolean,
     isIncoming: boolean,

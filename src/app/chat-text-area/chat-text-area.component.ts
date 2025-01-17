@@ -116,7 +116,7 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
       message = {
         type: 'groupChatText',
         chatId: this.groupChat.chatId,
-        text: this.textareaValue
+        text: this.textareaValue,
       }
     }
 

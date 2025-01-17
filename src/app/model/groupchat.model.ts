@@ -1,4 +1,5 @@
 import { Message } from "./friend.model";
+import { User } from "./user.model";
 
 export interface GroupChat {
     chatId: string,

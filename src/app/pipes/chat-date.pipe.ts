@@ -26,7 +26,7 @@ export class ChatDatePipe implements PipeTransform {
     const yesterday = new Date();
     yesterday.setDate(now.getDate() - 1);
     if (this.isSameDay(date, yesterday)) {
-      return `Yesterday, ${this.formatTime(date)}`;
+      return `Yest, ${this.formatTime(date)}`;
     }
 
     if (this.isWithinSameWeek(date, now)) {
