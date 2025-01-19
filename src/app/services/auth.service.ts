@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { API_URL } from '../api_url';
 import { LoginResponse, UserLogin, UserRegister } from "../model/auth.model";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable, Subscription, switchMap } from "rxjs";
+import { BehaviorSubject, finalize, Observable, Subscription, switchMap, tap } from "rxjs";
 import { Notification } from "../model/notification.model";
 import { SocketService } from "./socket.service";
 import { User } from "../model/user.model";
@@ -84,24 +84,47 @@ export class AuthService {
         return this.http.delete<{ message: string }>(`${API_URL}/users/delete_notification?id=${id}`);
     }
 
+    public markAllNotificationsAsSeen() {
+        return this.http.put(`${API_URL}/users/mark_all_notifications_seen`, {});
+    }
+
     public updateNotificationsAfterSeing() {
         const currentUser = this.userSubject.value;
         currentUser.notifications.forEach((notification) => { notification.isSeenByUser = true });
         this.updateUser(currentUser);
     }
 
-    public muteFriend(friendId: Friend['userId'], state: boolean) {
+    public mute(id: {friendId: Friend['userId']} | {chatId: GroupChat['chatId']}, state: boolean) {
         const currentUser = this.userSubject.value;
-        currentUser.friendsList.map((friend) => {
-            if (friend.userId === friendId) {
-                friend.isMuted = state;
-            }
+        const urlParams = {
+            endpoint: 'friendId' in id ? 'mute_friend_chat' : 'mute_groupchat',
+            param: 'friendId' in id ? {friend_id: id.friendId, is_muted: state} : {chat_id: id.chatId, is_muted: state}
+        }
 
-            return friend;
-        })
+        if ('friendId' in id) {
+            currentUser.friendsList.map((friend) => {
+                if (friend.userId === id.friendId) {
+                    friend.isMuted = state;
+                }
+                
+                return friend;
+            })
+        } else if ('chatId' in id) {
+            currentUser.groupChatsList.map((groupChat) => {
+                if (groupChat.chatId === id.chatId) {
+                    groupChat.isMuted = state;
+                }
+
+                return groupChat;
+            })  
+        }
         this.userSubject.next({ ...currentUser });
 
-        return this.http.patch<{ message: string }>(`${API_URL}/users/mute_friend`, { friend_id: friendId, is_muted: state });
+        return this.http.patch<{ message: string }>(`${API_URL}/users/${urlParams.endpoint}`, urlParams.param);
+    }
+
+    public leaveGroupChat(chatId: GroupChat['chatId']) {
+        return this.http.delete<{message: string}>(`${API_URL}/users/leave_groupchat?chat_id=${chatId}`);
     }
 
     public deleteFriend(friend: Friend): Observable<{ message: string }> {
@@ -179,7 +202,7 @@ export class AuthService {
         }
 
         if (notification.message && typeof notification.message !== 'string') {
-            if (notification.type === 'message' && !notification.message?.isSeen) {
+            if (notification.type === 'message' && !notification.message?.lastSeen) {
                 currentUser.friendsList.find((friend) => friend.username === notification.friendName)?.messages.push(notification.message as Message);
                 const isFriendMuted = currentUser.friendsList.find((friend) => friend.username === notification.friendName)?.isMuted;
 
@@ -191,6 +214,16 @@ export class AuthService {
                 }
 
                 this.userSubject.next({ ...currentUser });
+            }
+
+            if (notification.type === 'groupMessage') {
+                const groupChat = currentUser.groupChatsList.find((groupChats) => groupChats.chatId === notification.chatId); 
+                
+                if (notification.message.sender === 'user') {
+                    this.soundService.playMessageSentSound();
+                } else if (notification.message.sender !== 'user' && !groupChat?.isMuted) {
+                    this.soundService.playIncomingMessageSound();
+                }
             }
 
             if (this.lastSelectedFriend && notification.message.sender === this.lastSelectedFriend.username) {
@@ -231,22 +264,23 @@ export class AuthService {
 
     private handleHasSeenState(notification: Notification) {
         if (!notification.friendName) return;
-        if (typeof notification.isSeen !== 'undefined') {
+        if (typeof notification.lastSeen !== 'undefined') {
             this.updateHasSeenState(notification.friendName);
         }
     }
-
+    
     public updateHasSeenState(friendName: Friend['username']) {
         const currentUser = this.userSubject.value;
         const friend = currentUser.friendsList.find((friend) => friend.username === friendName);
-
+        
         if (!friend) return;
-
+        
+        friend.messages.map((message) => message.isSeen = true);
         const reversedMessagesList = [...friend.messages].reverse();
         const lastOutgoingMessage = reversedMessagesList.find((message) => !message.isIncoming);
         if (lastOutgoingMessage) {
-            friend.messages.map((message) => message.isSeen = false);
-            friend.messages[friend.messages.indexOf(lastOutgoingMessage)].isSeen = true;
+            friend.messages.map((message) => message.lastSeen = false);
+            friend.messages[friend.messages.indexOf(lastOutgoingMessage)].lastSeen = true;
         }
 
         this.userSubject.next({ ...currentUser });

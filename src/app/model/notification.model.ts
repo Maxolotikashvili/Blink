@@ -6,7 +6,7 @@ export interface Notification {
     chatId?: string,
     isSeenBy: Message['isSeenBy'],
     isSeenByUser: boolean,
-    isSeen?: boolean,
+    lastSeen?: boolean,
     isIncoming: boolean,
     type: 'friend-request' | 'message' | 'hasSeen' | 'connection' | 'group-chat-create' | 'groupMessage' | 'groupSeen',
     sender: {

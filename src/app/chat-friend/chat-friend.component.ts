@@ -16,7 +16,7 @@ import { matSnackDuration } from '../styles/active-theme-variables';
 })
 export class ChatFriendComponent implements OnDestroy, OnChanges {
   @Input() data!: { friend?: Friend, groupChat?: GroupChat };
-  private subscription: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
 
   public groupChat: GroupChat | undefined;
 
@@ -35,19 +35,26 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
     }
   }
 
-  public controlFriendNotificationsSound() {
+  public controlChatSound() {
+    let state!: boolean;
+    let param!: {friendId: Friend['userId']} | {chatId: GroupChat['chatId']};
+
     if (this.data.friend) {
-      const state = this.data.friend.isMuted ? false : true;
+      state = this.data.friend.isMuted ? false : true;
+      param = { friendId: this.data.friend.userId };
 
-      const subscription = this.authService.muteFriend(this.data.friend.userId, state).subscribe({
-        error: (error) => {
-          this.matSnack.open(error.detail ? error.detail : `Error muting ${this.data.friend?.username}, try again later`, 'Dismiss', { duration: matSnackDuration })
-          console.error(error);
-        }
-      });
-
-      this.subscription.add(subscription);
+    } else if (this.data.groupChat) {
+      state = this.data.groupChat.isMuted ? false : true;
+      param = { chatId: this.data.groupChat.chatId }
     }
+    console.log(state)
+    const subscription = this.authService.mute(param, state).subscribe({
+      error: (error) => {
+        this.matSnack.open(error.detail ? error.detail : `Error muting chat, try again later`, 'Dismiss', { duration: matSnackDuration });
+      }
+    })
+
+    this.subscriptions.add(subscription);
   }
 
   public clearChat() {
@@ -63,7 +70,7 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
         }
       });
 
-      this.subscription.add(subscription);
+      this.subscriptions.add(subscription);
     }
   }
 
@@ -80,15 +87,25 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
         }
       })
 
-      this.subscription.add(subscription);
+      this.subscriptions.add(subscription);
     }
   }
 
-  public removeUserFromGroupChat() {
+  public leaveChat() {
+    const subscription = this.authService.leaveGroupChat(this.groupChat?.chatId!).subscribe({
+      next: () => {
+        this.matSnack.open(`You have left the group chat`, 'Dismiss', { duration: matSnackDuration });
+      },
 
+      error: (error) => { 
+        this.matSnack.open(error.detail ? error.detail : `Error leaving chat, try again later`, 'Dismiss', { duration: matSnackDuration })
+      }
+    })
+
+    this.subscriptions.add(subscription);
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscriptions?.unsubscribe();
   }
 }

@@ -46,9 +46,14 @@ $text-border-radius: 10px;
                 margin: 20px 0;
 
                 .line {
-                    width: 100%;
+                    width: 50%;
                     height: 0.5px;
                     background: var(--active-textarea-border-color);
+                }
+
+                .date {
+                   width: 50%;
+                   text-align: center; 
                 }
             }
 

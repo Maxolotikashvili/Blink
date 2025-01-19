@@ -13,6 +13,7 @@ export interface Friend {
 export interface Message {
     isIncoming: boolean,
     isSeen: boolean,
+    lastSeen: boolean,
     sender: 'user' | Friend['username'],
     timeStamp: Date,
     text: string

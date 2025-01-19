@@ -20,11 +20,11 @@
 <div class="friend-utility-wrapper">
     <ul>
         <li>
-            <button (click)="controlFriendNotificationsSound()">
-                <div class="icon" *ngIf="groupChat" [ngClass]="{'is-muted': groupChat.isMuted, 'not-muted': !groupChat.isMuted}"></div>
+            <button (click)="controlChatSound()">
+                <div class="icon" *ngIf="groupChat" [ngClass]="{'is-muted': data.groupChat?.isMuted, 'not-muted': !data.groupChat?.isMuted}"></div>
                 <div class="icon" *ngIf="data.friend" [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
             </button>
-            <span class="label bk-info-primary">{{data.friend?.isMuted || groupChat?.isMuted ? 'Unmute' : 'Mute'}}</span>
+            <span class="label bk-info-primary"> {{data.groupChat?.isMuted || data.friend?.isMuted ? 'Unmute' : 'Mute'}} </span>
         </li>
         <li>
             <button>
@@ -45,7 +45,7 @@
             <span class="label bk-info-primary">Remove friend</span>
         </li>
         <li *ngIf="groupChat">
-            <button (click)="removeUserFromGroupChat()">
+            <button (click)="leaveChat()">
                 <div class="icon delete-friend"></div>
             </button>
             <span class="label bk-info-primary">Leave chat</span>

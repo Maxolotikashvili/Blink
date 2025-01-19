@@ -29,6 +29,7 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNotifications();
+    this.markAllNotificationsAsSeen();
   }
 
   private getNotifications() {
@@ -37,6 +38,17 @@ export class NotificationsComponent implements OnInit {
     });
 
     this.subscriptions.add(subscription);
+  }
+
+  private markAllNotificationsAsSeen() {
+    this.authService.markAllNotificationsAsSeen().subscribe({
+      next: () => {
+        this.authService.updateNotificationsAfterSeing();
+      },
+      error: (error) => {
+        console.error(`Failed to mark notifications as seen: ${error}`);
+      }
+    });
   }
 
   public deleteNotification(notification: Notification) {

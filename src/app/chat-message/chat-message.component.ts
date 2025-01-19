@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Friend } from '../model/friend.model';
 import { GroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
@@ -22,8 +22,7 @@ export class ChatMessageComponent {
   constructor(
     private chatService: ChatService, 
     private socketService: SocketService,
-    private authService: AuthService
-  ) { }
+  ) {}
 
   public updateLastSelectedFriend(friend: Friend) {
     this.chatService.updateLastSelectedFriend(friend);
@@ -33,8 +32,6 @@ export class ChatMessageComponent {
     if (shouldShowSeen) {
       this.socketService.hasSeen({id: friend.userId, type: 'friend'});
     } 
-    
-    this.authService.updateHasSeenState(friend.username);
   }
 
   public updateLastSelectedGroupChat(groupChat: GroupChat) {
