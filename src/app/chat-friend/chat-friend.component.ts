@@ -47,7 +47,7 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
       state = this.data.groupChat.isMuted ? false : true;
       param = { chatId: this.data.groupChat.chatId }
     }
-    console.log(state)
+
     const subscription = this.authService.mute(param, state).subscribe({
       error: (error) => {
         this.matSnack.open(error.detail ? error.detail : `Error muting chat, try again later`, 'Dismiss', { duration: matSnackDuration });
