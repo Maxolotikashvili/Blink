@@ -18,6 +18,7 @@ export class AuthService {
     private initialUserValue: User = {
         userId: '',
         username: '',
+        bio: '',
         email: '', friendsList: [],
         avatar: '',
         notifications: [],
@@ -37,6 +38,7 @@ export class AuthService {
         private soundService: SoundService,
         private chatService: ChatService,
     ) {
+
         this.getLastSelectedFriendOrGroupChat();
     }
 

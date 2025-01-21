@@ -6,6 +6,7 @@ import { Notification } from "./notification.model";
 export interface User {
     userId: string,
     username: string,
+    bio: string,
     email: string,
     theme: Theme,
     avatar: string,

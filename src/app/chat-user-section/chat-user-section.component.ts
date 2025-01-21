@@ -13,6 +13,7 @@ import { SocketService } from '../services/socket.service';
 import { ChatMessageComponent } from "../chat-message/chat-message.component";
 import { GroupChatModalComponent } from '../group-chat-modal/group-chat-modal.component';
 import { Friend } from '../model/friend.model';
+import { AvatarService } from '../services/avatar.service';
 
 @Component({
   selector: 'app-chat-user-section',
@@ -25,6 +26,7 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
   public user!: User;
   private subscriptions: Subscription = new Subscription();
   public onlineFriendsList: Friend[] = [];
+  public avatarsList: string[] = [];
 
   test(a: any) {
     console.log(a, 'template')
@@ -43,13 +45,16 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private authService: AuthService,
     private socketService: SocketService,
-    private matSnack: MatSnackBar
+    private matSnack: MatSnackBar,
+    private avatarService: AvatarService
   ) { }
 
   ngOnInit(): void {
     this.getUser();
     this.applyDefaultThemeOnStart();
     this.getOnlineFriendsList();
+    this.avatarsList = this.avatarService.avatarsList;
+    console.log(this.avatarsList)
   }
   
   private getUser() {

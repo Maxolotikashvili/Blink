@@ -2,8 +2,8 @@
 @use '../styles/mixins.scss' as *;
 @use '../styles/material-reset.scss' as *;
 
-$input-width: 70%;
-$margin-between-inputs: 30px;
+$input-width: 80%;
+$margin-between-inputs: 8px;
 
 .signup-component-wrapper {
     @include flex-center();
@@ -16,7 +16,7 @@ $margin-between-inputs: 30px;
         height: 95%;
         overflow: hidden;
         border-radius: var(--widget-border-radius);
-        box-shadow:  0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
 
         .background-wrapper {
             @include flex-center();
@@ -34,33 +34,80 @@ $margin-between-inputs: 30px;
             position: relative;
             @include flex-center();
             flex-flow: column;
-            background-color: white;
+            gap: 15px;
+            background-color: #ffffff;
 
             h3 {
                 color: var(--static-heading-color);
-                margin-bottom: 40px;
             }
 
-            form {
+            mat-stepper {
                 width: 100%;
-                @include flex-center();
-                flex-flow: column;
-                gap: $margin-between-inputs;
+                height: 76.5%;
+                background: unset;
 
-                mat-form-field {
-                    width: $input-width;
-                    background: transparent !important;
+                form {
+                    width: 100%;
+                    @include flex-center();
+                    align-items: unset;
+                    padding: 5px 0 5px 10px;
+                    flex-flow: column;
+                    gap: $margin-between-inputs;
+                    height: 55.5vh;
+                    overflow-y: scroll;
+
+                    mat-form-field {
+                        width: $input-width;
+                        background: transparent !important;
+
+                        input::placeholder {
+                            font-size: 12px;
+                            color: gray;
+                        }
+                    }
                 }
 
-                .button-wrapper {
-                    @include flex-center();
-                    flex-flow: column;
+                .mat-vertical-content {
+                    padding: 0
+                }
+
+                h4 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+
+                .avatars-wrapper {
                     width: 100%;
+                    @include flex-center();
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    border-radius: 10px;
+                    background: #f1f1f1;
+                    padding: 5px;
+                    height: 370px;
+                    overflow-y: scroll;
 
                     button {
-                        width: $input-width;
-                        margin: $margin-between-inputs 0 calc($margin-between-inputs / 2) 0;
+                        border: none;
+                        cursor: pointer;
+
+                        img {
+                            width: 140px;
+                            height: 140px;
+                            border-radius: 50%;
+                        }
                     }
+                }
+            }
+
+            .button-wrapper {
+                @include flex-center();
+                flex-flow: column;
+                width: 100%;
+
+                button {
+                    width: $input-width;
+                    margin-bottom: calc($margin-between-inputs / 2);
                 }
             }
         }

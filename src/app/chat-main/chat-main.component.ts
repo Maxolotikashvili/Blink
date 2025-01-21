@@ -10,6 +10,7 @@ import { SocketService } from '../services/socket.service';
 import { AuthService } from '../services/auth.service';
 import { User } from '../model/user.model';
 import { SOCKET_URL } from '../api_url';
+import { AvatarService } from '../services/avatar.service';
 
 @Component({
   selector: 'app-chat-main',
@@ -24,7 +25,7 @@ export class ChatMainComponent implements OnInit, OnDestroy {
 
   constructor(
     private socketService: SocketService,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {

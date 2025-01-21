@@ -1,4 +1,4 @@
-import { Component, isSignal, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { XMarkComponent } from "../x-mark/x-mark.component";
 import { ModalService } from '../services/modal.service';
@@ -11,9 +11,9 @@ import { UserRegister } from '../model/auth.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoaderComponent } from "../loader/loader.component";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HomeComponent } from '../home/home.component';
 import { SigninModalComponent } from '../signin-modal/signin-modal.component';
 import { matSnackDuration } from '../styles/active-theme-variables';
+import { AvatarService } from '../services/avatar.service';
 
 @Component({
   selector: 'app-signup-modal',
@@ -23,39 +23,51 @@ import { matSnackDuration } from '../styles/active-theme-variables';
   encapsulation: ViewEncapsulation.None
 })
 export class SignupModalComponent implements OnInit {
-  public signupForm!: FormGroup;
+  public registerForm!: FormGroup;
   public isUserRegistrationPending: boolean = false;
+  public avatarsList: string[] = [];
 
   public get userName(): AbstractControl | null {
-    return this.signupForm.get('username');
+    return this.registerForm.get('username');
+  }
+
+  public get bio(): AbstractControl | null {
+    return this.registerForm.get('bio');
   }
 
   public get email(): AbstractControl | null {
-    return this.signupForm.get('email');
+    return this.registerForm.get('email');
   }
 
   public get password(): AbstractControl | null {
-    return this.signupForm.get('password');
+    return this.registerForm.get('password');
   }
 
   public get confirmPassword(): AbstractControl | null {
-    return this.signupForm.get('confirmPassword');
+    return this.registerForm.get('confirmPassword');
   }
 
   constructor(
     private modalService: ModalService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private matSnack: MatSnackBar
+    private avatarService: AvatarService,
+    private matSnack: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
-    this.initializeUserSignUpForm();
+    this.setUpForm();
+    this.getAvatars();
   }
 
-  private initializeUserSignUpForm() {
-    this.signupForm = this.fb.group({
+  private getAvatars() {
+    this.avatarsList = this.avatarService.avatarsList;
+  }
+
+  private setUpForm() {
+    this.registerForm = this.fb.group({
       username: new FormControl<string>('', Validators.required),
+      bio: new FormControl<string>(''),
       email: new FormControl<string>('', [Validators.required, Validators.email]),
       password: new FormControl<string>('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/)]),
       confirmPassword: new FormControl<string>('', Validators.required)
@@ -66,14 +78,16 @@ export class SignupModalComponent implements OnInit {
     this.modalService.openModal(SigninModalComponent);
   }
 
-  public handleSignupFormSubmit() {
-    if (this.signupForm.status !== 'VALID') return;
+  public handleFormSubmit() {
+    if (this.registerForm.status !== 'VALID') return;
     this.isUserRegistrationPending = true;
     
     const user: UserRegister = {
       username: this.userName?.value,
+      bio: this.bio?.value,
       email: this.email?.value,
-      password: this.password?.value
+      password: this.password?.value,
+      avatar: ''
     }
     
     this.authService.registerUser(user).subscribe({

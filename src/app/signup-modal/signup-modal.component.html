@@ -7,45 +7,71 @@
 
         <div class="form-wrapper">
             <h3 class="bk-heading-h3">Sign Up Here</h3>
-            <form name="signup-form" (ngSubmit)="handleSignupFormSubmit()" [formGroup]="signupForm">
-                <mat-form-field>
-                    <mat-label>Enter username (Display name)</mat-label>
-                    <input type="text" matInput formControlName="username" required>
-                    <mat-error *ngIf="userName?.errors?.['required']">Input mandatory</mat-error>
-                    <mat-error *ngIf="userName?.errors?.['taken']">Username already taken, try something different</mat-error>
-                </mat-form-field>
+            <mat-stepper  orientation="vertical"> <!-- linear=true-->
+                <mat-step [stepControl]="registerForm">
+                    <ng-template matStepLabel>Step 1</ng-template>
+                    <ng-template matStepContent>
+                        <form name="signup-form" (ngSubmit)="handleFormSubmit()" [formGroup]="registerForm">
+                            <mat-form-field>
+                                <mat-label>Enter username (Display name)</mat-label>
+                                <input type="text" matInput formControlName="username" required>
+                                <mat-error *ngIf="userName?.errors?.['required']">Input mandatory</mat-error>
+                                <mat-error *ngIf="userName?.errors?.['taken']">Username already taken, try something different</mat-error>
+                            </mat-form-field>
+        
+                            <mat-form-field>
+                                <mat-label>Enter your personal tagline (optional)</mat-label>
+                                <input type="text" matInput formControlName="bio" placeholder="share what describes you the best">
+                            </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Enter your email</mat-label>
-                    <input type="email" matInput formControlName="email" required>
-                    <mat-error *ngIf="email?.errors?.['required']">Input mandatory</mat-error>
-                    <mat-error *ngIf="email?.errors?.['email']">Input valid email</mat-error>
-                    <mat-error *ngIf="email?.errors?.['taken']">An account with this email already exists</mat-error>
-                </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Enter your email</mat-label>
+                                <input type="email" matInput formControlName="email" required>
+                                <mat-error *ngIf="email?.errors?.['required']">Input mandatory</mat-error>
+                                <mat-error *ngIf="email?.errors?.['email']">Input valid email</mat-error>
+                                <mat-error *ngIf="email?.errors?.['taken']">An account with this email already exists</mat-error>
+                            </mat-form-field>
+        
+                            <mat-form-field>
+                                <mat-label>Enter new password</mat-label>
+                                <input type="password" matInput formControlName="password" required>
+                                <mat-error *ngIf="password?.errors?.['required']">Input mandatory</mat-error>
+                                <mat-error *ngIf="password?.errors?.['minlength']">Minimum length of 8 charecters
+                                    required</mat-error>
+                                <mat-error *ngIf="password?.errors?.['pattern']">At least one capital letter and one number
+                                    required</mat-error>
+                            </mat-form-field>
+        
+                            <mat-form-field>
+                                <mat-label>Confirm new password</mat-label>
+                                <input type="password" matInput formControlName="confirmPassword" required>
+                                <mat-error *ngIf="confirmPassword?.errors?.['required']">Input mandatory</mat-error>
+                                <mat-error *ngIf="confirmPassword?.hasError('passwordsMismatch')">Passwords do not match</mat-error>
+                            </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Enter new password</mat-label>
-                    <input type="password" matInput formControlName="password" required>
-                    <mat-error *ngIf="password?.errors?.['required']">Input mandatory</mat-error>
-                    <mat-error *ngIf="password?.errors?.['minlength']">Minimum length of 8 charecters
-                        required</mat-error>
-                    <mat-error *ngIf="password?.errors?.['pattern']">At least one capital letter and one number
-                        required</mat-error>
-                </mat-form-field>
+                            <button type="submit" style="display: none"></button>
+                        </form>
+                    </ng-template>
+                </mat-step>
 
-                <mat-form-field>
-                    <mat-label>Confirm new password</mat-label>
-                    <input type="password" matInput formControlName="confirmPassword" required>
-                    <mat-error *ngIf="confirmPassword?.errors?.['required']">Input mandatory</mat-error>
-                    <mat-error *ngIf="confirmPassword?.hasError('passwordsMismatch')">Passwords do not match</mat-error>
-                </mat-form-field>
+                <mat-step>
+                    <ng-template matStepLabel>Step 2</ng-template>
+                    <ng-template matStepContent>
+                        <h4>Select your avatar</h4>
 
-                <div class="button-wrapper">
-                    <button class="round-button-big-static" mat-flat-button type="submit"
-                        [disabled]="signupForm.status === 'INVALID'">Register</button>
-                    <a class="bk-nav-link-primary" (click)="openLoginPage()">Login with existing account</a>
-                </div>
-            </form>
+                        <div class="avatars-wrapper">
+                            <button *ngFor="let avatar of avatarsList">
+                                <img [src]="avatar" alt="avatar">
+                            </button>
+                        </div>
+                    </ng-template>
+                </mat-step>
+            </mat-stepper>
+            
+            <div class="button-wrapper">
+                <button class="round-button-big-static" mat-flat-button (click)="handleFormSubmit()" [disabled]="registerForm.status === 'INVALID'">Register</button>
+                <a class="bk-nav-link-primary" (click)="openLoginPage()">Login with existing account</a>
+            </div>
 
             <app-loader *ngIf="isUserRegistrationPending"></app-loader>
         </div>
