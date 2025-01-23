@@ -62,6 +62,12 @@ $text-border-radius: 10px;
                 flex-flow: column;
                 gap: 2px;
 
+                .seen {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                }
+
                 .timestamp-text-wrapper {
                     display: flex;
                     align-items: center;

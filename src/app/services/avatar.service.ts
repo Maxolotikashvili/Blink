@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AvatarService {
   avatarsList: string[] = [];
 
-  static totalAvatars: number = 28;
+  static totalAvatars: number = 27;
 
   constructor(private http: HttpClient) { 
     this.initializeAvatarsList();

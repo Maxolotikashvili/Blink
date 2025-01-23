@@ -1,9 +1,9 @@
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule, formatDate, JsonPipe } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { SocketService } from '../services/socket.service';
 import { Friend, FriendMessage, Message } from '../model/friend.model';
-import { map, Observable, Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { ChatService } from '../services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
@@ -69,7 +69,6 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
 
   private fetchMessages(chat: Friend | GroupChat) {
     let observable;
-
     if ('userId' in chat) {
       observable = this.authService.user$.pipe(map((user) => user.friendsList.find((friend) => friend.userId === chat.userId)?.messages));
     } else if ('chatId' in chat) {
@@ -77,10 +76,25 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     }
 
     const subscription = observable?.subscribe((messages) => {
-      this.chatList = messages!;
+      if ('chatId' in chat && messages) {
+        this.chatList = this.removeUserFromIsSeenByArray(messages);
+      } else if (messages) {
+        this.chatList = messages;
+      }
     })
 
     this.activeSubscriptions.add(subscription);
+  }
+
+  private removeUserFromIsSeenByArray(messages: Message[]): Message[] {
+    const newMessages = messages.map((message) => {
+      const newMessage = { ...message, isSeenBy: [...message.isSeenBy] };
+      newMessage.isSeenBy = newMessage.isSeenBy.filter((user) => user.username !== 'user');
+  
+      return newMessage;
+    });
+  
+    return newMessages;
   }
 
   public handleTextSend(event: MouseEvent | KeyboardEvent) {
@@ -165,6 +179,10 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     } else {
       this.clickedTextIndex = i + 1;
     }
+  }
+
+  trackByMessage(index: number, message: Message): string {
+    return message.id;
   }
 
   ngOnDestroy(): void {

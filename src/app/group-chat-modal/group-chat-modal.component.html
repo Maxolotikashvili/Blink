@@ -18,7 +18,7 @@
             <div class="friends-wrapper">
                 <div class="friend" *ngFor="let friend of friends$ | async as friends">
                     <div class="img-name-wrapper">
-                        <img class="avatar-img-small" src="maxo-lotikashvili.jpeg" alt="avatar">
+                        <img class="avatar-img-small" [src]="friend.avatar" alt="avatar">
                         <span>{{friend.username}}</span>
                     </div>
                     <button class="add-button" [ngClass]="{'added': selectedFriendsList.includes(friend.username)}" (click)="addFriendToGroupChat(friend)"></button>

@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     border: none;
     background: none;
@@ -18,9 +18,10 @@
 
         .avatar-wrapper {
             position: relative;
-            width: 80px;
+            width: 55px;
             height: 40px;
             display: flex;
+            margin-right: 5px;
 
             .friend-image {
                 position: absolute;
@@ -30,7 +31,7 @@
             }
 
             .friend-image:nth-child(1) {
-                left: 15%;
+                left: 0%;
                 transform: translate(0%, -50%);
             }
 
@@ -40,7 +41,7 @@
             }
 
             .friend-image:nth-child(3) {
-                left: 85%;
+                left: 100%;
                 transform: translate(-100%, -50%);
             }
         }
@@ -49,7 +50,6 @@
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
-            background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
 
@@ -67,22 +67,35 @@
             flex-flow: column;
             gap: 4px;
 
+            h5 {
+                font-size: 14px;
+            }
+
+            .no-messages {
+                font-size: 14px;
+            }
+
             .last-sent-text-wrapper {
-                max-width: 9vw;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
+                max-width: 120px;
+
+                .last-sent-text, .last-sent-text-author {
+                    font-size: 12px;
+                }
             }
 
             .heading-wrapper {
                 display: inline-block;
-                width: 88px;
+                width: 150px;
                 text-align: start;
                 color: var(--active-primary-text-color);
 
                 h5 {
-                    font-size: 14px;
+                    font-size: 12.5px;
                     display: inline;
+                }
+
+                h5:not(:first-child) {
+                    margin-left: 2px;
                 }
             }
         }
@@ -91,8 +104,19 @@
     .groupchat-avatar-name-wrapper {
         gap: 0;
 
-        .no-messages {
-            font-size: 12px;
+        .text-wrapper {
+            .no-messages {
+                font-size: 11px;
+            }
+
+            .last-sent-text-wrapper {
+                max-width: 120px;
+
+                .last-sent-text-author,
+                .last-seen-text {
+                    font-size: 11.5px;
+                }
+            }
         }
     }
 
@@ -101,6 +125,10 @@
         top: 50%;
         right: 3%;
         transform: translate(0, -50%);
+    }
+
+    .date {
+        white-space: nowrap;
     }
 }
 

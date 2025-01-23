@@ -54,7 +54,6 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
     this.applyDefaultThemeOnStart();
     this.getOnlineFriendsList();
     this.avatarsList = this.avatarService.avatarsList;
-    console.log(this.avatarsList)
   }
   
   private getUser() {

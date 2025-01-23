@@ -1,7 +1,7 @@
 <ng-container *ngIf="user">
     <div class="user-section-component-wrapper">
         <div class="profile-wrapper">
-            <img src="" class="avatar-img-medium" alt="avatar">
+            <img [src]="user.avatar" class="avatar-img-medium" alt="avatar">
             <h3 class="bk-heading-h3">{{user.username}}</h3>
             <span class="bk-info-secondary bio" *ngIf="user.bio">&#64;{{user.bio}}</span>
         </div>

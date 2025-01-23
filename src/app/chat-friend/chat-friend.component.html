@@ -1,8 +1,8 @@
 <div class="profile-wrapper">
-    <img class="avatar-img-medium" src="maxo-lotikashvili.jpeg" alt="friend-avatar" *ngIf="data.friend">
+    <img class="avatar-img-medium" [src]="data.friend.avatar" alt="friend-avatar" *ngIf="data.friend">
 
     <div class="img-wrapper" [ngClass]="{'two-images-wrapper': groupChat.users.length < 3, 'many-images-wrapper': groupChat.users.length > 2}" *ngIf="groupChat">
-        <img *ngFor="let image of groupChat.users | slice: 0:3" src="maxo-lotikashvili.jpeg" alt="friend-avatar">
+        <img *ngFor="let image of groupChat.users | slice: 0:3" [src]="image.avatar" alt="friend-avatar">
         <span class="bk-info-secondary" *ngIf="groupChat.users.length > 3">+{{groupChat.users.length - 3}}</span>
     </div>
     <h3 class="bk-heading-h3" *ngIf="data.friend"> {{data.friend.username}} </h3>
@@ -14,7 +14,7 @@
         </div>
     </ng-container>
     
-    <p class="bk-info-secondary moto" *ngIf="data.friend">&#64;Will I am</p>
+    <p class="bk-info-secondary moto" *ngIf="data.friend && data.friend?.bio">&#64;{{data.friend.bio}}</p>
 </div>
 
 <div class="friend-utility-wrapper">
@@ -70,7 +70,7 @@
         </li>
         <li>
             <h6 class="bk-heading-h6">Email</h6>
-            <span class="bk-info-secondary" *ngIf="data.friend">maxolotilashvili401gmail.com</span>
+            <span class="bk-info-secondary" *ngIf="data.friend">{{data.friend.email}}</span>
             <ng-container *ngIf="groupChat">
                 <p class="groupchat-info-wrapper dots">
                     <span class="bk-info-secondary" *ngFor="let friend of groupChat.users; let last = last">

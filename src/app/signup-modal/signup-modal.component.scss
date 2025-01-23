@@ -12,7 +12,7 @@ $margin-between-inputs: 8px;
     .modal-wrapper {
         position: relative;
         display: flex;
-        width: 85%;
+        width: 95%;
         height: 95%;
         overflow: hidden;
         border-radius: var(--widget-border-radius);
@@ -88,13 +88,38 @@ $margin-between-inputs: 8px;
                     overflow-y: scroll;
 
                     button {
+                        position: relative;
                         border: none;
                         cursor: pointer;
 
                         img {
-                            width: 140px;
-                            height: 140px;
+                            width: 169px;
+                            height: 169px;
                             border-radius: 50%;
+                            object-fit: cover;
+                            object-position: top;
+                        }
+
+                        .overlay {
+                            width: 100%;
+                            height: 100%;
+                            @include flex-center();
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            background: rgba(0, 0, 0, 0.579);
+                            color: #ffffff;
+                            font-family: "Roboto";
+                            font-weight: 600;
+                            font-size: 14px;
+                            border-radius: 50%;
+                            transform: scale(0);
+                            transform-origin: bottom;
+                            transition: transform .07s linear;
+                        }
+
+                        .selected-overlay {
+                            transform: scale(1);
                         }
                     }
                 }

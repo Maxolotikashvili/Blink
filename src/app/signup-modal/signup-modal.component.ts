@@ -26,6 +26,7 @@ export class SignupModalComponent implements OnInit {
   public registerForm!: FormGroup;
   public isUserRegistrationPending: boolean = false;
   public avatarsList: string[] = [];
+  public selectedAvatar!: string;
 
   public get userName(): AbstractControl | null {
     return this.registerForm.get('username');
@@ -78,6 +79,14 @@ export class SignupModalComponent implements OnInit {
     this.modalService.openModal(SigninModalComponent);
   }
 
+  public selectAvatar(avatar: string) {
+    if (this.selectedAvatar === avatar) {
+      return;
+    }
+    
+    this.selectedAvatar = avatar;
+  }
+
   public handleFormSubmit() {
     if (this.registerForm.status !== 'VALID') return;
     this.isUserRegistrationPending = true;
@@ -87,7 +96,7 @@ export class SignupModalComponent implements OnInit {
       bio: this.bio?.value,
       email: this.email?.value,
       password: this.password?.value,
-      avatar: ''
+      avatar: this.selectedAvatar
     }
     
     this.authService.registerUser(user).subscribe({
@@ -105,15 +114,17 @@ export class SignupModalComponent implements OnInit {
 
   private handleRegistrationErrors(err: HttpErrorResponse) {
     if (err.status === 400) {
-      if (err.error.detail === 'Username already taken') {
-        console.error(`Registration failed with status code of ${err.status}: ${err.error.detail}`)
+      if (err.error.detail.includes('Username already taken')) {
         this.userName?.setErrors({ taken: true });
+        this.matSnack.open(err.error.detail, 'Dismiss', { duration: matSnackDuration });
       }
 
       if (err.error.detail === 'Email already taken') {
-        console.error(`Registration failed with status code of ${err.status}: ${err.error.detail}`)
         this.email?.setErrors({ taken: true })
+        this.matSnack.open(err.error.detail, 'Dismiss', { duration: matSnackDuration });
       }
+    } else {
+      console.error(`Error: ${err.error}`);
     }
   }
 

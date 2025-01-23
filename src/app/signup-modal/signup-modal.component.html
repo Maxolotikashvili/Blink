@@ -60,8 +60,9 @@
                         <h4>Select your avatar</h4>
 
                         <div class="avatars-wrapper">
-                            <button *ngFor="let avatar of avatarsList">
+                            <button *ngFor="let avatar of avatarsList" (click)="selectAvatar(avatar)">
                                 <img [src]="avatar" alt="avatar">
+                                <div class="overlay" [ngClass]="{'selected-overlay': selectedAvatar === avatar}">Selected</div>
                             </button>
                         </div>
                     </ng-template>
@@ -69,7 +70,7 @@
             </mat-stepper>
             
             <div class="button-wrapper">
-                <button class="round-button-big-static" mat-flat-button (click)="handleFormSubmit()" [disabled]="registerForm.status === 'INVALID'">Register</button>
+                <button class="round-button-big-static" mat-flat-button (click)="handleFormSubmit()" [disabled]="registerForm.status === 'INVALID' || !selectedAvatar">Register</button>
                 <a class="bk-nav-link-primary" (click)="openLoginPage()">Login with existing account</a>
             </div>
 

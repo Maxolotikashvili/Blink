@@ -1,6 +1,6 @@
 <div class="text-area-component-wrapper">
     <div class="messages-wrapper" #messagesWrapper> 
-        <div class="message" [ngClass]="{'friend-message': message.sender !== 'user'}" *ngFor="let message of chatList; let i = index">
+        <div class="message" [ngClass]="{'friend-message': message.sender !== 'user'}" *ngFor="let message of chatList; let i = index; trackBy: trackByMessage">
          
             <div class="date-separator" *ngIf="shouldShowDateSeparator(i)">
                 <div class="line"></div>
@@ -11,16 +11,15 @@
             <div class="text-wrapper">
                 <div class="groupchat-message-sender-wrapper" *ngIf="groupChat && message.sender !== 'user' && chatList[i]?.sender !== chatList[i-1]?.sender">
                     <span class="bk-info-secondary">{{message.sender}}</span>
-                    <img class="avatar-img-small" src="maxo-lotikashvili.jpeg" alt="avatar">
+                    <img class="avatar-img-small" [src]="message.senderAvatar" *ngIf="message.senderAvatar" alt="avatar">
                 </div>
 
                 <div class="timestamp-text-wrapper">
                     <span class="bk-info-secondary date" [ngClass]="{'date-active': clickedTextIndex === i + 1}"> {{message.timeStamp | date: 'hh:mm'}} </span>
-                    
                     <button class="text" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="showTextDeliveryTime(i)">{{message.text}}</button>  
                 </div>
 
-                <div class="bk-info-secondary seen" *ngIf="message.lastSeen">seen</div>
+                <img class="seen" [src]="friend?.avatar" *ngIf="message.lastSeen">
 
                 <div class="is-seen-by-wrapper" *ngIf="message.isSeenBy && message.isSeenBy.length > 0">
                     <span class="bk-info-secondary">seen by:</span>

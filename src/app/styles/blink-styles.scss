@@ -236,15 +236,19 @@
 } 
 
 .avatar-img-medium  {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
 } 
 
 .avatar-img-small {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
 } 
 
 .dots {
