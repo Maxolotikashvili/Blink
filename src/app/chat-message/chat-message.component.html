@@ -14,7 +14,7 @@
                 </p>
             </div>
         </div>
-            
+        
         <span class="bk-date-primary" *ngIf="friend.messages.length > 0 && !(friend.messages | unseenTextsLength)">{{friend.messages[friend.messages.length - 1].timeStamp | chatDate}}</span>
         <div class="bk-notification-circle" *ngIf="friend.messages | unseenTextsLength">{{friend.messages | unseenTextsLength}} </div>
     </button>
