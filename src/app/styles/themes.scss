@@ -12,6 +12,32 @@
 
 // Active theme
 :root {
+    --active-app-background: var(--chronoflux-app-background);
+    --active-icons-background: var(--chronoflux-icons-background);
+    --active-icons-color: var(--chronoflux-icons-color);
+    --active-widget-conture-color: var(--chronoflux-widget-conture-color);
+    --active-user-widget-background: var(--chronoflux-user-widget-background);
+    --active-user-divider-color: var(--chronoflux-user-divider-color);
+    --active-user-message-background: var(--chronoflux-user-message-background);
+    --active-user-message-border-color: var(--chronoflux-user-message-border-color);
+    --active-textarea-widget-background: var(--chronoflux-textarea-widget-background);
+    --active-friend-widget-background: var(--chronoflux-friend-widget-background);
+    --active-friend-message-background: var(--chronoflux-friend-message-background);
+    --active-text-color-1: var(--chronoflux-text-color-1);
+    --active-text-color-2: var(--chronoflux-text-color-2);
+    --active-text-color-3: var(--chronoflux-text-color-3);
+    --active-text-color-4: var(--chronoflux-text-color-4);
+    --active-text-color-5: var(--chronoflux-text-color-5);
+    --active-text-color-6: var(--chronoflux-text-color-6);
+    --active-text-color-7: var(--chronoflux-text-color-7);
+    --active-text-color-8: var(--chronoflux-text-color-8);
+    --active-text-color-9: var(--chronoflux-text-color-9);
+    --active-text-color-10: var(--chronoflux-text-color-10);
+}
+
+
+// Active theme
+:root {
     --active-primary-text-color: var(--synthwave-primary-text-color);
     --active-secondary-text-color: var(--synthwave-secondary-text-color);
     --active-button-background-color: var(--synthwave-button-background-color);
@@ -94,6 +120,130 @@
     --darkmode-modal-texts-color: #aaaaaa;
     --darkmode-modal-button-background-color: #7e7e7e;
 }
+
+// Chronoflux
+:root {
+    --chronoflux-app-background: #270041;
+    --chronoflux-icons-background: #DDD6FE;
+    --chronoflux-widget-conture-color: #DDD6FE;
+    --chronoflux-icons-color: #000000;
+    --chronoflux-user-widget-background: #200037;
+    --chronoflux-user-divider-color: #DDD6FE;
+    --chronoflux-user-message-background: #F5F3FF;
+    --chronoflux-user-message-border-color: #2E1065;
+    --chronoflux-textarea-widget-background: unset;
+    --chronoflux-friend-widget-background: transparent; 
+    --chronoflux-friend-message-background: #2E1065;
+    --chronoflux-text-color-1: #ffffff;
+    --chronoflux-text-color-2: #E5E7EB;
+    --chronoflux-text-color-3: #F9FAFB;
+    --chronoflux-text-color-4: #F3F4F6;
+    --chronoflux-text-color-5: var(--chronoflux-text-color-3);
+    --chronoflux-text-color-6: var(--chronoflux-text-color-2);
+    --chronoflux-text-color-7: var(--chronoflux-text-color-3);
+    --chronoflux-text-color-8: var(--chronoflux-text-color-2);
+    --chronoflux-text-color-9: #000000;
+    --chronoflux-text-color-10: var(--chronoflux-text-color-1);
+}
+
+// Timberly 
+:root {
+    --timberly-app-background: #E6F5D9;
+    --timberly-icons-background: #042F2E;
+    --timberly-widget-conture-color: #042F2E;
+    --timberly-icons-color: #FFFFFF;
+    --timberly-user-widget-background: #042F2E;
+    --timberly-user-divider-color: #F0FDFA;
+    --timberly-user-message-background: #042F2E;
+    --timberly-user-message-border-color: unset;
+    --timberly-textarea-widget-background: unset;
+    --timberly-friend-widget-background: transparent; 
+    --timberly-friend-message-background: #E6F5D9;
+    --timberly-text-color-1: #ffffff;
+    --timberly-text-color-2: #D1D5DB;
+    --timberly-text-color-3: #F9FAFB;
+    --timberly-text-color-4: var(--timberly-text-color-1);
+    --timberly-text-color-5: var(--timberly-text-color-3);
+    --timberly-text-color-6: var(--timberly-text-color-3);
+    --timberly-text-color-7: var(--timberly-text-color-3);
+    --timberly-text-color-8: #E5E7EB;
+    --timberly-text-color-9: var(--timberly-text-color-1);
+    --timberly-text-color-10: #000000;
+}
+
+// Auraline
+:root {
+    --auraline-app-background: #0D47A3;
+    --auraline-icons-background: #DBEAFE;
+    --auraline-friend-widget-conture-color: #EFF6FF;
+    --auraline-icons-color: #000000;
+    --auraline-user-widget-background: #BAE6FD;
+    --auraline-user-divider-color: #172554;
+    --auraline-user-message-background: #BAE6FD;
+    --auraline-user-message-border-color: unset;
+    --auraline-textarea-widget-background: unset;
+    --auraline-friend-widget-background: transparent; 
+    --auraline-friend-message-background: #1E3A8A;
+    --auraline-text-color-1: #000000;
+    --auraline-text-color-2: #374151;
+    --auraline-text-color-3: var(--auraline-text-color-2);
+    --auraline-text-color-4: #1F2937;
+    --auraline-text-color-5: var(--auraline-text-color-2);
+    --auraline-text-color-6: var(--auraline-text-color-2);
+    --auraline-text-color-7: #111827;
+    --auraline-text-color-8: #4B5563;
+    --auraline-text-color-9: var(--auraline-text-color-1);
+    --auraline-text-color-10: #ffffff;
+}
+
+// Darkbloom
+:root {
+    --darkbloom-app-background: #020617;
+    --darkbloom-widget-conture-color: #EFF6FF;
+    --darkbloom-icons-background: #F8FAFC;
+    --darkbloom-icons-color: #000000;
+    --darkbloom-user-widget-background: #0F172A;
+    --darkbloom-user-divider-color: #172544;
+    --darkbloom-user-message-background: #CBD5E1;
+    --darkbloom-textarea-widget-background: linear-gradient(0deg, rgba(15,23,42,1) 0%, rgba(43,51,70,1) 33%, rgba(51,65,85,1) 67%, rgba(100,116,139,1) 100%);
+    --darkbloom-friend-widget-background: #020617;
+    --darkbloom-friend-message-background: #1E293B;
+    --darkbloom-text-color-1: #ffffff;
+    --darkbloom-text-color-2: #DBDBDB;
+    --darkbloom-text-color-3: #F1F5F9;
+    --darkbloom-text-color-4: #F8FAFC;
+    --darkbloom-text-color-5: var(--darkbloom-text-color-3);
+    --darkbloom-text-color-6: #CBD5E1;
+    --darkbloom-text-color-7: var(--darkbloom-text-color-4);
+    --darkbloom-text-color-8: var(--darkbloom-text-color-3);
+    --darkbloom-text-color-9: #000000;
+    --darkbloom-text-color-10: var(--darkbloom-text-color-1);
+}
+
+// Albescent
+:root {
+    --albescent-app-background: #F1F5F9;
+    --albescent-widget-conture-color: #202434;
+    --albescent-icons-background: #0F172A;
+    --albescent-icons-color: #000000;
+    --albescent-user-widget-background: #E2E8F0;
+    --albescent-user-divider-color: #0F172A;
+    --albescent-user-message-background: #0F172A;
+    --albescent-textarea-widget-background: linear-gradient(204deg, rgba(241,245,249,1) 0%, rgba(203,213,225,1) 33%, rgba(200,210,224,1) 67%, rgba(161,175,195,1) 100%);
+    --albescent-friend-widget-background: #F1F5F9;
+    --albescent-friend-message-background: #F8FAFC;
+    --albescent-text-color-1: #000000;
+    --albescent-text-color-2: #334155;
+    --albescent-text-color-3: var(--albescent-text-color-2);
+    --albescent-text-color-4: #1E293B;
+    --albescent-text-color-5: var(--albescent-text-color-2);
+    --albescent-text-color-6: #64748B;
+    --albescent-text-color-7: #0F172A;
+    --albescent-text-color-8: #475569;
+    --albescent-text-color-9: #ffffff;
+    --albescent-text-color-10: var(--albescent-text-color-1);
+}
+
 
 :root {
     --light-text-primary-color: #ffffff;

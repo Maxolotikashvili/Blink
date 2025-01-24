@@ -2,3 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Mandali&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 // Jakarta
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@mixin default-font {
+    font-family: "Plus Jakarta Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+}
