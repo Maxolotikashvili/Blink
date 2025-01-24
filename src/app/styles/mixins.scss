@@ -25,8 +25,8 @@
 }
 
 @mixin button {
-    background: var(--active-button-background-color) !important;
-    color: var(--active-button-text-color) !important;
+    background: var(--active-icon-background) !important;
+    color: var(--active-icon-color) !important;
     letter-spacing: 1px !important;
 }
 

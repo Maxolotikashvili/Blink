@@ -2,18 +2,18 @@
     [ngStyle]="{'transform': 'translateX(' + sidebarLocationX + 'px)'}">
     <div class="top-side-buttons-wrapper">
         <button (click)="openAddFriendModal()">
-            <img src="emoji.png" alt="image">
+            <div class="add-friend"></div>
         </button>
         <button (click)="openNotificationsModal()">
             <div class="bk-notification-circle notification-size" *ngIf="userNotificationsLength$ | async as userNotificationsLength">{{userNotificationsLength}}</div>
-            <img src="emoji.png" alt="image">
+            <div class="notifications"></div>
         </button>
         <button (click)="openGroupChatModal()">
-            <img src="emoji.png" alt="image">
+            <div class="create-group-chat"></div>
         </button>
     </div>
 
-    <button>
-        <img src="emoji.png" (click)="logOut()" alt="">
+    <button (click)="logOut()">
+        <div class="log-out"></div>
     </button>
 </div>

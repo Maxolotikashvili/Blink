@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Friend } from '../model/friend.model';
 import { GroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,8 @@ import { matSnackDuration } from '../styles/active-theme-variables';
   selector: 'app-chat-friend',
   imports: [CommonModule, MatDividerModule],
   templateUrl: './chat-friend.component.html',
-  styleUrl: './chat-friend.component.scss'
+  styleUrl: './chat-friend.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatFriendComponent implements OnDestroy, OnChanges {
   @Input() data!: { friend?: Friend, groupChat?: GroupChat };

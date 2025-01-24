@@ -28,17 +28,7 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
   public onlineFriendsList: Friend[] = [];
   public avatarsList: string[] = [];
 
-  test(a: any) {
-    console.log(a, 'template')
-  }
-
-  themeNameList: { displayName: string, key: Theme, background: string }[] = [
-    { displayName: 'Synth', key: 'synthwave', background: 'var(--synthwave-button-background-color)' },
-    { displayName: 'Forest', key: 'forest', background: 'var(--darkmode-wallpaper-color)' },
-    { displayName: 'Kyanite', key: 'kyanite', background: 'var(--darkmode-wallpaper-color)' },
-    { displayName: 'Dark', key: 'darkmode', background: 'var(--darkmode-wallpaper-color)' },
-    { displayName: 'Light', key: 'lightmode', background: 'var(--darkmode-wallpaper-color)' }
-  ];
+  themeNameList: Theme[] = ['chronoflux', 'timberly', 'auraline', 'darkbloom', 'albescent'];
 
   constructor(
     private themeService: ThemeService,
@@ -53,8 +43,9 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
     this.getUser();
     this.applyDefaultThemeOnStart();
     this.getOnlineFriendsList();
-    this.avatarsList = this.avatarService.avatarsList;
+    this.getAvatars();
   }
+  
   
   private getUser() {
     const subscription = this.authService.user$.subscribe((user: User) => {
@@ -62,10 +53,10 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
       
       this.filterOnlineFriends();
     });
-
+    
     this.subscriptions.add(subscription);
   }
-
+  
   private filterOnlineFriends() {
     const onlineFriends = this.user.friendsList.filter((friend) => friend.isOnline);
     if (onlineFriends.length > 0) {
@@ -74,17 +65,24 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
       this.onlineFriendsList = [];
     }
   }
-
+  
   private getOnlineFriendsList() {
     this.socketService.connect('connect');
   }
-
+  
   private applyDefaultThemeOnStart() {
     this.themeService.changeThemeTo('default');
+  }
+  
+  private getAvatars() {
+    this.avatarsList = this.avatarService.avatarsList;
   }
 
   public changeTheme(theme: Theme) {
     const subscription = this.themeService.changeThemeTo(theme)?.subscribe({
+      next: (res) => {
+        console.log(res);
+      },
 
       error: (err) => {
         this.matSnack.open(err.detail ? err.detail : 'Error saving theme, try again later', 'Dismiss', { duration: matSnackDuration });

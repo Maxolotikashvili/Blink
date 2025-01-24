@@ -1,8 +1,8 @@
 <div class="notifications-component-wrapper">
 
     <div class="modal-wrapper bk-modal">
-        <h3 class="bk-modal-heading">Notifications</h3>
-        <app-x-mark [size]="'default'" [color]="'var(--active-textarea-message-background-color-friend)'" [isForBurger]="false"></app-x-mark>
+        <h3 class="bk-text-xxl">Notifications</h3>
+        <app-x-mark [size]="'default'" [color]="'var(--active-text-color-10)'" [isForBurger]="false"></app-x-mark>
 
         <div class="notifications-wrapper" *ngIf="notifications">
             <div class="notification-wrapper" *ngFor="let notification of notifications">
@@ -13,8 +13,8 @@
 
                 <div class="notification" *ngIf="notification.displayMessage">
                         <span class="notification-type bk-info-primary" *ngIf="notification.type === 'friend-request'">Connect</span>
-                        <p class="bk-modal-text" [ngStyle]="{'font-weight': !notification.isSeenByUser ? '800' : 'unset'}">{{notification.displayMessage}}</p>
-                        <span class="bk-modal-date" [ngStyle]="{'font-weight': !notification.isSeenByUser ? '800' : 'unset'}">{{notification.timeStamp | chatDate}}</span>
+                        <p class="bk-text-m message" [ngStyle]="{'font-weight': !notification.isSeenByUser ? '800' : 'unset'}">{{notification.displayMessage}}</p>
+                        <span class="bk-text-xs date" [ngStyle]="{'font-weight': !notification.isSeenByUser ? '800' : 'unset'}">{{notification.timeStamp | chatDate}}</span>
                 </div>
 
                 <div class="buttons-wrapper" *ngIf="notification.isIncoming && notification.status === 'pending'">
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <h2 class="no-notifications-text" *ngIf="notifications.length === 0">No notifications to display</h2>
+            <h2 class="no-notifications-text bk-text-xl" *ngIf="notifications.length === 0">No notifications to display</h2>
         </div>
 
     </div>

@@ -2,88 +2,84 @@
 @use "./themes.scss" as *;
 @use "./fonts.scss" as *;
 
-.bk-heading-h1 {
+.bk-h1 {
     font-size: 54px;
-    font-family: 'Roboto';   
-    font-weight: 500;
+    font-family: $default-font;
     color: var(--static-heading-color);
 }
 
-.bk-heading-h2 {
+.bk-h2 {
     font-size: 40px;
-    font-family: 'Roboto';
-    font-weight: 500;
+    font-family: $default-font;
     color: var(--static-heading-color);
     transition: color var(--global-transition-parameters);
 }
 
-.bk-heading-h3 {
-    font-size: 22px;
-    font-weight: 600;
-    font-family: 'Roboto';
-    color: var(--active-primary-text-color);
+.bk-text-xxl {
+    font-size: 26px;
+    font-family: $default-font;
     letter-spacing: 1px;
     transition: color var(--global-transition-parameters);
 }
 
-.bk-heading-h4 {
+.bk-text-xl {
     font-size: 18px;
-    font-weight: 400;
-    font-family: 'Roboto';
-    color: var(--active-primary-text-color);
+    font-family: $default-font;
     transition: color var(--global-transition-parameters);
 }
 
-.bk-heading-h5 {
+.bk-text-l {
     font-size: 16px;
-    font-weight: 300;
-    font-family: 'Roboto';
-    color: var(--active-primary-text-color);
+    font-family: $default-font;
     transition: color var(--global-transition-parameters);
 }
 
-.bk-heading-h6 {
-    font-size: 12px;
-    font-weight: 500;
-    font-family: 'Roboto';
-    color: var(--active-primary-text-color);
-    transition: color var(--global-transition-parameters);
-}
-
-.bk-info-primary {
-    font-size: 12px;
-    font-weight: 400;
-    font-family: 'Roboto';
-    color: var(--active-primary-text-color);
-    transition: color var(--global-transition-parameters);
-}
-
-.bk-info-secondary {
+.bk-text-m {
     font-size: 14px;
-    font-weight: 300;
-    font-family: 'Roboto';
-    color: var(--active-secondary-text-color);
+    font-family: $default-font;
     transition: color var(--global-transition-parameters);
 }
 
-.bk-date-primary {
-    font-size: 10px;
+.bk-text-s {
+    font-size: 12.5px;
+    font-family: $default-font;
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-text-xs {
+    font-size: 11.5px;
+    font-family: $default-font;
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-text-xxs {
+    font-size: 10.5px;
+    font-family: $default-font;
+    transition: color var(--global-transition-parameters);
+}
+
+.bk-text-light {
+    font-weight: 300;
+}
+
+.bk-text-normal {
     font-weight: 400;
-    font-family: 'Roboto';
-    color: var(--active-secondary-text-color);
-    transition: color var(--global-transition-parameters);
 }
 
-.bk-date-secondary {
-    font-size: 10px;
-    font-weight: 300;
-    font-family: 'Roboto';
-    color: var(--active-secondary-text-color);
-    transition: color var(--global-transition-parameters);
+.bk-text-medium {
+    font-weight: 500;
+}
+
+.bk-text-semibold {
+    font-weight: 600;
+}
+
+.bk-text-bold {
+    font-weight: 800;
 }
 
 .bk-nav-link-primary {
-    font-family: "Roboto";
+    font-family: $default-font;
     font-weight: 300;
     line-height: 27px;
     font-size: 16px;
@@ -95,28 +91,6 @@
 
 .bk-nav-link-primary:hover {
     color: var(--static-nav-link-primary-color-hover);
-}
-
-.bk-nav-link-secondary {
-    font-size: 12px;
-    font-weight: 400;
-    font-family: 'Roboto';
-    color: var(--static-nav-link-secondary-color);
-    transition: color var(--global-transition-parameters);
-    cursor: pointer;
-}
-
-.bk-nav-link-secondary:hover {
-    color: var(--static-nav-link-secondary-color-hover);
-}
-
-.bk-article-text {
-    font-family: "Roboto";
-    font-weight: 300;
-    line-height: 27px;
-    font-size: 16px;
-    color: var(--static-article-text-color);
-    transition: color var(--global-transition-parameters);
 }
 
 .bk-important-word {
@@ -132,12 +106,6 @@
 .bk-modal-text {
     font-weight: 400;
     color: var(--active-modal-texts-color);
-}
-
-.bk-modal-date {
-    font-weight: 500;
-    color: #c3c7d3; //var
-    font-size: 12px;
 }
 
 // 
@@ -178,6 +146,14 @@
     border-radius: 6px !important;
 }
 
+.square-button-s {
+    @include button();
+    min-width: 70px !important;
+    height: 45px !important;
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
+    border-radius: 100px !important;
+}
+
 .square-button-small {
     @include button();
     min-width: 100px !important;
@@ -190,7 +166,7 @@
     @include button-static();
     min-width: 100px !important;
     min-height: 30px !important;
-    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);        
+    transition: background var(--global-transition-parameters), color var(--global-transition-parameters);
 }
 
 .round-button-medium-static {
@@ -212,8 +188,7 @@
 .round-button-big[disabled],
 .round-button-small-static[disabled],
 .round-button-medium-static[disabled],
-.round-button-big-static[disabled]
-{
+.round-button-big-static[disabled] {
     background: rgb(211, 211, 211) !important;
 }
 
@@ -222,37 +197,62 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: rgb(209, 0, 0);
+    background: rgb(223, 0, 0);
     color: #ffffff;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 12px;
 }
 
-//
-.avatar-img-big {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-} 
-
-.avatar-img-medium  {
-    width: 100px;
-    height: 100px;
+.bk-img-l {
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     object-fit: cover;
     object-position: top;
-} 
+}
 
-.avatar-img-small {
+.bk-img-m {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.bk-img-s {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
     object-position: top;
-} 
+}
+
+.bk-img-xs {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+}
 
 .dots {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color: var(--active-text-color-1);
+}
+
+.name-on-hover {
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-out;
+}
+
+.theme-button:hover,
+.friend-utility:hover {
+    .name-on-hover {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

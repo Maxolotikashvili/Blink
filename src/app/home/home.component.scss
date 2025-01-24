@@ -38,6 +38,11 @@ $component-padding: 40px;
             flex-flow: column;
             align-items: flex-start;
             gap: $gap-between-texts;
+            
+            .article-text {
+                color: var(--static-article-text-color);
+                line-height: 27px;
+            }
         }
 
         .background-image {

@@ -7,6 +7,11 @@ $image-size: 90px;
 .profile-wrapper {
     @include flex-center();
     flex-flow: column;
+    margin-bottom: 20px;
+
+    .friend-name {
+        color: var(--active-text-color-1);
+    }
 
     .groupchat-heading-wrapper {
         display: inline-block;
@@ -42,6 +47,7 @@ $image-size: 90px;
     .many-images-wrapper {
         position: relative;
         height: $image-size;
+        margin-bottom: 10px;
 
         img {
             position: absolute;
@@ -68,22 +74,26 @@ $image-size: 90px;
     }
 
     img {
-        margin-bottom: 10px;
+        // margin-bottom: 10px;
     }
 
     .moto {
-        margin-top: 5px;
+        color: var(--active-text-color-2);
     }
 }
 
 .friend-utility-wrapper {
-    margin: $margin-from-divider 0;
-    padding: 0 5px;
+    @include flex-center();
+    border-top: 1px solid var(--active-widget-conture-color);
+    border-bottom: 1px solid var(--active-widget-conture-color);
+    height: 140px;
 
     ul {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: baseline;
+        width: 100%;
+        padding-top: 24px;
 
         li {
             display: flex;
@@ -135,44 +145,14 @@ $image-size: 90px;
 
             span {
                 text-align: center;
-            }
-
-            .label {
-                white-space: nowrap;
-                opacity: 0;
-                transform: translateY(-5px);
-                transition: transform 0.2s ease-out;
-            }
-
-        }
-
-        li:hover {
-            .label {
-                opacity: 1;
-                transform: translateY(0);
+                color: var(--active-text-color-4);
             }
         }
     }
 }
 
-.friend-info-wrapper {
-    margin: $margin-from-divider 0;
-
-    ul {
-        display: flex;
-        flex-flow: column;
-        gap: 20px;
-
-        li {
-            .groupchat-info-wrapper {
-                display: inline-block;
-                width: 100%;
-                color: var(--active-primary-text-color);
-                
-                span:not(:nth-child(1)) {
-                    margin-left: 8px;
-                }
-            }
-        }
-    }
+.no-friend {
+    @include position-center();
+    width: max-content;
+    white-space: nowrap;
 }

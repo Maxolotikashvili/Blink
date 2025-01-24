@@ -1,20 +1,20 @@
 <ng-container *ngIf="user">
     <div class="user-section-component-wrapper">
         <div class="profile-wrapper">
-            <img [src]="user.avatar" class="avatar-img-medium" alt="avatar">
-            <h3 class="bk-heading-h3">{{user.username}}</h3>
-            <span class="bk-info-secondary bio" *ngIf="user.bio">&#64;{{user.bio}}</span>
+            <img [src]="user.avatar" class="bk-img-l" alt="avatar">
+            <span class="bk-text-xxl user-name">{{user.username}}</span>
+            <span class="bk-text-m bio" *ngIf="user.bio">&#64;{{user.bio}}</span>
         </div>
 
-        <mat-divider></mat-divider>
+        <mat-divider aria-label="divider"></mat-divider>
 
         <div class="themes-wrapper">
-            <h4 class="bk-heading-h4">Themes</h4>
+            <h4 class="bk-text-xl">Themes</h4>
 
             <div class="buttons-wrapper">
-                <button *ngFor="let theme of themeNameList" (click)="changeTheme(theme.key)">
-                    <div class="circle" [ngStyle]="{'background': theme.background}">{{theme.displayName[0]}}</div>
-                    <span class="bk-info-primary">{{theme.displayName}}</span>
+                <button class="theme-button" *ngFor="let theme of themeNameList" (click)="changeTheme(theme)">
+                    <div class="circle">{{theme[0] | uppercase}}</div>
+                    <span class="bk-text-xs name-on-hover">{{theme | titlecase}}</span>
                 </button>
             </div>
         </div>
@@ -22,13 +22,13 @@
         <mat-divider aria-label="divider"></mat-divider>
 
         <div class="chats-wrapper">
-            <h4 class="bk-heading-h4">Chats</h4>
+            <h4 class="bk-text-xl">Chats</h4>
 
             <mat-tab-group class="chat-tab" mat-stretch-tabs="true" animationDuration="230">
                 <mat-tab label="Friends" labelClass="labels">
                     <app-chat-message *ngIf="user.friendsList" [data]="{username: user.username, friendsList: user.friendsList}"></app-chat-message>
                     <div class="empty-message-wrapper" *ngIf="user.friendsList && user.friendsList.length === 0">
-                        <p class="bk-heading-h5">No friends to show</p>
+                        <p class="bk-text-m">No friends to show</p>
                         <button mat-button (click)="openAddFriendModal()">Add friends</button>
                     </div>
                 </mat-tab>
@@ -36,13 +36,13 @@
                 <mat-tab label="Online" labelClass="labels">
                     <app-chat-message *ngIf="onlineFriendsList" [data]="{username: user.username, friendsList: onlineFriendsList, isOnline: true}"></app-chat-message>
                     <div class="empty-message-wrapper" *ngIf="onlineFriendsList.length === 0">
-                        <p class="bk-heading-h5">No online friends</p>
+                        <p class="bk-text-m">No online friends</p>
                     </div>
                 </mat-tab>
                 <mat-tab label="Group chats" labelClass="labels">
                     <app-chat-message *ngIf="user.groupChatsList" [data]="{username: user.username, groupChatList: user.groupChatsList}"></app-chat-message>
                     <div class="empty-message-wrapper" *ngIf="user.groupChatsList.length === 0">
-                        <p class="bk-heading-h5">No groupchats to show</p>
+                        <p class="bk-text-m">No groupchats to show</p>
                         <button mat-button (click)="openGroupChatModal()">Create groupchat</button>
                     </div>
                 </mat-tab>

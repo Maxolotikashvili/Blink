@@ -23,8 +23,8 @@
 
     <section class="home-section about-app-section" ng-cloak>
         <div class="heading-wrapper">
-            <h1 class="bk-heading-h1">About Blink</h1>
-            <p class="bk-article-text">Blink is a free, fast and lightweight web chat application designed to provide effective
+            <h1 class="bk-h1 bk-text-medium">About Blink</h1>
+            <p class="bk-text-l article-text">Blink is a free, fast and lightweight web chat application designed to provide effective
                 communication, it ensures a great user experience for real-time conversations.</p>
         </div>
         <img src="about-us.svg" class="background-image" alt="about-us">
@@ -32,8 +32,8 @@
 
     <section class="home-section about-us-section" id="aboutUs" ng-cloak>
         <article class="heading-wrapper">
-            <h2 class="bk-heading-h2">About us</h2>
-            <p class="bk-article-text">We are university students who decided to build something meaningful. In a world of
+            <h2 class="bk-h2 bk-text-medium">About us</h2>
+            <p class="bk-text-l article-text">We are university students who decided to build something meaningful. In a world of
                 rapidly advancing technology, we believe that speed and aesthetics are the most crucial elements in
                 delivering a quality web product. Our goal is to create an experience that's not only fast but also
                 visually
@@ -46,7 +46,7 @@
         <h2 class="bk-heading-h2">Contributors</h2>
         <div class="contributors-wrapper">
             <div class="contributor" *ngFor="let contributor of contributorsList">
-                <img class="avatar-img-big" [src]="contributor.imageUrl">
+                <img class="bk-img-l" [src]="contributor.imageUrl">
                 <div class="text-wrapper">
                     <h5 class="bk-heading-h5">{{contributor.name}}</h5>
                     <span class="bk-info-primary">{{contributor.occupation}}</span>

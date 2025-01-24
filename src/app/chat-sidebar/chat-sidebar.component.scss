@@ -2,6 +2,14 @@
 @use '../styles/global-styles.scss' as *;
 @use '../styles/themes.scss' as *;
 
+@mixin svg {
+    width: 35px;
+    height: 35px;
+    background-color: var(--active-icon-color);
+    -webkit-mask-size: auto;
+    mask-size: auto;
+}
+
 .sidebar-component-wrapper {
     display: flex;
     justify-content: space-between;
@@ -10,8 +18,9 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background: var(--active-sidebar-background-color);
+    background: transparent;
     border-radius: var(--widget-border-radius);
+    border: 1px solid var(--active-widget-conture-color);
     transition: background var(--global-transition-parameters), transform 0.4s ease;
     padding: 40px 10px;
 
@@ -24,8 +33,9 @@
 
     button {
         position: relative;
-        background: none;
         border: none;
+        background: var(--active-icon-background);
+        border-radius: 50%;
         cursor: pointer;
 
         .notification-size {
@@ -37,10 +47,28 @@
             transform: translate(-50%, -50%);
         }
 
-        img {
-            width: 30px;
-            background: var(--active-sidebar-svg-colors);
-            border-radius: 50%;
+        .add-friend {
+            @include svg();
+            -webkit-mask: url('/icons/add-friend.svg') no-repeat center;
+            mask: url('/icons/add-friend.svg') no-repeat center;
+        }
+
+        .notifications {
+            @include svg();
+            -webkit-mask: url('/icons/notifications.svg') no-repeat center;
+            mask: url('/icons/notifications.svg') no-repeat center;
+        }
+
+        .create-group-chat {
+            @include svg();
+            -webkit-mask: url('/icons/create-grou-chat.svg') no-repeat center;
+            mask: url('/icons/create-group-chat.svg') no-repeat center;
+        }
+
+        .log-out {
+            @include svg();
+            -webkit-mask: url('/icons/log-out.svg') no-repeat center;
+            mask: url('/icons/log-out.svg') no-repeat center;
         }
     }
 }

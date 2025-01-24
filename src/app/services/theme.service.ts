@@ -4,16 +4,18 @@ import { API_URL } from "../api_url";
 import { activeVariables } from "../styles/active-theme-variables";
 import { User } from "../model/user.model";
 import { AuthService } from "./auth.service";
-import { take } from "rxjs";
+import { BehaviorSubject, Observable, take } from "rxjs";
 
-export type Theme = 'darkmode' | 'synthwave' | 'kyanite' | 'forest' | 'lightmode';
+export type Theme = 'chronoflux' | 'timberly' | 'auraline' | 'darkbloom' | 'albescent';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ThemeService {
     private activeThemeVariables: string[] = activeVariables;
-    public activeTheme: string = '';
+
+    private activeThemeSubject: BehaviorSubject<Theme> = new BehaviorSubject<Theme>('chronoflux');
+    public activeTheme$: Observable<Theme> = this.activeThemeSubject as Observable<Theme>;
     private user!: User;
 
     constructor(private http: HttpClient, private authService: AuthService) { }
@@ -25,7 +27,7 @@ export class ThemeService {
     }
 
     changeThemeTo(theme: Theme | 'default') {
-        if (theme === this.activeTheme) return;
+        if (theme === this.activeThemeSubject.value) return;
         this.getUser();
 
         if (theme === 'default') {
@@ -48,7 +50,7 @@ export class ThemeService {
 
             if (colorThemeValue) {
                 root.style.setProperty(variable, colorThemeValue);
-                this.activeTheme = themeName;
+                this.activeThemeSubject.next(themeName);
             }
         });
     }

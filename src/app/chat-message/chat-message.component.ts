@@ -18,7 +18,8 @@ import { UnseenGroupTextsLength } from '../pipes/unseen-grouptexts-length.pipe';
 })
 export class ChatMessageComponent {
   @Input() data!: { username: User['username'], friendsList?: Friend[], groupChatList?: GroupChat[], isOnline?: boolean };
-
+  public selectedChat!: Friend['userId'] | GroupChat['chatId']; 
+  
   constructor(
     private chatService: ChatService, 
     private socketService: SocketService,
@@ -26,6 +27,8 @@ export class ChatMessageComponent {
   }
 
   public updateLastSelectedFriend(friend: Friend) {
+    this.selectedChat = friend.userId;
+
     this.chatService.updateLastSelectedFriend(friend);
     const shouldShowSeen = friend.messages.length > 0 && friend.messages[friend.messages.length - 1].isIncoming;
 
@@ -35,6 +38,8 @@ export class ChatMessageComponent {
   }
 
   public updateLastSelectedGroupChat(groupChat: GroupChat) {
+    this.selectedChat = groupChat.chatId;
+
     this.chatService.updateLastSelectedGroupChat(groupChat);
 
     const isMessageIncoming = groupChat.messages.length > 0 && groupChat.messages[groupChat.messages.length -1].isIncoming;

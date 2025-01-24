@@ -23,7 +23,7 @@ export class AuthService {
         avatar: '',
         notifications: [],
         groupChatsList: [],
-        theme: 'synthwave',
+        theme: 'chronoflux',
     }
     private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.initialUserValue);
     readonly user$: Observable<User> = this.userSubject as Observable<User>;

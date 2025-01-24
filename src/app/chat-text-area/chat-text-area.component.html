@@ -1,29 +1,29 @@
-<div class="text-area-component-wrapper">
+<div class="text-area-component-wrapper" [ngClass]="{'chronoflux-theme': activeTheme === 'chronoflux', 'auraline-theme': activeTheme === 'auraline', 'timberly-theme': activeTheme === 'timberly'}">
     <div class="messages-wrapper" #messagesWrapper> 
         <div class="message" [ngClass]="{'friend-message': message.sender !== 'user'}" *ngFor="let message of chatList; let i = index; trackBy: trackByMessage">
          
             <div class="date-separator" *ngIf="shouldShowDateSeparator(i)">
                 <div class="line"></div>
-                <span class="date bk-info-secondary">{{ getDateSeparator(message.timeStamp) }}</span>
+                <span class="date bk-text-m">{{ getDateSeparator(message.timeStamp) }}</span>
                 <div class="line"></div>
             </div>
 
             <div class="text-wrapper">
                 <div class="groupchat-message-sender-wrapper" *ngIf="groupChat && message.sender !== 'user' && chatList[i]?.sender !== chatList[i-1]?.sender">
-                    <span class="bk-info-secondary">{{message.sender}}</span>
-                    <img class="avatar-img-small" [src]="message.senderAvatar" *ngIf="message.senderAvatar" alt="avatar">
+                    <span class="bk-text-s bk-text-semibold">{{message.sender}}</span>
+                    <img class="bk-img-s" [src]="message.senderAvatar" *ngIf="message.senderAvatar" alt="avatar">
                 </div>
 
                 <div class="timestamp-text-wrapper">
-                    <span class="bk-info-secondary date" [ngClass]="{'date-active': clickedTextIndex === i + 1}"> {{message.timeStamp | date: 'hh:mm'}} </span>
-                    <button class="text" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="showTextDeliveryTime(i)">{{message.text}}</button>  
+                    <span class="bk-text-s date" [ngClass]="{'date-active': clickedTextIndex === i + 1}"> {{message.timeStamp | date: 'hh:mm'}} </span>
+                    <button class="text bk-text-s" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="showTextDeliveryTime(i)">{{message.text}}</button>  
                 </div>
 
                 <img class="seen" [src]="friend?.avatar" *ngIf="message.lastSeen">
 
                 <div class="is-seen-by-wrapper" *ngIf="message.isSeenBy && message.isSeenBy.length > 0">
-                    <span class="bk-info-secondary">seen by:</span>
-                    <div class="bk-info-secondary seen" *ngFor="let seenBy of message.isSeenBy; let last = last">
+                    <span class="bk-text-s">seen by:</span>
+                    <div class="bk-text-s seen" *ngFor="let seenBy of message.isSeenBy; let last = last">
                         <span>{{seenBy.username}}<span *ngIf="message.isSeenBy.length > 1 && !last">,</span></span>
                     </div>
                 </div>
@@ -31,15 +31,14 @@
         </div>
     </div>
 
-    <div *ngIf="!friend && !groupChat" class="bk-heading-h4 no-selected-friend-text">Select a chat to start messaging</div>
+    <div *ngIf="!friend && !groupChat" class="bk-text-l no-selected-friend-text">Select a chat to start messaging</div>
     
     <div class="input-area-wrapper" *ngIf="friend || groupChat">
-        <img class="emoji" src="emoji.png" alt="">
+        <img class="emoji" src="mute.png" alt="">
         <div class="divider"></div>
-        <textarea name="textarea" [(ngModel)]="textareaValue" cdkTextareaAutosize="true" rows="1" placeholder="Type here" (keypress)="handleTextSend($event)" #textArea></textarea>
+        <textarea name="textarea" class="bk-text-s" [(ngModel)]="textareaValue" cdkTextareaAutosize="true" rows="1" placeholder="Type here" (keypress)="handleTextSend($event)" #textArea></textarea>
 
-        <button mat-flat-button class="square-button-small" type="button" (click)="handleTextSend($event)">
-            <span class="send-text">Send</span>
+        <button mat-flat-button class="square-button-s" type="button" (click)="handleTextSend($event)">
             <img class="icon" src="send.png" alt="send">
         </button>
     </div>

@@ -3,11 +3,12 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation 
 import { MaterialModule } from '../shared-modules/materia.module';
 import { SocketService } from '../services/socket.service';
 import { Friend, FriendMessage, Message } from '../model/friend.model';
-import { map, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { ChatService } from '../services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { GroupChat, GroupChatMessage } from '../model/groupchat.model';
+import { Theme, ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-chat-text-area',
@@ -26,15 +27,26 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   public groupChat!: GroupChat | undefined;
   public textareaValue: string = '';
   public clickedTextIndex: number | null = null;
+  public activeTheme!: Theme;
 
   constructor(
     private chatService: ChatService,
     private socketService: SocketService,
-    private authService: AuthService
+    private authService: AuthService,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit(): void {
+    this.getActiveTheme();
     this.fetchFriendChatData();
+  }
+
+  private getActiveTheme() {
+    const subscription = this.themeService.activeTheme$.subscribe((theme) => {
+      this.activeTheme = theme;
+    });
+
+    this.activeSubscriptions.add(subscription);
   }
 
   private fetchFriendChatData() {

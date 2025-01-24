@@ -14,7 +14,11 @@
         gap: 50px;
         padding: 30px;
         border-radius: var(--widget-border-radius);
-        background: var(--active-modal-background-color);
+        background: var(--active-app-background);
+
+        h3 {
+            color: var(--active-text-color-1);
+        }
 
         .form-wrapper {
             width: 100%;
@@ -26,11 +30,11 @@
                 width: 100%;
 
                 mat-label {
-                    color: var(--active-textarea-color);
+                    color: var(--active-text-color-1);
                 }
 
                 input {
-                    color: var(--active-textarea-color);
+                    color: var(--active-text-color-1);
                 }
             }
         }
@@ -44,6 +48,18 @@
             mat-form-field {
                 width: 80%;
                 align-self: center;
+
+                mat-label {
+                    color: var(--active-text-color-2);
+                }
+
+                input {
+                    color: var(--active-text-color-1);
+                }
+
+                mat-icon {
+                    color: var(--active-text-color-2);
+                }
             }
 
             .friends-wrapper {
@@ -64,6 +80,10 @@
                         display: flex;
                         align-items: center;
                         gap: 10px;
+
+                        .friend-name {
+                            color: var(--active-text-color-1);
+                        }
                     }
 
                     .add-button,
@@ -73,10 +93,9 @@
                         height: 40px;
                         border: none;
                         border-radius: 50%;
-                        background: var(--active-modal-button-background-color);
+                        background: var(--active-icon-background);
                         font-size: 24px;
                         font-weight: 300;
-                        color: var(--active-textarea-message-background-color-friend);
                         cursor: pointer;
                         transition: all 0.2s linear;
                     }
@@ -88,7 +107,7 @@
                     }
 
                     .add-button:hover {
-                        background: var(--active-textarea-message-background-color-friend);
+                        background: var(--active-text-color-1);
                         color: var(--active-modal-button-background-color);
                     }
 
@@ -103,8 +122,8 @@
                         left: 30%;
                         width: 8px;
                         height: 18px;
-                        border-bottom: 3px solid var(--active-textarea-message-background-color-friend);
-                        border-right: 3px solid var(--active-textarea-message-background-color-friend);
+                        border-bottom: 3px solid var(--active-text-color-1);
+                        border-right: 3px solid var(--active-text-color-1);
                         transform: rotate(45deg) translate(-50%, -50%);
                         transition: all 0.2s linear;
                     }
@@ -116,19 +135,19 @@
             }
 
             .create-button {
-                width: 40%;
+                width: 30%;
                 height: 44px;
                 align-self: center;
                 border: none;
                 background: none;
-                border-radius: 5px;
-                background: var(--active-textarea-message-background-color-friend);
-                color:  var(--light-text-primary-color);
+                border-radius: 50px;
+                background: var(--active-icon-background);
+                color:  var(--active-icon-color);
                 transition: background .3s linear;
             }
 
             .create-button:disabled {
-                background: var(--synthwave-modal-button-background-color);
+                background: rgb(211, 211, 211) !important;
             }
         }
     }

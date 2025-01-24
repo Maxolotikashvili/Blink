@@ -29,6 +29,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 mat-divider {
-    border-top-color: var(--active-widget-dividers-color) !important;
+    border-top-color: var(--active-widget-conture-color) !important;
     transition: border-color var(--global-transition-parameters);
 }

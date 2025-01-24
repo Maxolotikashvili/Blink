@@ -1,8 +1,8 @@
 <div class="group-chat-modal-component-wrapper">
     <div class="modal-wrapper">
         <app-loader *ngIf="isLoading$ | async"></app-loader>
-        <app-x-mark [size]="'default'" [color]="'var(--active-textarea-message-background-color-friend)'" [isForBurger]="false"></app-x-mark>
-        <h3 class="bk-modal-heading">Create group chat</h3>
+        <app-x-mark [size]="'default'" [color]="'var(--active-text-color-1)'" [isForBurger]="false"></app-x-mark>
+        <h3 class="bk-text-xxl">Create group chat</h3>
 
         <div class="friends-list-wrapper">
             <mat-form-field>
@@ -18,8 +18,8 @@
             <div class="friends-wrapper">
                 <div class="friend" *ngFor="let friend of friends$ | async as friends">
                     <div class="img-name-wrapper">
-                        <img class="avatar-img-small" [src]="friend.avatar" alt="avatar">
-                        <span>{{friend.username}}</span>
+                        <img class="bk-img-s" [src]="friend.avatar" alt="avatar">
+                        <span class="bk-text-m friend-name">{{friend.username}}</span>
                     </div>
                     <button class="add-button" [ngClass]="{'added': selectedFriendsList.includes(friend.username)}" (click)="addFriendToGroupChat(friend)"></button>
                 </div>

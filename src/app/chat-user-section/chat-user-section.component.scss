@@ -7,9 +7,10 @@ $margin-between-cards: 20px;
 .user-section-component-wrapper {
     position: relative;
     height: 100%;
+    background: var(--active-user-widget-background);
     padding: var(--chat-widgets-padding);
     border-radius: var(--widget-border-radius);
-    border: 1px var(--active-widget-border-type) var(--active-widget-border-color-user);
+    border: 2px solid var(--active-user-textarea-border-colors);
     transition: border var(--global-transition-parameters);
     user-select: none;
 
@@ -18,29 +19,30 @@ $margin-between-cards: 20px;
         flex-flow: column;
         margin-bottom: 20px;
 
-        img {
-            margin-bottom: 10px;
+        .user-name {
+            color: var(--active-text-color-3);
         }
 
         .bio {
-            margin-top: 5px;
+            color: var(--active-text-color-2);
         }
     }
 
     .themes-wrapper {
         margin: $margin-between-cards 0;
 
-        h3 {
-            margin-bottom: 12px;
+        h4 {
+            padding-left: 10px;
+            color: var(--active-text-color-3);
         }
 
         .buttons-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            margin-top: 19px;
+            padding-inline: 5px;
 
-            button {
+            .theme-button {
                 @include flex-center();
                 flex-flow: column;
                 gap: 4px;
@@ -53,23 +55,42 @@ $margin-between-cards: 20px;
                     width: 40px;
                     height: 40px;
                     border-radius: 50%;
-                    color: #ffffff;
+                    background: var(--active-theme-background);
+                    color: var(--active-text-color-10);
                     font-size: 16px;
                     font-weight: 800;
                     transition: background var(--global-transition-parameters);
+                }
+
+                span {
+                    color: var(--active-text-color-4);
                 }
             }
         }
     }
 
+    mat-divider {
+        background: var(--active-widget-conture-color);
+    }
+
     .chats-wrapper {
         margin-top: $margin-between-cards;
 
+        h4 {
+            padding-left: 10px;
+            color: var(--active-text-color-5);
+        }
+
         .chat-tab {
+            
             .labels {
                 span {
-                    color: var(--active-mat-tab-label-color);
+                    color: var(--active-text-color-6);
                 }
+            }
+
+            .mat-mdc-tab-labels {
+                padding-left: 10px;
             }
 
             .empty-message-wrapper {
@@ -81,13 +102,17 @@ $margin-between-cards: 20px;
             
                 button {
                     min-width: 60% !important;
-                    color: var(--active-mat-tab-label-color-active);
+                    color: var(--active-text-color-6)
+                }
+
+                p {
+                    color: var(--active-text-color-1);
                 }
             }
 
             .mdc-tab--active {
                 .mdc-tab__text-label {
-                    color: var(--active-mat-tab-label-color-active);
+                    color: rgb(245, 245, 245);
                 }
             }
 
@@ -103,7 +128,7 @@ $margin-between-cards: 20px;
             }
 
             .mdc-tab-indicator__content--underline {
-                border-color: var(--active-mat-tab-underline-color) !important;
+                border-color: var(--active-user-divider-color) !important;
             }
         }
     }
