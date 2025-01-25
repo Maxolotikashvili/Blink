@@ -155,5 +155,5 @@ $image-size: 90px;
 .no-friend {
     @include position-center();
     width: max-content;
-    white-space: nowrap;
+    text-align: left;
 }

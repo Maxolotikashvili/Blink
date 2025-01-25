@@ -16,7 +16,7 @@ $margin-from-divider: 30px;
 
     .no-data {
         @include position-center();
-        white-space: nowrap;
+        text-align: left;
         color: var(--active-text-color-11);
     }
 }
