@@ -166,16 +166,28 @@ $component-padding: calc(5% + 10px);
         height: 11vh;
         border-top: 1px solid var(--active-widget-conture-color);
         transition: border var(--global-transition-parameters);
+        
+        .emoji-button {
+            @include flex-center();
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--active-icon-background);
+            border-radius: 50%;
+            margin: 0 3% 0 $component-padding;
+            cursor: pointer;
 
-        .emoji {
-            width: 25px;
-            height: 25px;
-            margin: 0 5% 0 $component-padding;
+            .emoji {
+                width: 40px;
+                height: 40px;
+                -webkit-mask: url('/icons/emoji.svg') no-repeat center;
+                mask: url('/icons/emoji.svg') no-repeat center;
+            }
         }
 
         .divider {
             height: 60%;
-            width: 1px;
+            width: 1.5px;
             background: var(--active-widget-conture-color);
             transition: background var(--global-transition-parameters);
         }
@@ -201,16 +213,13 @@ $component-padding: calc(5% + 10px);
 
         button {
             margin-right: $component-padding;
-            .mdc-button__label {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 15px;
-            }
 
-            .icon {
-                width: 20px;
-                height: 20px;
+            .send {
+                transform: scale(0.8);
+                width: 30px;
+                height: 30px;
+                -webkit-mask: url('/icons/send.svg') no-repeat center;
+                mask: url('/icons/send.svg') no-repeat center;
             }
         }
     }

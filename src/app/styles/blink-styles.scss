@@ -256,3 +256,12 @@
         opacity: 1;
     }
 }
+
+.svg-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--active-icon-color);
+    -webkit-mask-size: auto;
+    mask-size: auto;
+    transition: all 0.2s ease;
+}

@@ -92,7 +92,7 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
     }
   }
 
-  public leaveChat() {
+  public leaveGroupChat() {
     if (!this.groupChat?.chatId) return;
     
     this.authService.deleteGroupChatFromUsersChatsList(this.groupChat?.chatId);

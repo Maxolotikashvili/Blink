@@ -34,12 +34,14 @@
     <div *ngIf="!friend && !groupChat" class="bk-text-l no-selected-friend-text">Select a chat to start messaging</div>
     
     <div class="input-area-wrapper" *ngIf="friend || groupChat">
-        <img class="emoji" src="mute.png" alt="">
+        <button class="emoji-button">
+            <div class="svg-icon emoji"></div>
+        </button>
         <div class="divider"></div>
         <textarea name="textarea" class="bk-text-s" [(ngModel)]="textareaValue" cdkTextareaAutosize="true" rows="1" placeholder="Type here" (keypress)="handleTextSend($event)" #textArea></textarea>
 
         <button mat-flat-button class="square-button-s" type="button" (click)="handleTextSend($event)">
-            <img class="icon" src="send.png" alt="send">
+            <div class="svg-icon send"></div>
         </button>
     </div>
 </div>

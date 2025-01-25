@@ -241,7 +241,7 @@ export class AuthService {
             }
 
             if (notification.type === 'groupMessage') {
-                const groupChat = currentUser.groupChatsList.find((groupChats) => groupChats.chatId === notification.chatId); 
+                const groupChat = currentUser.groupChatsList.find((groupChats) => groupChats.chatId === notification.chatId);
                 
                 if (notification.message.sender === 'user') {
                     this.soundService.playMessageSentSound();

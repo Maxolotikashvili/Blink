@@ -24,27 +24,27 @@
     <ul>
         <li class="friend-utility">
             <button (click)="controlChatSound()">
-                <div class="icon" *ngIf="groupChat" [ngClass]="{'is-muted': data.groupChat?.isMuted, 'not-muted': !data.groupChat?.isMuted}"></div>
-                <div class="icon" *ngIf="data.friend" [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
+                <div class="svg-icon" *ngIf="groupChat" [ngClass]="{'is-muted': data.groupChat?.isMuted, 'not-muted': !data.groupChat?.isMuted}"></div>
+                <div class="svg-icon" *ngIf="data.friend" [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
                 <div class="mute-line" [ngClass]="{'mute-line-active': data.friend?.isMuted || data.groupChat?.isMuted}"></div>
             </button>
             <span class="name-on-hover bk-text-xs"> {{data.groupChat?.isMuted || data.friend?.isMuted ? 'Unmute' : 'Mute'}} </span>
         </li>
         <li class="friend-utility">
             <button (click)="clearChat()">
-                <div class="icon delete-chat"></div>
+                <div class="svg-icon delete-chat"></div>
             </button>
             <span class="name-on-hover bk-text-xs">Clear chat</span>
         </li>
         <li *ngIf="data.friend" class="friend-utility">
             <button (click)="deleteFriend()">
-                <div class="icon delete-friend"></div>
+                <div class="svg-icon delete-friend"></div>
             </button>
             <span class="name-on-hover bk-text-xs">Remove friend</span>
         </li>
         <li *ngIf="groupChat" class="friend-utility">
-            <button (click)="leaveChat()">
-                <div class="icon delete-friend"></div>
+            <button (click)="leaveGroupChat()">
+                <div class="svg-icon leave-groupchat"></div>
             </button>
             <span class="name-on-hover bk-text-xs">Leave chat</span>
         </li>

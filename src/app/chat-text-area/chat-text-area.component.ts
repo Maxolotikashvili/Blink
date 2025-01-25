@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { GroupChat, GroupChatMessage } from '../model/groupchat.model';
 import { Theme, ThemeService } from '../services/theme.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-chat-text-area',
@@ -51,6 +52,8 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
 
   private fetchFriendChatData() {
     const subscription = this.chatService.lastSelectedFriend$.subscribe((friend: Friend) => {
+      if (friend.userId === this.friend?.userId) return;
+
       if (friend) {
         this.groupChat = undefined;
         this.friend = friend;
@@ -66,6 +69,8 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
 
   private fetchGroupChatData() {
     const subscription = this.chatService.lastSelectedGroupChat$.subscribe((groupChat) => {
+      if (groupChat.chatId === this.groupChat?.chatId) return;
+
       if (groupChat) {
         this.friend = undefined;
         this.groupChat = groupChat;
@@ -80,21 +85,33 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   }
 
   private fetchMessages(chat: Friend | GroupChat) {
+    let observable: Observable<Message[] | undefined>;
+
     if (chat && 'userId' in chat) {
-      this.chatList = chat.messages;
+      observable = this.authService.user$.pipe(map((user) => user.friendsList.find((friend) => friend.userId === chat.userId)?.messages));
     } else {
-      this.chatList = this.removeUserFromIsSeenByArray(chat.messages);
+      observable = this.authService.user$.pipe(map((user) => user.groupChatsList.find((groupChat) => groupChat.chatId === chat.chatId)?.messages));
     }
+
+    const subscription = observable.subscribe((messages: Message[] | undefined) => {
+      if ('chatId' in chat && messages) {
+        this.chatList = this.removeUserFromIsSeenByArray(messages);
+      } else if (messages) {
+        this.chatList = messages;
+      }
+    })
+
+    this.activeSubscriptions.add(subscription);
   }
 
   private removeUserFromIsSeenByArray(messages: Message[]): Message[] {
     const newMessages = messages.map((message) => {
       const newMessage = { ...message, isSeenBy: [...message.isSeenBy] };
       newMessage.isSeenBy = newMessage.isSeenBy.filter((user) => user.username !== 'user');
-  
+
       return newMessage;
     });
-  
+
     return newMessages;
   }
 
