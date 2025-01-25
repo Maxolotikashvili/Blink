@@ -80,22 +80,11 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   }
 
   private fetchMessages(chat: Friend | GroupChat) {
-    let observable;
-    if ('userId' in chat) {
-      observable = this.authService.user$.pipe(map((user) => user.friendsList.find((friend) => friend.userId === chat.userId)?.messages));
-    } else if ('chatId' in chat) {
-      observable = this.authService.user$.pipe(map((user) => user.groupChatsList.find((groupChat) => groupChat.chatId === chat.chatId)?.messages));
+    if (chat && 'userId' in chat) {
+      this.chatList = chat.messages;
+    } else {
+      this.chatList = this.removeUserFromIsSeenByArray(chat.messages);
     }
-
-    const subscription = observable?.subscribe((messages) => {
-      if ('chatId' in chat && messages) {
-        this.chatList = this.removeUserFromIsSeenByArray(messages);
-      } else if (messages) {
-        this.chatList = messages;
-      }
-    })
-
-    this.activeSubscriptions.add(subscription);
   }
 
   private removeUserFromIsSeenByArray(messages: Message[]): Message[] {

@@ -1,9 +1,5 @@
 <div class="friend-section-component-wrapper">
-    <ng-container *ngIf="friend$ | async as friend">
-        <app-chat-friend [data]="{ friend: friend }"></app-chat-friend>
-    </ng-container>
-
-    <ng-container *ngIf="groupChat$ | async as groupChat">
-        <app-chat-friend [data]="{ groupChat: groupChat }"></app-chat-friend>
-    </ng-container>
+    <app-chat-friend *ngIf="friend" [data]="{ friend: friend }"></app-chat-friend>
+    <app-chat-friend *ngIf="groupChat" [data]="{ groupChat: groupChat }"></app-chat-friend>
+    <span class="bk-text-m no-data" *ngIf="!friend && !groupChat">No friend or groupchat selected to display</span>
 </div>

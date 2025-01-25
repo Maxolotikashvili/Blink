@@ -13,4 +13,10 @@ $margin-from-divider: 30px;
     border: 2px solid var(--active-widget-conture-color);
     transition: border-color var(--global-transition-parameters);
     user-select: none;
+
+    .no-data {
+        @include position-center();
+        white-space: nowrap;
+        color: var(--active-text-color-1);
+    }
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
-import { Observable } from 'rxjs';
+import { combineLatest, map, merge, Observable, Subscription } from 'rxjs';
 import { Friend } from '../model/friend.model';
 import { ChatService } from '../services/chat.service';
 import { GroupChat } from '../model/groupchat.model';
@@ -13,22 +13,33 @@ import { ChatFriendComponent } from "../chat-friend/chat-friend.component";
   templateUrl: './chat-friend-section.component.html',
   styleUrl: './chat-friend-section.component.scss'
 })
-export class ChatFriendsSectionComponent implements OnInit {
-  friend$!: Observable<Friend>;
-  groupChat$!: Observable<GroupChat>;
+export class ChatFriendsSectionComponent implements OnInit, OnDestroy {
+  public subscriptions: Subscription = new Subscription();
+  public friend!: Friend | undefined;
+  public groupChat!: GroupChat | undefined;
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.getFriendData();
-    this.getGroupChat();
+    this.getLastSelectedFriendOrGroupChat();
   }
 
-  private getFriendData() {
-    this.friend$ = this.chatService.lastSelectedFriend$;
+  getLastSelectedFriendOrGroupChat() {
+    const subscription = merge(this.chatService.lastSelectedFriend$, this.chatService.lastSelectedGroupChat$).subscribe((data) => {
+      console.log(data)
+      if (data && 'userId' in data) {
+        this.friend = data;
+        this.groupChat = undefined
+      } else {
+        this.groupChat = data;
+        this.friend = undefined;
+      }
+    })
+
+    this.subscriptions.add(subscription);
   }
 
-  private getGroupChat() {
-    this.groupChat$ = this.chatService.lastSelectedGroupChat$;
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
