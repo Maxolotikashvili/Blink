@@ -1,5 +1,5 @@
 @if (data.friendsList) {
-    <button class="chat-wrapper" [ngClass]="{'active-friend-chat': selectedChat === friend.userId}" *ngFor="let friend of data.friendsList" (click)="updateLastSelectedFriend(friend)">
+    <button class="chat-wrapper" [ngClass]="{'active-friend-chat': selectedChat === friend.userId}" *ngFor="let friend of data.friendsList" (click)="updateLastSelectedFriend(friend.userId)">
         <div class="avatar-name-wrapper">
             <div class="bk-img-m friend-image" [ngStyle]="{'background-image': 'url('+friend.avatar+')'}">
                 <div class="green-circle" *ngIf="friend.isOnline"></div>
@@ -20,7 +20,7 @@
 } 
 
 @if (data.groupChatList) {
-    <button class="chat-wrapper" [ngClass]="{'active-friend-chat': selectedChat === groupChat.chatId}" *ngFor="let groupChat of data.groupChatList" (click)="updateLastSelectedGroupChat(groupChat)">
+    <button class="chat-wrapper" [ngClass]="{'active-friend-chat': selectedChat === groupChat.chatId}" *ngFor="let groupChat of data.groupChatList" (click)="updateLastSelectedGroupChat(groupChat.chatId)">
         <div class="avatar-name-wrapper groupchat-avatar-name-wrapper">
             <div class="avatar-wrapper">
                 <div class="bk-img-s friend-image" *ngFor="let user of groupChat.users | slice: 0:3" [ngStyle]="{'background-image': 'url('+user.avatar+')'}"></div>

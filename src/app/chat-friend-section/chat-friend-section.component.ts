@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { combineLatest, map, merge, Observable, Subscription } from 'rxjs';
-import { Friend } from '../model/friend.model';
+import { Friend, LastSelectedFriend } from '../model/friend.model';
 import { ChatService } from '../services/chat.service';
-import { GroupChat } from '../model/groupchat.model';
+import { GroupChat, LastSelectedGroupChat } from '../model/groupchat.model';
 import { ChatFriendComponent } from "../chat-friend/chat-friend.component";
 
 @Component({
@@ -15,8 +15,8 @@ import { ChatFriendComponent } from "../chat-friend/chat-friend.component";
 })
 export class ChatFriendsSectionComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription = new Subscription();
-  public friend!: Friend | undefined;
-  public groupChat!: GroupChat | undefined;
+  public friend!: LastSelectedFriend | undefined;
+  public groupChat!: LastSelectedGroupChat | undefined;
 
   constructor(private chatService: ChatService) { }
 

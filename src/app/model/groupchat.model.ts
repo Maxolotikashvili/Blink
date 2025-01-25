@@ -19,3 +19,10 @@ export interface GroupChatMessage {
     chatId: string,
     text: string
 }
+
+export interface LastSelectedGroupChat {
+    chatId: GroupChat['chatId'],
+    isMuted: GroupChat['isMuted'],
+    users: GroupChat['users'],
+    messagesLength: number
+}

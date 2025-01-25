@@ -6,8 +6,8 @@ import { BehaviorSubject, finalize, Observable, Subscription, switchMap, tap } f
 import { Notification } from "../model/notification.model";
 import { SocketService } from "./socket.service";
 import { User } from "../model/user.model";
-import { GroupChat } from "../model/groupchat.model";
-import { Friend, Message } from "../model/friend.model";
+import { GroupChat, LastSelectedGroupChat } from "../model/groupchat.model";
+import { Friend, LastSelectedFriend, Message } from "../model/friend.model";
 import { SoundService } from "./sound.service";
 import { ChatService } from "./chat.service";
 import { ModalService } from "./modal.service";
@@ -32,8 +32,8 @@ export class AuthService {
     readonly user$: Observable<User> = this.userSubject as Observable<User>;
 
     private subscription: Subscription = new Subscription();
-    private lastSelectedFriend!: Friend | null;
-    private lastSelectedGroupChat!: GroupChat | null;
+    private lastSelectedFriend!: LastSelectedFriend | null;
+    private lastSelectedGroupChat!: LastSelectedGroupChat | null;
 
     constructor(
         private http: HttpClient,
@@ -101,11 +101,11 @@ export class AuthService {
         this.updateUser(currentUser);
     }
 
-    public mute(id: {friendId: Friend['userId']} | {chatId: GroupChat['chatId']}, state: boolean) {
+    public mute(id: { friendId: Friend['userId'] } | { chatId: GroupChat['chatId'] }, state: boolean) {
         const currentUser = this.userSubject.value;
         const urlParams = {
             endpoint: 'friendId' in id ? 'mute_friend_chat' : 'mute_groupchat',
-            param: 'friendId' in id ? {friend_id: id.friendId, is_muted: state} : {chat_id: id.chatId, is_muted: state}
+            param: 'friendId' in id ? { friend_id: id.friendId, is_muted: state } : { chat_id: id.chatId, is_muted: state }
         }
 
         if ('friendId' in id) {
@@ -113,7 +113,7 @@ export class AuthService {
                 if (friend.userId === id.friendId) {
                     friend.isMuted = state;
                 }
-                
+
                 return friend;
             })
         } else if ('chatId' in id) {
@@ -123,7 +123,7 @@ export class AuthService {
                 }
 
                 return groupChat;
-            })  
+            })
         }
         this.userSubject.next({ ...currentUser });
 
@@ -131,7 +131,7 @@ export class AuthService {
     }
 
     public leaveGroupChat(chatId: GroupChat['chatId']) {
-        return this.http.delete<{message: string}>(`${API_URL}/users/leave_groupchat?chat_id=${chatId}`);
+        return this.http.delete<{ message: string }>(`${API_URL}/users/leave_groupchat?chat_id=${chatId}`);
     }
 
     public deleteGroupChatFromUsersChatsList(chatId: GroupChat['chatId']) {
@@ -147,20 +147,20 @@ export class AuthService {
         } else {
             return;
         }
-        
+
         this.updateUser(currentUser);
     }
 
-    public deleteFriend(friend: Friend): Observable<{ message: string }> {
+    public deleteFriend(friend: LastSelectedFriend): Observable<{ message: string }> {
         const currentUser = this.userSubject.value;
-        currentUser.friendsList.splice(currentUser.friendsList.indexOf(friend), 1);
+        currentUser.friendsList = currentUser.friendsList.filter((friends) => friends.userId !== friend.userId);
         this.chatService.updateLastSelectedFriend('');
 
         this.userSubject.next({ ...currentUser });
         return this.http.delete<{ message: string }>(`${API_URL}/users/delete_friend?friendId=${friend.userId}`);
     }
 
-    public deleteChat(param: Friend | GroupChat): Observable<{ message: string }> {
+    public deleteChat(param: LastSelectedFriend | LastSelectedGroupChat): Observable<{ message: string }> {
         const currentUser = this.userSubject.value;
         const target = 'userId' in param ? currentUser.friendsList : currentUser.groupChatsList;
         const url: string = 'userId' in param ? `delete_chat?friendId=${param.userId}` : `delete-group-chat?chatId=${param.chatId}`;
@@ -242,7 +242,7 @@ export class AuthService {
 
             if (notification.type === 'groupMessage') {
                 const groupChat = currentUser.groupChatsList.find((groupChats) => groupChats.chatId === notification.chatId);
-                
+
                 if (notification.message.sender === 'user') {
                     this.soundService.playMessageSentSound();
                 } else if (notification.message.sender !== 'user' && !groupChat?.isMuted) {
@@ -295,13 +295,13 @@ export class AuthService {
             this.updateHasSeenState(notification.friendName);
         }
     }
-    
+
     public updateHasSeenState(friendName: Friend['username']) {
         const currentUser = this.userSubject.value;
         const friend = currentUser.friendsList.find((friend) => friend.username === friendName);
-        
+
         if (!friend) return;
-        
+
         friend.messages.map((message) => message.isSeen = true);
         const reversedMessagesList = [...friend.messages].reverse();
         const lastOutgoingMessage = reversedMessagesList.find((message) => !message.isIncoming);

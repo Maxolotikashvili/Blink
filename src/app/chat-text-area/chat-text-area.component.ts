@@ -2,12 +2,12 @@ import { CommonModule, formatDate, JsonPipe } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { SocketService } from '../services/socket.service';
-import { Friend, FriendMessage, Message } from '../model/friend.model';
+import { Friend, FriendMessage, LastSelectedFriend, Message } from '../model/friend.model';
 import { map, Observable, Subscription } from 'rxjs';
 import { ChatService } from '../services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { GroupChat, GroupChatMessage } from '../model/groupchat.model';
+import { GroupChat, GroupChatMessage, LastSelectedGroupChat } from '../model/groupchat.model';
 import { Theme, ThemeService } from '../services/theme.service';
 import { User } from '../model/user.model';
 
@@ -24,8 +24,8 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   private activeSubscriptions: Subscription = new Subscription();
 
   public chatList!: Message[];
-  public friend!: Friend | undefined;
-  public groupChat!: GroupChat | undefined;
+  public friend!: LastSelectedFriend | undefined;
+  public groupChat!: LastSelectedGroupChat | undefined;
   public textareaValue: string = '';
   public clickedTextIndex: number | null = null;
   public activeTheme!: Theme;
@@ -51,7 +51,7 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   }
 
   private fetchFriendChatData() {
-    const subscription = this.chatService.lastSelectedFriend$.subscribe((friend: Friend) => {
+    const subscription = this.chatService.lastSelectedFriend$.subscribe((friend: LastSelectedFriend) => {
       if (friend.userId === this.friend?.userId) return;
 
       if (friend) {
@@ -84,7 +84,7 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     this.activeSubscriptions.add(subscription);
   }
 
-  private fetchMessages(chat: Friend | GroupChat) {
+  private fetchMessages(chat: LastSelectedFriend | LastSelectedGroupChat) {
     let observable: Observable<Message[] | undefined>;
 
     if (chat && 'userId' in chat) {

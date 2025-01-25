@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
-import { Friend } from '../model/friend.model';
-import { GroupChat } from '../model/groupchat.model';
+import { Friend, LastSelectedFriend } from '../model/friend.model';
+import { GroupChat, LastSelectedGroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../services/auth.service';
@@ -16,10 +16,10 @@ import { matSnackDuration } from '../styles/active-theme-variables';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatFriendComponent implements OnDestroy, OnChanges {
-  @Input() data!: { friend?: Friend, groupChat?: GroupChat };
+  @Input() data!: { friend?: LastSelectedFriend, groupChat?: LastSelectedGroupChat };
   private subscriptions: Subscription = new Subscription();
 
-  public groupChat: GroupChat | undefined;
+  public groupChat: LastSelectedGroupChat | undefined;
 
   constructor(private authService: AuthService, private matSnack: MatSnackBar) { }
 
@@ -59,8 +59,8 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
   }
 
   public clearChat() {
-    if (this.data.friend && this.data.friend.messages.length > 0 || this.data.groupChat && this.data.groupChat.messages.length > 0) {
-      const target: Friend | GroupChat | undefined = this.data.friend ? this.data.friend : this.data.groupChat;
+    if (this.data.friend && this.data.friend.messagesLength > 0 || this.data.groupChat && this.data.groupChat.messagesLength > 0) {
+      const target: LastSelectedFriend | LastSelectedGroupChat | undefined = this.data.friend ? this.data.friend : this.data.groupChat;
 
       if (!target) return;
 

@@ -27,3 +27,14 @@ export interface FriendMessage {
     friendName: string,
     text: string
 }
+
+export interface LastSelectedFriend {
+    userId: Friend['userId'],
+    username: Friend['username'],
+    bio: Friend['bio'],
+    email: Friend['email'],
+    isOnline: Friend['isOnline'],
+    avatar: Friend['avatar'],
+    isMuted: Friend['isMuted'],
+    messagesLength: number
+}

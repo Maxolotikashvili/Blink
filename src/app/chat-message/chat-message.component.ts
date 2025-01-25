@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Friend } from '../model/friend.model';
-import { GroupChat, GroupChatUser } from '../model/groupchat.model';
+import { Friend, Message } from '../model/friend.model';
+import { GroupChat, GroupChatUser, LastSelectedGroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
 import { ChatDatePipe } from '../pipes/chat-date.pipe';
 import { ChatService } from '../services/chat.service';
@@ -26,27 +26,49 @@ export class ChatMessageComponent {
   ) {
   }
 
-  public updateLastSelectedFriend(friend: Friend) {
-    this.selectedChat = friend.userId;
+  public updateLastSelectedFriend(friendId: Friend['userId']) {
+    const selectedFriend: Friend = this.data.friendsList?.find((friend) => friend.userId === friendId)!;
+    const lastMessage: Message = selectedFriend?.messages[selectedFriend.messages.length -1];
+    
+    this.selectedChat = friendId;
 
-    this.chatService.updateLastSelectedFriend(friend);
-    const shouldShowSeen = friend.messages.length > 0 && friend.messages[friend.messages.length - 1].isIncoming;
+    if (!selectedFriend) return;
+
+    const {messages, ...resOfFriend} = selectedFriend;
+    const lastSelectedFriend = {
+      ...resOfFriend,
+      messagesLength: selectedFriend.messages.length      
+    }
+
+    this.chatService.updateLastSelectedFriend(lastSelectedFriend);
+    const shouldShowSeen = selectedFriend.messages.length > 0 && lastMessage.isIncoming;
 
     if (shouldShowSeen) {
-      this.socketService.hasSeen({id: friend.userId, type: 'friend'});
+      this.socketService.hasSeen({id: selectedFriend.userId, type: 'friend'});
     } 
   }
 
-  public updateLastSelectedGroupChat(groupChat: GroupChat) {
-    this.selectedChat = groupChat.chatId;
+  public updateLastSelectedGroupChat(groupChatId: GroupChat['chatId']) {
+    const selectedChat: GroupChat = this.data.groupChatList?.find((groupChat) => groupChat.chatId === groupChatId)!;
+    const lastMessage: Message = selectedChat?.messages[selectedChat.messages.length -1];
+    
+    this.selectedChat = selectedChat.chatId;
 
-    this.chatService.updateLastSelectedGroupChat(groupChat);
+    if (!selectedChat) return;
 
-    const isMessageIncoming = groupChat.messages.length > 0 && groupChat.messages[groupChat.messages.length -1].isIncoming;
-    const isAlreadySeen = groupChat.messages[groupChat.messages.length -1]?.isSeenBy.length > 0 && groupChat.messages[groupChat.messages.length -1].isSeenBy.some((user) => user.username === 'user');
+    const {messages, ...resOfGroupChat} = selectedChat;
+    const lastSelectedGroupChat: LastSelectedGroupChat = {
+      ...resOfGroupChat,
+      messagesLength: messages.length
+    }
+
+    this.chatService.updateLastSelectedGroupChat(lastSelectedGroupChat);
+
+    const isMessageIncoming: boolean = selectedChat.messages.length > 0 && lastMessage.isIncoming;
+    const isAlreadySeen: boolean = lastMessage.isSeenBy.length > 0 && lastMessage.isSeenBy.some((user) => user.username === 'user');
 
     if (isMessageIncoming && !isAlreadySeen) {
-      this.socketService.hasSeen({id: groupChat.chatId, type: 'groupchat'});
+      this.socketService.hasSeen({id: selectedChat.chatId, type: 'groupchat'});
     }
   }
 }
