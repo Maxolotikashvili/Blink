@@ -28,14 +28,14 @@ export class SocketService {
   }
 
   public addFriend(inputValue: string) {
-    this.isSocketLoadingSubject.next(true);
+    this.updateSocketLoadingState(true);
     if (this.notificationSocket.OPEN === this.notificationSocket.readyState) {
       this.notificationSocket.send(inputValue);
     }
   }
 
   public acceptFriendRequest(senderEmail: string, isAccepted: boolean) {
-    this.isSocketLoadingSubject.next(true);
+    this.updateSocketLoadingState(true);
     const data = {
       senderEmail: senderEmail,
       isAccepted: isAccepted
@@ -68,6 +68,7 @@ export class SocketService {
   }
 
   public createGroupChat(selectedFriendsList: Friend['username'][]) {
+    this.updateSocketLoadingState(true);
     if (this.createGroupChatsocket.OPEN === this.createGroupChatsocket.readyState) {
       this.createGroupChatsocket.send(JSON.stringify(selectedFriendsList));
     }

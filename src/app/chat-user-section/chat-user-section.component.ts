@@ -80,10 +80,6 @@ export class ChatUserSectionComponent implements OnInit, OnDestroy {
 
   public changeTheme(theme: Theme) {
     const subscription = this.themeService.changeThemeTo(theme)?.subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-
       error: (err) => {
         this.matSnack.open(err.detail ? err.detail : 'Error saving theme, try again later', 'Dismiss', { duration: matSnackDuration });
         console.error(err);

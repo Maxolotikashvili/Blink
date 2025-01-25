@@ -43,7 +43,7 @@ export class ChatMessageComponent {
     this.chatService.updateLastSelectedGroupChat(groupChat);
 
     const isMessageIncoming = groupChat.messages.length > 0 && groupChat.messages[groupChat.messages.length -1].isIncoming;
-    const isAlreadySeen = groupChat.messages[groupChat.messages.length -1].isSeenBy.length > 0 && groupChat.messages[groupChat.messages.length -1].isSeenBy.some((user) => user.username === 'user');
+    const isAlreadySeen = groupChat.messages[groupChat.messages.length -1]?.isSeenBy.length > 0 && groupChat.messages[groupChat.messages.length -1].isSeenBy.some((user) => user.username === 'user');
 
     if (isMessageIncoming && !isAlreadySeen) {
       this.socketService.hasSeen({id: groupChat.chatId, type: 'groupchat'});

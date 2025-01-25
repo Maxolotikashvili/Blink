@@ -10,7 +10,7 @@ $margin-between-cards: 20px;
     background: var(--active-user-widget-background);
     padding: var(--chat-widgets-padding);
     border-radius: var(--widget-border-radius);
-    border: 2px solid var(--active-user-textarea-border-colors);
+    border: var(--active-user-textarea-borders);
     transition: border var(--global-transition-parameters);
     user-select: none;
 
@@ -20,7 +20,7 @@ $margin-between-cards: 20px;
         margin-bottom: 20px;
 
         .user-name {
-            color: var(--active-text-color-3);
+            color: var(--active-text-color-1);
         }
 
         .bio {
@@ -56,7 +56,7 @@ $margin-between-cards: 20px;
                     height: 40px;
                     border-radius: 50%;
                     background: var(--active-theme-background);
-                    color: var(--active-text-color-10);
+                    color: var(--active-theme-color);
                     font-size: 16px;
                     font-weight: 800;
                     transition: background var(--global-transition-parameters);
@@ -106,13 +106,13 @@ $margin-between-cards: 20px;
                 }
 
                 p {
-                    color: var(--active-text-color-1);
+                    color: var(--active-text-color-2);
                 }
             }
 
             .mdc-tab--active {
                 .mdc-tab__text-label {
-                    color: rgb(245, 245, 245);
+                    color: var(--active-text-color-1);
                 }
             }
 
@@ -123,7 +123,6 @@ $margin-between-cards: 20px;
             .mat-mdc-tab-body-content {
                 display: flex;
                 flex-flow: column;
-                gap: 5px;
                 margin-top: $margin-between-cards;
             }
 

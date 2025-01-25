@@ -66,7 +66,7 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
 
       const subscription = this.authService.deleteChat(target).subscribe({
         error: (err) => {
-          this.matSnack.open(err.detail ? err.detail : `Error deleting chat, try again later`, 'Dismiss', { duration: matSnackDuration });
+          this.matSnack.open(err.detail ? err.detail : `Error clearing chat, try again later`, 'Dismiss', { duration: matSnackDuration });
           console.error(err);
         }
       });
@@ -93,6 +93,9 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
   }
 
   public leaveChat() {
+    if (!this.groupChat?.chatId) return;
+    
+    this.authService.deleteGroupChatFromUsersChatsList(this.groupChat?.chatId);
     const subscription = this.authService.leaveGroupChat(this.groupChat?.chatId!).subscribe({
       next: () => {
         this.matSnack.open(`You have left the group chat`, 'Dismiss', { duration: matSnackDuration });

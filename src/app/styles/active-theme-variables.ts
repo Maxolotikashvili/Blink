@@ -1,19 +1,20 @@
 export const activeVariables: string[] = [
     '--active-app-background',
     '--active-icon-background',
-    '--active-user-textarea-border-colors',
+    '--active-user-textarea-borders',
     '--active-icon-color',
     '--active-theme-background',
+    '--active-theme-color',
     '--active-widget-conture-color',
     '--active-user-widget-background',
     '--active-user-divider-color',
     '--active-user-message-background',
-    '--active-user-message-border-color',
+    '--active-user-message-border',
     '--active-textarea-widget-background-image',
     '--active-textarea-widget-background',
     '--active-friend-widget-background',
     '--active-friend-message-background',
-    '--active-friend-message-border-color',
+    '--active-friend-message-border',
     '--active-text-color-1',
     '--active-text-color-2',
     '--active-text-color-3',
@@ -23,7 +24,8 @@ export const activeVariables: string[] = [
     '--active-text-color-7',
     '--active-text-color-8',
     '--active-text-color-9',
-    '--active-text-color-10'
+    '--active-text-color-10',
+    '--active-text-color-11'
 ]
 
 export const matSnackDuration: number = 4000;

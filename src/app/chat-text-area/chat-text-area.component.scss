@@ -14,7 +14,7 @@ $component-padding: calc(5% + 10px);
     padding: var(--chat-widgets-padding);
     background: var(--active-textarea-widget-background);
     border-radius: var(--widget-border-radius);
-    border: 2px solid var(--active-user-textarea-border-colors);
+    border: var(--active-user-textarea-borders);
     transition: background var(--global-transition-parameters);
     user-select: text;
 
@@ -24,7 +24,7 @@ $component-padding: calc(5% + 10px);
         left: 50%;
         width: max-content;
         transform: translate(-50%, -50%);
-        color: var(--active-text-color-1);
+        color: var(--active-text-color-11);
     }
 
     .messages-wrapper {
@@ -97,7 +97,7 @@ $component-padding: calc(5% + 10px);
                         padding: 8px 20px;
                         background: var(--active-user-message-background);
                         color: var(--active-text-color-9);
-                        border: 1px solid var(--active-user-message-border-color);
+                        border: var(--active-user-message-border);
                         border-radius: $text-border-radius;
                         border-bottom-left-radius: 0;
                         letter-spacing: .5px;
@@ -147,7 +147,7 @@ $component-padding: calc(5% + 10px);
                     }
 
                     .text {
-                        border: 1px solid var(--active-friend-message-border-color);
+                        border: var(--active-friend-message-border);
                         border-bottom-left-radius: $text-border-radius;
                         border-bottom-right-radius: 0;
                         background: var(--active-friend-message-background);
@@ -164,7 +164,6 @@ $component-padding: calc(5% + 10px);
         justify-content: space-between;
         gap: 10px;
         height: 11vh;
-        // max-height: 15%;
         border-top: 1px solid var(--active-widget-conture-color);
         transition: border var(--global-transition-parameters);
 

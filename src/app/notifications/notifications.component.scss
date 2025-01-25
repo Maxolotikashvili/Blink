@@ -17,7 +17,7 @@ $gap-between-notifications: 20px;
         background: var(--active-app-background);
 
         h3 {
-            color: var(--active-text-color-1);
+            color: var(--active-text-color-11);
         }
 
         .notifications-wrapper {
@@ -48,7 +48,7 @@ $gap-between-notifications: 20px;
                     position: absolute;
                     top: 50%;
                     left: 50%;
-                    background: var(--active-text-color-9);
+                    background: var(--active-icon-color);
                     transition: inherit;
                 }
 
@@ -62,11 +62,11 @@ $gap-between-notifications: 20px;
             }
 
             .delete-button:hover {
-                background-color: var(--active-text-color-2);
+                background-color: var(--active-icon-color);
 
                 .line-1,
                 .line-2 {
-                    background: var(--active-text-color-1);
+                    background: var(--active-icon-background);
                 }
             }
 
@@ -96,11 +96,11 @@ $gap-between-notifications: 20px;
                     }
 
                     .message {
-                        color: var(--active-text-color-3);
+                        color: var(--active-text-color-11);
                     }
 
                     .date {
-                        color: var(--active-text-color-2);
+                        color: var(--active-text-color-11);
                     }
                 }
 
@@ -114,7 +114,7 @@ $gap-between-notifications: 20px;
                         height: 50px;
                         border-radius: 50%;
                         border: none;
-                        border: 1px solid var(--active-app-background);
+                        border: 1px solid var(--active-widget-conture-color);
                         background: transparent;
                         font-size: 30px;
                         transition: .2s linear;

@@ -18,7 +18,7 @@ export class ChatService {
         this.lastSelectedFriendSubject.next(friend);
     }
 
-    public updateLastSelectedGroupChat(groupChat: GroupChat) {
+    public updateLastSelectedGroupChat(groupChat: GroupChat | '') {
         this.lastSelectedFriendSubject.next('');
         this.lastSelectedGroupChatSubject.next(groupChat);
     }

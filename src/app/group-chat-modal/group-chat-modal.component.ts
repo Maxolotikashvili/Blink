@@ -10,6 +10,7 @@ import { MaterialModule } from '../shared-modules/materia.module';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { matSnackDuration } from '../styles/active-theme-variables';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-group-chat-modal',
@@ -25,7 +26,8 @@ export class GroupChatModalComponent implements OnInit {
   constructor(
     private socketService: SocketService,
     private authService: AuthService,
-    private matSnack: MatSnackBar
+    private matSnack: MatSnackBar,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {

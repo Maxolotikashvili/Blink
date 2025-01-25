@@ -26,7 +26,6 @@ export class ChatFriendsSectionComponent implements OnInit, OnDestroy {
 
   getLastSelectedFriendOrGroupChat() {
     const subscription = merge(this.chatService.lastSelectedFriend$, this.chatService.lastSelectedGroupChat$).subscribe((data) => {
-      console.log(data)
       if (data && 'userId' in data) {
         this.friend = data;
         this.groupChat = undefined

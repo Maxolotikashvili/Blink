@@ -10,7 +10,7 @@ $image-size: 90px;
     margin-bottom: 20px;
 
     .friend-name {
-        color: var(--active-text-color-1);
+        color: var(--active-text-color-11);
     }
 
     .groupchat-heading-wrapper {
@@ -21,12 +21,13 @@ $image-size: 90px;
         overflow: hidden;
         text-align: center;
 
-        h3 {
+        span {
+            color: var(--active-text-color-11);
             display: inline;
             width: $image-size;
         }
 
-        h3:not(:nth-child(1)) {
+        span:not(:nth-child(1)) {
             margin-left: 8px;
         }
     }
@@ -73,12 +74,8 @@ $image-size: 90px;
         }
     }
 
-    img {
-        // margin-bottom: 10px;
-    }
-
-    .moto {
-        color: var(--active-text-color-2);
+    .bio {
+        color: var(--active-text-color-11);
     }
 }
 
@@ -103,49 +100,56 @@ $image-size: 90px;
             gap: 4px;
 
             button {
+                position: relative;
                 @include flex-center();
-                width: 45px;
-                height: 45px;
                 border: none;
-                background: var(--active-button-background-color);
-                background-color: transparent;
+                background: var(--active-icon-background);
                 border-radius: 50%;
                 transition: background var(--global-transition-parameters);
                 cursor: pointer;
 
                 .icon {
-                    width: 37px;
-                    height: 37px;
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                    transition: background-image 0.2s ease;
+                    width: 40px;
+                    height: 40px;
+                    background-color: var(--active-icon-color);
+                    -webkit-mask-size: auto;
+                    mask-size: auto;
+                    transition: all 0.2s ease;
                 }
 
-                .is-muted {
-                    background-image: unset;
-                    background-image: url('/mute.png');
+                .not-muted, .is-muted {
+                    -webkit-mask: url('/icons/clear-chat.svg') no-repeat center;
+                    mask: url('/icons/clear-chat.svg') no-repeat center;
                 }
 
-                .not-muted {
-                    background-image: url('/sound.png');
+                .mute-line {
+                    width: 100%;
+                    height: 2px;
+                    transform-origin: left;
+                    background: rgb(237, 0, 0);
+                    @include position-center();
+                    transform: rotate(-45deg) translate(-50%, -50%) scaleY(0);
+                    transition: transform 0.2s ease;
                 }
 
-                .mark-as-seen {
-                    background-image: url('/mark-as-seen.png');
+                .mute-line-active {
+                    transform: rotate(-45deg) translate(-50%, -50%) scaleY(1);
                 }
 
                 .delete-chat {
-                    background-image: url('/delete-chat.png');
+                    -webkit-mask: url('/icons/clear-chat.svg') no-repeat center;
+                    mask: url('/icons/clear-chat.svg') no-repeat center;
                 }
 
                 .delete-friend {
-                    background-image: url('/delete-friend.svg');
+                    -webkit-mask: url('/icons/delete-friend.svg') no-repeat center;
+                    mask: url('/icons/delete-friend.svg') no-repeat center;
                 }
             }
 
             span {
                 text-align: center;
-                color: var(--active-text-color-4);
+                color: var(--active-text-color-10);
             }
         }
     }

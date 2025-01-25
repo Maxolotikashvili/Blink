@@ -10,6 +10,9 @@ import { GroupChat } from "../model/groupchat.model";
 import { Friend, Message } from "../model/friend.model";
 import { SoundService } from "./sound.service";
 import { ChatService } from "./chat.service";
+import { ModalService } from "./modal.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { matSnackDuration } from "../styles/active-theme-variables";
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +40,8 @@ export class AuthService {
         private socketService: SocketService,
         private soundService: SoundService,
         private chatService: ChatService,
+        private modalService: ModalService,
+        private matSnack: MatSnackBar
     ) {
 
         this.getLastSelectedFriendOrGroupChat();
@@ -127,6 +132,23 @@ export class AuthService {
 
     public leaveGroupChat(chatId: GroupChat['chatId']) {
         return this.http.delete<{message: string}>(`${API_URL}/users/leave_groupchat?chat_id=${chatId}`);
+    }
+
+    public deleteGroupChatFromUsersChatsList(chatId: GroupChat['chatId']) {
+        const currentUser = this.userSubject.value;
+
+        if (currentUser.groupChatsList.length === 0) {
+            return
+        }
+        const targetGroupChat: GroupChat | undefined = currentUser.groupChatsList.find((groupChat) => groupChat.chatId === chatId);
+        if (targetGroupChat) {
+            currentUser.groupChatsList.splice(currentUser.groupChatsList.indexOf(targetGroupChat), 1)
+            this.chatService.updateLastSelectedGroupChat('');
+        } else {
+            return;
+        }
+        
+        this.updateUser(currentUser);
     }
 
     public deleteFriend(friend: Friend): Observable<{ message: string }> {
@@ -252,6 +274,9 @@ export class AuthService {
         if (notification.type === "group-chat-create") {
             currentUser.groupChatsList.push(notification as any);
             this.userSubject.next(currentUser);
+            this.socketService.updateSocketLoadingState(false);
+            this.modalService.closeAllPages();
+            this.matSnack.open('Group chat created', 'Dismiss', { duration: matSnackDuration });
         }
 
         if (notification.type === 'groupMessage') {

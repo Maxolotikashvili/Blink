@@ -2,14 +2,6 @@
 @use '../styles/global-styles.scss' as *;
 @use '../styles/themes.scss' as *;
 
-@mixin svg {
-    width: 35px;
-    height: 35px;
-    background-color: var(--active-icon-color);
-    -webkit-mask-size: auto;
-    mask-size: auto;
-}
-
 .sidebar-component-wrapper {
     display: flex;
     justify-content: space-between;
@@ -37,6 +29,7 @@
         background: var(--active-icon-background);
         border-radius: 50%;
         cursor: pointer;
+        transition: all .2s linear;
 
         .notification-size {
             width: 20px;
@@ -47,28 +40,40 @@
             transform: translate(-50%, -50%);
         }
 
+        .icon {
+            width: 35px;
+            height: 35px;
+            background-color: var(--active-icon-color);
+            -webkit-mask-size: auto;
+            mask-size: auto;
+        }
+
         .add-friend {
-            @include svg();
             -webkit-mask: url('/icons/add-friend.svg') no-repeat center;
             mask: url('/icons/add-friend.svg') no-repeat center;
         }
 
         .notifications {
-            @include svg();
             -webkit-mask: url('/icons/notifications.svg') no-repeat center;
             mask: url('/icons/notifications.svg') no-repeat center;
         }
 
         .create-group-chat {
-            @include svg();
             -webkit-mask: url('/icons/create-grou-chat.svg') no-repeat center;
             mask: url('/icons/create-group-chat.svg') no-repeat center;
         }
 
         .log-out {
-            @include svg();
             -webkit-mask: url('/icons/log-out.svg') no-repeat center;
             mask: url('/icons/log-out.svg') no-repeat center;
+        }
+    }
+
+    button:hover {
+        background: var(--active-icon-color);
+
+        .icon {
+            background-color: var(--active-text-color-10);
         }
     }
 }

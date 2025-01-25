@@ -17,48 +17,30 @@
         background: var(--active-app-background);
 
         h3 {
-            color: var(--active-text-color-1);
+            color: var(--active-text-color-11);
         }
 
-        .form-wrapper {
-            width: 100%;
-            @include flex-center();
-            flex-flow: column;
-
-            mat-form-field,
-            button {
-                width: 100%;
-
-                mat-label {
-                    color: var(--active-text-color-1);
-                }
-
-                input {
-                    color: var(--active-text-color-1);
-                }
-            }
-        }
-
+        
         .friends-list-wrapper {
             width: 100%;
             display: flex;
             flex-flow: column;
             gap: 15px;
-
+            
             mat-form-field {
                 width: 80%;
                 align-self: center;
 
                 mat-label {
-                    color: var(--active-text-color-2);
+                    color: var(--active-text-color-11);
                 }
 
                 input {
-                    color: var(--active-text-color-1);
+                    color: var(--active-text-color-11);
                 }
 
                 mat-icon {
-                    color: var(--active-text-color-2);
+                    color: var(--active-text-color-11);
                 }
             }
 
@@ -82,7 +64,7 @@
                         gap: 10px;
 
                         .friend-name {
-                            color: var(--active-text-color-1);
+                            color: var(--active-text-color-11);
                         }
                     }
 
@@ -94,21 +76,22 @@
                         border: none;
                         border-radius: 50%;
                         background: var(--active-icon-background);
+                        color: var(--active-icon-color);
                         font-size: 24px;
                         font-weight: 300;
                         cursor: pointer;
-                        transition: all 0.2s linear;
+                        transition: all 0.12s linear;
                     }
 
                     .add-button::before {
                         content: "+";
                         @include position-center();
-                        transition: all 0.2s linear;
+                        transition: all 0.12s linear;
                     }
 
                     .add-button:hover {
-                        background: var(--active-text-color-1);
-                        color: var(--active-modal-button-background-color);
+                        background: var(--active-icon-color);
+                        color: var(--active-icon-background);
                     }
 
                     .added {
@@ -125,7 +108,7 @@
                         border-bottom: 3px solid var(--active-text-color-1);
                         border-right: 3px solid var(--active-text-color-1);
                         transform: rotate(45deg) translate(-50%, -50%);
-                        transition: all 0.2s linear;
+                        transition: all 0.12s linear;
                     }
 
                     .added:hover {
@@ -143,11 +126,16 @@
                 border-radius: 50px;
                 background: var(--active-icon-background);
                 color:  var(--active-icon-color);
-                transition: background .3s linear;
+                transition: all .12s linear;
+            }
+
+            .create-button:hover {
+                background: var(--active-text-color-6);
             }
 
             .create-button:disabled {
-                background: rgb(211, 211, 211) !important;
+                opacity: 0.6;
+                cursor: not-allowed;
             }
         }
     }

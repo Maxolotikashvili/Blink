@@ -2,18 +2,18 @@
     [ngStyle]="{'transform': 'translateX(' + sidebarLocationX + 'px)'}">
     <div class="top-side-buttons-wrapper">
         <button (click)="openAddFriendModal()">
-            <div class="add-friend"></div>
+            <div class="icon add-friend"></div>
         </button>
         <button (click)="openNotificationsModal()">
             <div class="bk-notification-circle notification-size" *ngIf="userNotificationsLength$ | async as userNotificationsLength">{{userNotificationsLength}}</div>
-            <div class="notifications"></div>
+            <div class="icon notifications"></div>
         </button>
         <button (click)="openGroupChatModal()">
-            <div class="create-group-chat"></div>
+            <div class="icon create-group-chat"></div>
         </button>
     </div>
 
     <button (click)="logOut()">
-        <div class="log-out"></div>
+        <div class="icon log-out"></div>
     </button>
 </div>

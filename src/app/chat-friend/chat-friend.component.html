@@ -17,17 +17,16 @@
         </div>
     </ng-container>
 
-    <p class="bk-text-m moto" *ngIf="data.friend && data.friend?.bio">&#64;{{data.friend.bio}}</p>
+    <p class="bk-text-m bio" *ngIf="data.friend && data.friend?.bio">&#64;{{data.friend.bio}}</p>
 </div>
 
 <div class="friend-utility-wrapper">
     <ul>
         <li class="friend-utility">
             <button (click)="controlChatSound()">
-                <div class="icon" *ngIf="groupChat"
-                    [ngClass]="{'is-muted': data.groupChat?.isMuted, 'not-muted': !data.groupChat?.isMuted}"></div>
-                <div class="icon" *ngIf="data.friend"
-                    [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
+                <div class="icon" *ngIf="groupChat" [ngClass]="{'is-muted': data.groupChat?.isMuted, 'not-muted': !data.groupChat?.isMuted}"></div>
+                <div class="icon" *ngIf="data.friend" [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
+                <div class="mute-line" [ngClass]="{'mute-line-active': data.friend?.isMuted || data.groupChat?.isMuted}"></div>
             </button>
             <span class="name-on-hover bk-text-xs"> {{data.groupChat?.isMuted || data.friend?.isMuted ? 'Unmute' : 'Mute'}} </span>
         </li>
