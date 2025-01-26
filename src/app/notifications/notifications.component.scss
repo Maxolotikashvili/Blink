@@ -28,7 +28,7 @@ $gap-between-notifications: 20px;
             justify-content: space-between;
             gap: $gap-between-notifications;
             margin-top: 50px;
-            overflow-y: scroll;
+            overflow-y: auto;
 
             .delete-button {
                 width: 30px;

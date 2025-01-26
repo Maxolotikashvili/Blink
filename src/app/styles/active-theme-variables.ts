@@ -5,6 +5,8 @@ export const activeVariables: string[] = [
     '--active-icon-color',
     '--active-theme-background',
     '--active-theme-color',
+    '--active-hovered-chat-background',
+    '--active-selected-chat-background',
     '--active-widget-conture-color',
     '--active-user-widget-background',
     '--active-user-divider-color',

@@ -1,5 +1,6 @@
 @use './app/styles/themes.scss' as *;
 @use './app//styles/material-reset.scss' as *;
+@use './app/styles/fonts.scss' as *;
 
 // Reset
 * {
@@ -13,7 +14,8 @@
     outline: none;
 }
 
-ul, li {
+ul,
+li {
     list-style: none;
 }
 
@@ -21,8 +23,16 @@ a {
     text-decoration: none;
 }
 
-html, body { height: 100%; scroll-behavior: smooth}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+    scroll-behavior: smooth
+}
+
+body {
+    margin: 0;
+    font-family: $default-font;
+}
 
 [ng-cloak] {
     display: none;
@@ -32,3 +42,21 @@ mat-divider {
     border-top-color: var(--active-widget-conture-color) !important;
     transition: border-color var(--global-transition-parameters);
 }
+
+// ::-webkit-scrollbar {
+//     width: 8px;
+// }
+
+// ::-webkit-scrollbar-track {
+//     background: var(--active-icon-color);
+//     border-radius: 10px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//     background: var(--active-icon-background);
+//     border-radius: 20px;
+// }
+
+// ::-webkit-scrollbar-thumb:hover {
+//     background: #555;
+// }

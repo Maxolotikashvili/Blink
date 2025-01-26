@@ -124,6 +124,7 @@ $margin-between-cards: 20px;
                 display: flex;
                 flex-flow: column;
                 margin-top: $margin-between-cards;
+                overflow: unset;
             }
 
             .mdc-tab-indicator__content--underline {

@@ -1,15 +1,14 @@
-import { CommonModule, formatDate, JsonPipe } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { SocketService } from '../services/socket.service';
-import { Friend, FriendMessage, LastSelectedFriend, Message } from '../model/friend.model';
-import { map, Observable, Subscription } from 'rxjs';
+import { FriendMessage, LastSelectedFriend, Message } from '../model/friend.model';
+import { map, merge, Observable, Subscription } from 'rxjs';
 import { ChatService } from '../services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { GroupChat, GroupChatMessage, LastSelectedGroupChat } from '../model/groupchat.model';
+import { GroupChatMessage, LastSelectedGroupChat } from '../model/groupchat.model';
 import { Theme, ThemeService } from '../services/theme.service';
-import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-chat-text-area',
@@ -39,7 +38,7 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getActiveTheme();
-    this.fetchFriendChatData();
+    this.getLastSelectedChat();
   }
 
   private getActiveTheme() {
@@ -50,34 +49,23 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     this.activeSubscriptions.add(subscription);
   }
 
-  private fetchFriendChatData() {
-    const subscription = this.chatService.lastSelectedFriend$.subscribe((friend: LastSelectedFriend) => {
-      if (friend.userId === this.friend?.userId) return;
+  private getLastSelectedChat() {
+    const mergedObservables = merge(this.chatService.lastSelectedFriend$, this.chatService.lastSelectedGroupChat$)
+    const subscription = mergedObservables.subscribe((lastSelectedChat) => {
+      if (lastSelectedChat) {
+        if ('chatId' in lastSelectedChat && lastSelectedChat.chatId === this.groupChat?.chatId || 'userId' in lastSelectedChat && lastSelectedChat.userId === this.friend?.userId) {
+          return
+        }
 
-      if (friend) {
-        this.groupChat = undefined;
-        this.friend = friend;
-        this.fetchMessages(friend);
-        this.scrollToBottomAndEmptyTextareaValue();
-      } else {
-        this.fetchGroupChatData();
-      }
-    })
+        if ('chatId' in lastSelectedChat) {
+          this.groupChat = lastSelectedChat;
+          this.friend = undefined;
+        } else {
+          this.friend = lastSelectedChat;
+          this.groupChat = undefined;
+        }
 
-    this.activeSubscriptions.add(subscription);
-  }
-
-  private fetchGroupChatData() {
-    const subscription = this.chatService.lastSelectedGroupChat$.subscribe((groupChat) => {
-      if (groupChat.chatId === this.groupChat?.chatId) return;
-
-      if (groupChat) {
-        this.friend = undefined;
-        this.groupChat = groupChat;
-        this.fetchMessages(groupChat);
-        this.scrollToBottomAndEmptyTextareaValue();
-      } else {
-        this.fetchFriendChatData();
+        this.fetchMessages(lastSelectedChat);
       }
     })
 
@@ -87,10 +75,10 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   private fetchMessages(chat: LastSelectedFriend | LastSelectedGroupChat) {
     let observable: Observable<Message[] | undefined>;
 
-    if (chat && 'userId' in chat) {
-      observable = this.authService.user$.pipe(map((user) => user.friendsList.find((friend) => friend.userId === chat.userId)?.messages));
-    } else {
+    if ('chatId' in chat) {
       observable = this.authService.user$.pipe(map((user) => user.groupChatsList.find((groupChat) => groupChat.chatId === chat.chatId)?.messages));
+    } else {
+      observable = this.authService.user$.pipe(map((user) => user.friendsList.find((friend) => friend.userId === chat.userId)?.messages));
     }
 
     const subscription = observable.subscribe((messages: Message[] | undefined) => {
@@ -99,6 +87,8 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
       } else if (messages) {
         this.chatList = messages;
       }
+
+      this.scrollToBottomAndEmptyTextareaValue();
     })
 
     this.activeSubscriptions.add(subscription);
@@ -149,10 +139,6 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     this.scrollToBottomAndEmptyTextareaValue();
   }
 
-  test(as: any) {
-    console.log(as)
-  }
-
   private scrollToBottomAndEmptyTextareaValue() {
     setTimeout(() => {
       this.messagesWrapper.nativeElement.scroll({
@@ -160,7 +146,7 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
         left: 0,
         behavior: 'smooth'
       });
-    }, 0);
+    }, 100);
     this.textareaValue = '';
   }
 

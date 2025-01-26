@@ -44,16 +44,6 @@ mat-card {
     margin-top: 5px;
 }
 
-.mat-mdc-tab-body {
-    height: 39vh;
-    overflow-y: auto;
-
-    .mat-mdc-tab-body-content {
-        position: relative;
-        height: 95%;
-    }
-}
-
 .mdc-tab__text-label {
     font-size: 12.5px;
     font-weight: 400 !important;
@@ -69,4 +59,8 @@ mat-card {
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
     border-bottom-color: var(--active-widget-conture-color) !important;
+}
+
+.mat-mdc-tab-body.mat-mdc-tab-body-active {
+    overflow-y: hidden !important;
 }

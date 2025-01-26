@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, InputSignal } from '@angular/core';
 import { Friend, Message } from '../model/friend.model';
 import { GroupChat, GroupChatUser, LastSelectedGroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
@@ -41,9 +41,11 @@ export class ChatMessageComponent {
     }
 
     this.chatService.updateLastSelectedFriend(lastSelectedFriend);
-    const shouldShowSeen = selectedFriend.messages.length > 0 && lastMessage.isIncoming;
 
-    if (shouldShowSeen) {
+    const isMessageIncoming: boolean = selectedFriend.messages.length > 0 && lastMessage.isIncoming;
+    const isAlreadySeen: boolean = selectedFriend.messages.length > 0 && lastMessage.isSeen;
+
+    if (isMessageIncoming && !isAlreadySeen) {
       this.socketService.hasSeen({id: selectedFriend.userId, type: 'friend'});
     } 
   }
@@ -65,8 +67,8 @@ export class ChatMessageComponent {
     this.chatService.updateLastSelectedGroupChat(lastSelectedGroupChat);
 
     const isMessageIncoming: boolean = selectedChat.messages.length > 0 && lastMessage.isIncoming;
-    const isAlreadySeen: boolean = lastMessage.isSeenBy.length > 0 && lastMessage.isSeenBy.some((user) => user.username === 'user');
-
+    const isAlreadySeen: boolean = lastMessage?.isSeenBy.length > 0 && lastMessage.isSeenBy.some((user) => user.username === 'user');
+    
     if (isMessageIncoming && !isAlreadySeen) {
       this.socketService.hasSeen({id: selectedChat.chatId, type: 'groupchat'});
     }

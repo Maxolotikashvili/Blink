@@ -105,29 +105,24 @@ export class AuthService {
         const currentUser = this.userSubject.value;
         const urlParams = {
             endpoint: 'friendId' in id ? 'mute_friend_chat' : 'mute_groupchat',
-            param: 'friendId' in id ? { friend_id: id.friendId, is_muted: state } : { chat_id: id.chatId, is_muted: state }
+            param: 'friendId' in id ? { friend_id: id.friendId} : { chat_id: id.chatId}
         }
 
         if ('friendId' in id) {
-            currentUser.friendsList.map((friend) => {
-                if (friend.userId === id.friendId) {
-                    friend.isMuted = state;
-                }
-
-                return friend;
-            })
-        } else if ('chatId' in id) {
-            currentUser.groupChatsList.map((groupChat) => {
-                if (groupChat.chatId === id.chatId) {
-                    groupChat.isMuted = state;
-                }
-
-                return groupChat;
-            })
+            const friend = currentUser.friendsList.find((friend) => friend.userId === id.friendId);
+            if (friend) {
+                friend.isMuted = state;
+            }
+        }
+        else if ('chatId' in id) {
+            const groupChat = currentUser.groupChatsList.find((groupChat) => groupChat.chatId === id.chatId);
+            if (groupChat) {
+                groupChat.isMuted = state;
+            }
         }
         this.userSubject.next({ ...currentUser });
 
-        return this.http.patch<{ message: string }>(`${API_URL}/users/${urlParams.endpoint}`, urlParams.param);
+        return this.http.patch<{ message: string }>(`${API_URL}/users/${urlParams.endpoint}`, {...urlParams.param, is_muted: state});
     }
 
     public leaveGroupChat(chatId: GroupChat['chatId']) {
@@ -162,10 +157,17 @@ export class AuthService {
 
     public deleteChat(param: LastSelectedFriend | LastSelectedGroupChat): Observable<{ message: string }> {
         const currentUser = this.userSubject.value;
-        const target = 'userId' in param ? currentUser.friendsList : currentUser.groupChatsList;
         const url: string = 'userId' in param ? `delete_chat?friendId=${param.userId}` : `delete-group-chat?chatId=${param.chatId}`;
-        const index: number = target.indexOf(param as any);
-        target[index].messages = [];
+        let target: Friend | GroupChat | undefined;
+
+        if ('userId' in param) {
+            target = currentUser.friendsList.find((friend) => friend.userId === param.userId);
+            currentUser.friendsList[currentUser.friendsList.indexOf(target!)].messages = [];
+
+        } else if ('chatId' in param) {
+            target = currentUser.groupChatsList.find((groupChat) => groupChat.chatId === param.chatId);
+            currentUser.groupChatsList[currentUser.groupChatsList.indexOf(target!)].messages = [];
+        }
 
         this.userSubject.next({ ...currentUser });
         return this.http.delete<{ message: string }>(`${API_URL}/users/${url}`);

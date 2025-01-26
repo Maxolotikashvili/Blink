@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Friend, LastSelectedFriend } from '../model/friend.model';
 import { GroupChat, LastSelectedGroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
@@ -21,7 +21,7 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
 
   public groupChat: LastSelectedGroupChat | undefined;
 
-  constructor(private authService: AuthService, private matSnack: MatSnackBar) { }
+  constructor(private authService: AuthService, private matSnack: MatSnackBar, private cdr: ChangeDetectorRef) { }
 
   ngOnChanges(): void {
     this.removeUserFromGroupChatUsers();
@@ -48,6 +48,7 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
       state = this.data.groupChat.isMuted ? false : true;
       param = { chatId: this.data.groupChat.chatId }
     }
+
     const subscription = this.authService.mute(param, state).subscribe({
       error: (error) => {
         this.matSnack.open(error.detail ? error.detail : `Error muting chat, try again later`, 'Dismiss', { duration: matSnackDuration });
