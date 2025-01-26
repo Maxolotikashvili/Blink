@@ -24,10 +24,10 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
   constructor(private authService: AuthService, private matSnack: MatSnackBar) { }
 
   ngOnChanges(): void {
-    this.getGroupChat();
+    this.removeUserFromGroupChatUsers();
   }
 
-  private getGroupChat() {
+  private removeUserFromGroupChatUsers() {
     if (this.data.groupChat) {
       this.groupChat = {
         ...this.data.groupChat,
@@ -48,7 +48,6 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
       state = this.data.groupChat.isMuted ? false : true;
       param = { chatId: this.data.groupChat.chatId }
     }
-
     const subscription = this.authService.mute(param, state).subscribe({
       error: (error) => {
         this.matSnack.open(error.detail ? error.detail : `Error muting chat, try again later`, 'Dismiss', { duration: matSnackDuration });

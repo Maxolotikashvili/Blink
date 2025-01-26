@@ -61,7 +61,7 @@ export class ChatMessageComponent {
       ...resOfGroupChat,
       messagesLength: messages.length
     }
-
+    
     this.chatService.updateLastSelectedGroupChat(lastSelectedGroupChat);
 
     const isMessageIncoming: boolean = selectedChat.messages.length > 0 && lastMessage.isIncoming;

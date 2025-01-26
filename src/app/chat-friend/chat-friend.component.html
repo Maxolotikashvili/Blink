@@ -6,7 +6,7 @@
         <img class="bk-img-s" *ngFor="let image of groupChat.users | slice: 0:3" [src]="image.avatar" alt="friend-avatar">
         <span class="bk-text-m" *ngIf="groupChat.users.length > 3">+{{groupChat.users.length - 3}}</span>
     </div>
-    
+
     <span class="bk-text-xxl friend-name" *ngIf="data.friend"> {{data.friend.username}} </span>
     
     <ng-container *ngIf="groupChat">
