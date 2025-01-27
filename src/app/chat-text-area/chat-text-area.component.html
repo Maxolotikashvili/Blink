@@ -16,7 +16,7 @@
 
                 <div class="timestamp-text-wrapper">
                     <span class="bk-text-s date" [ngClass]="{'date-active': clickedTextIndex === i + 1}"> {{message.timeStamp | date: 'hh:mm'}} </span>
-                    <button class="text bk-text-s" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="showTextDeliveryTime(i)">{{message.text}}</button>  
+                    <button class="text bk-text-m" [ngClass]="{'text-active': clickedTextIndex === i + 1}" (click)="showTextDeliveryTime(i)">{{message.text}}</button>  
                 </div>
 
                 <img class="seen" [src]="friend?.avatar" *ngIf="message.lastSeen">
