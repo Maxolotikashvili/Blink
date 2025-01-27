@@ -10,7 +10,6 @@ import { MaterialModule } from '../shared-modules/materia.module';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { matSnackDuration } from '../styles/active-theme-variables';
-import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-group-chat-modal',
@@ -27,7 +26,6 @@ export class GroupChatModalComponent implements OnInit {
     private socketService: SocketService,
     private authService: AuthService,
     private matSnack: MatSnackBar,
-    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +42,10 @@ export class GroupChatModalComponent implements OnInit {
   }
 
   addFriendToGroupChat(friend: Friend) {
+    if (this.selectedFriendsList.includes('user')) {
+      this.selectedFriendsList.splice(this.selectedFriendsList.indexOf('user'), 1);
+    }
+
     if (!this.selectedFriendsList.includes(friend.username)) {
       this.selectedFriendsList.push(friend.username);
     } else {
@@ -61,11 +63,9 @@ export class GroupChatModalComponent implements OnInit {
     }
 
     this.authService.user$.pipe(map((user) => user.groupChatsList), take(1)).subscribe((groupChatsList) => {
-      let isGroupChatCreatable: boolean = false;
 
       if (groupChatsList.length === 0) {
-        isGroupChatCreatable = true; 
-        this.createGroupChat(isGroupChatCreatable);
+        this.createGroupChat(true);
         return;
       }
 
@@ -75,17 +75,17 @@ export class GroupChatModalComponent implements OnInit {
 
       const groupChatUsersList = [...groupChatsList].map((groupChat) => groupChat.users.map((user) => user.username));
       for (let users of groupChatUsersList) {
-        if (this.areArraysIdentical(users, this.selectedFriendsList)) {
-          isGroupChatCreatable = false;
-        } else {
-          isGroupChatCreatable = true;
-        }
-      }
 
-     this.createGroupChat(isGroupChatCreatable);
+        if (this.areArraysIdentical(users, this.selectedFriendsList)) {
+          this.createGroupChat(false);
+          return;
+        }
+
+      }
+      this.createGroupChat(true);
     });
   }
-
+  
   private createGroupChat(isCreatable: boolean) {
     if (isCreatable) {
       this.socketService.createGroupChat(this.selectedFriendsList);

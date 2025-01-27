@@ -105,7 +105,7 @@ export class AuthService {
         const currentUser = this.userSubject.value;
         const urlParams = {
             endpoint: 'friendId' in id ? 'mute_friend_chat' : 'mute_groupchat',
-            param: 'friendId' in id ? { friend_id: id.friendId} : { chat_id: id.chatId}
+            param: 'friendId' in id ? { friend_id: id.friendId } : { chat_id: id.chatId }
         }
 
         if ('friendId' in id) {
@@ -122,7 +122,7 @@ export class AuthService {
         }
         this.userSubject.next({ ...currentUser });
 
-        return this.http.patch<{ message: string }>(`${API_URL}/users/${urlParams.endpoint}`, {...urlParams.param, is_muted: state});
+        return this.http.patch<{ message: string }>(`${API_URL}/users/${urlParams.endpoint}`, { ...urlParams.param, is_muted: state });
     }
 
     public leaveGroupChat(chatId: GroupChat['chatId']) {
@@ -276,9 +276,14 @@ export class AuthService {
         if (notification.type === "group-chat-create") {
             currentUser.groupChatsList.push(notification as any);
             this.userSubject.next(currentUser);
-            this.socketService.updateSocketLoadingState(false);
-            this.modalService.closeAllPages();
-            this.matSnack.open('Group chat created', 'Dismiss', { duration: matSnackDuration });
+
+            if (notification.message) {
+                this.matSnack.open(notification.message as string, 'Dismiss', { duration: matSnackDuration });
+            } else {
+                this.socketService.updateSocketLoadingState(false);
+                this.modalService.closeAllPages();
+                this.matSnack.open('Group chat created', 'Dismiss', { duration: matSnackDuration });
+            }
         }
 
         if (notification.type === 'groupMessage') {
