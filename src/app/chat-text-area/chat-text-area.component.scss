@@ -178,6 +178,7 @@ $component-padding: calc(5% + 10px);
             background: var(--active-icon-background);
             border-radius: 50%;
             margin: 0 3% 0 $component-padding;
+            padding-bottom: 2px;
             cursor: pointer;
 
             .emoji {
@@ -214,6 +215,7 @@ $component-padding: calc(5% + 10px);
 
         button {
             margin-right: $component-padding;
+            padding-top: 3px;
 
             .send {
                 transform: scale(0.8);
