@@ -42,10 +42,6 @@ export class GroupChatModalComponent implements OnInit {
   }
 
   addFriendToGroupChat(friend: Friend) {
-    if (this.selectedFriendsList.includes('user')) {
-      this.selectedFriendsList.splice(this.selectedFriendsList.indexOf('user'), 1);
-    }
-
     if (!this.selectedFriendsList.includes(friend.username)) {
       this.selectedFriendsList.push(friend.username);
     } else {
@@ -58,7 +54,8 @@ export class GroupChatModalComponent implements OnInit {
   }
 
   checkIfGroupChatIsCreatable() {
-    if (this.selectedFriendsList.length < 2) {
+    if (this.selectedFriendsList.includes('user') && this.selectedFriendsList.length < 3 || !this.selectedFriendsList.includes('user') && this.selectedFriendsList.length < 2) {
+      this.matSnack.open('Selected at least 2 friends', 'Dismiss', { duration: matSnackDuration });
       return;
     }
 
@@ -80,14 +77,15 @@ export class GroupChatModalComponent implements OnInit {
           this.createGroupChat(false);
           return;
         }
-
       }
+
       this.createGroupChat(true);
     });
   }
   
   private createGroupChat(isCreatable: boolean) {
     if (isCreatable) {
+      this.selectedFriendsList = this.selectedFriendsList.filter((name) => name !== 'user');
       this.socketService.createGroupChat(this.selectedFriendsList);
     } else {
       this.matSnack.open('Group chat with these users already exist', 'Dismiss', { duration: matSnackDuration });
@@ -110,5 +108,4 @@ export class GroupChatModalComponent implements OnInit {
 
     return true;
   }
-
 }

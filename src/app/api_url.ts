@@ -1,2 +1,2 @@
-export const API_URL: string = 'http://127.0.0.1:8000';
-export const SOCKET_URL: string = 'ws://localhost:8000';
+export const API_URL: string = 'https://blink-api-864c2723063e.herokuapp.com';
+export const SOCKET_URL: string = 'wss://blink-api-864c2723063e.herokuapp.com';

@@ -11,7 +11,6 @@ $margin-between-cards: 20px;
     padding: var(--chat-widgets-padding);
     border-radius: var(--widget-border-radius);
     border: var(--active-user-textarea-borders);
-    transition: border var(--global-transition-parameters);
     user-select: none;
 
     .profile-wrapper {
