@@ -88,7 +88,7 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
         this.chatList = messages;
       }
 
-      this.scrollToBottomAndEmptyTextareaValue();
+      this.scrollToBottomUponReceivingMessage();
     })
 
     this.activeSubscriptions.add(subscription);
@@ -134,12 +134,13 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
 
     if (message) {
       this.socketService.chat(message);
+      this.textareaValue = ''
     }
 
-    this.scrollToBottomAndEmptyTextareaValue();
+    this.scrollToBottomUponReceivingMessage();
   }
 
-  private scrollToBottomAndEmptyTextareaValue() {
+  private scrollToBottomUponReceivingMessage() {
     setTimeout(() => {
       this.messagesWrapper.nativeElement.scroll({
         top: this.messagesWrapper.nativeElement.scrollHeight,
@@ -147,7 +148,6 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
         behavior: 'smooth'
       });
     }, 100);
-    this.textareaValue = '';
   }
 
   shouldShowDateSeparator(currentIndex: number): boolean {

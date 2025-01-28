@@ -26,7 +26,7 @@ export interface Notification {
     messages?: Message[],
     displayMessage?: string,
     status: 'pending' | 'complete' | 'rejected'
-    timeStamp: string,
+    timeStamp: Date,
     friendName?: Friend['username']
     error?: string
     isOnline?: boolean

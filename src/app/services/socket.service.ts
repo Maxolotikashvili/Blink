@@ -30,7 +30,7 @@ export class SocketService {
   public addFriend(inputValue: string) {
     this.updateSocketLoadingState(true);
     if (this.notificationSocket.OPEN === this.notificationSocket.readyState) {
-      this.notificationSocket.send(inputValue);
+      this.notificationSocket.send(JSON.stringify({inputValue: inputValue, localizedTime: new Date()}));
     }
   }
 
@@ -38,7 +38,8 @@ export class SocketService {
     this.updateSocketLoadingState(true);
     const data = {
       senderEmail: senderEmail,
-      isAccepted: isAccepted
+      isAccepted: isAccepted,
+      localizedTime: new Date()
     }
     if (this.acceptFriendReqSocket.OPEN === this.acceptFriendReqSocket.readyState) {
       this.acceptFriendReqSocket.send(JSON.stringify(data));
@@ -47,7 +48,7 @@ export class SocketService {
 
   public chat(data: { friendName: Friend['username'], text: string } | GroupChatMessage) {
     if (this.chatSocket.OPEN === this.chatSocket.readyState) {
-      this.chatSocket.send(JSON.stringify(data));
+      this.chatSocket.send(JSON.stringify({...data, localizedTime: new Date()}));
     }
   }
 
@@ -60,7 +61,7 @@ export class SocketService {
         }
       } else {
         message = {
-          chat_id: param.id
+          chat_id: param.id,
         }
       }
       this.hasSeenSocket.send(JSON.stringify(message));

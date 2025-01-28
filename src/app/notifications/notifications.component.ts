@@ -34,7 +34,12 @@ export class NotificationsComponent implements OnInit {
 
   private getNotifications() {
     const subscription = this.authService.user$.pipe(map((user) => user.notifications)).subscribe((notifications) => {
-      this.notifications = notifications;
+      this.notifications = notifications.sort((a, b) => {
+        const aa: number = new Date(b.timeStamp).getTime();
+        const bb: number = new Date(a.timeStamp).getTime();
+
+        return aa - bb;
+      })
     });
 
     this.subscriptions.add(subscription);

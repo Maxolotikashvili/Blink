@@ -5,6 +5,7 @@
     position: relative;
     display: grid;
     grid-template-columns: 5% 25% 43% 25%;
+    grid-template-rows: repeat(1, minmax(0, 1fr));
     height: 100%;
     padding: 10px;
     grid-column-gap: calc(2% / 3);

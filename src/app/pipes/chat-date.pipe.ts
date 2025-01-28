@@ -5,16 +5,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ChatDatePipe implements PipeTransform {
   transform(value: Date | string | number): string {
-    const date = new Date(value);
+    const localDate: string = new Date(value).toLocaleString();
+    const date = new Date(localDate);
     const now = new Date();
-
+    
     const differenceInMs = now.getTime() - date.getTime();
     const differenceInMinutes = Math.floor(differenceInMs / 60000);
 
     if (differenceInMinutes < 1) {
       return 'Now';
     }
-
     if (differenceInMinutes < 60) {
       return `${differenceInMinutes} min ago`;
     }
