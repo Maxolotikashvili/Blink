@@ -1,3 +1,4 @@
+@use "../styles/fonts.scss" as *;
 @import url('https://fonts.googleapis.com/css?family=Exo+2:200i');
 
 app-signup-background-svg {
@@ -68,6 +69,7 @@ app-signup-background-svg {
             color: #ffffff;
             font-weight: 300;
             font-size: 24px;
+            font-family: $default-font;
             letter-spacing: 3px;
         }
 

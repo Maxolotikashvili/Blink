@@ -1,3 +1,4 @@
+@use '../styles/fonts.scss' as *;
 @use '../styles/mixins.scss' as *;
 
 .add-friend-component-wrapper {
@@ -30,16 +31,19 @@
 
                 mat-label {
                     color: var(--active-text-color-11);
+                    font-family: $default-font;
                 }
 
                 input {
                     color: var(--active-text-color-11);
+                    font-family: $default-font;
                 }
             }
             
             button {
                 background: var(--active-icon-background);
                 color: var(--active-icon-color);
+                font-family: $default-font;
             }
         }
     }

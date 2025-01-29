@@ -1,6 +1,7 @@
 @use "../styles/global-styles.scss" as *;
 @use "../styles/blink-styles.scss" as *;
 @use "../styles/mixins.scss" as *;
+@use "../styles/fonts.scss" as *;
 
 $header-height: 160px;
 $gap-between-texts: 30px;
@@ -16,6 +17,10 @@ $component-padding: 40px;
         align-items: center;
         padding-inline: $component-padding;
         height: $header-height;
+
+        * {
+            font-family: $default-font;
+        }
 
         nav {
             ul {

@@ -1,4 +1,5 @@
 @use '../styles/mixins.scss' as *;
+@use '../styles/fonts.scss' as *;
 
 .group-chat-modal-component-wrapper {
     width: 100%;
@@ -19,7 +20,6 @@
         h3 {
             color: var(--active-text-color-11);
         }
-
         
         .friends-list-wrapper {
             width: 100%;
@@ -33,10 +33,12 @@
 
                 mat-label {
                     color: var(--active-text-color-11);
+                    font-family: $default-font;
                 }
 
                 input {
                     color: var(--active-text-color-11);
+                    font-family: $default-font;
                 }
 
                 mat-icon {
@@ -123,6 +125,7 @@
                 align-self: center;
                 border: none;
                 background: none;
+                font-family: $default-font;
                 border-radius: 50px;
                 background: var(--active-icon-background);
                 color:  var(--active-icon-color);

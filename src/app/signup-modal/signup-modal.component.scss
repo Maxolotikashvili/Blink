@@ -1,6 +1,7 @@
 @use '../styles/global-styles.scss' as *;
 @use '../styles/mixins.scss' as *;
 @use '../styles/material-reset.scss' as *;
+@use '../styles/fonts.scss' as *;
 
 $input-width: 80%;
 $margin-between-inputs: 8px;
@@ -8,6 +9,7 @@ $margin-between-inputs: 8px;
 .signup-component-wrapper {
     @include flex-center();
     height: 100%;
+    font-family: $default-font;
 
     .modal-wrapper {
         position: relative;
@@ -37,6 +39,10 @@ $margin-between-inputs: 8px;
             gap: 15px;
             background-color: #ffffff;
 
+            *:not(mat-icon) {
+                font-family: $default-font;
+            }
+
             h3 {
                 color: var(--static-heading-color);
             }
@@ -53,7 +59,6 @@ $margin-between-inputs: 8px;
                     padding: 5px 0 5px 10px;
                     flex-flow: column;
                     gap: $margin-between-inputs;
-                    height: 55.5vh;
                     overflow-y: auto;
 
                     mat-form-field {
@@ -62,8 +67,13 @@ $margin-between-inputs: 8px;
 
                         input::placeholder {
                             font-size: 12px;
-                            color: gray;
+                            // color: gray;
                         }
+                    }
+
+                    .confirm-password {
+                        margin-top: 15px;
+                        transition: margin 0.2s ease;
                     }
                 }
 
@@ -71,20 +81,16 @@ $margin-between-inputs: 8px;
                     padding: 0
                 }
 
-                h4 {
-                    text-align: center;
-                    margin-bottom: 20px;
-                }
-
                 .avatars-wrapper {
                     width: 100%;
                     @include flex-center();
                     flex-wrap: wrap;
+                    margin-top: 10px;
                     gap: 20px;
                     border-radius: 10px;
                     background: #f1f1f1;
                     padding: 5px;
-                    height: 370px;
+                    height: 50vh;
                     overflow-y: auto;
 
                     button {
@@ -109,12 +115,11 @@ $margin-between-inputs: 8px;
                             left: 0;
                             background: rgba(0, 0, 0, 0.579);
                             color: #ffffff;
-                            font-family: "Roboto";
                             font-weight: 600;
                             font-size: 14px;
                             border-radius: 50%;
                             transform: scale(0);
-                            transform-origin: bottom;
+                            transform-origin: center;
                             transition: transform .07s linear;
                         }
 

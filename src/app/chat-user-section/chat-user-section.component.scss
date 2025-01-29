@@ -1,6 +1,7 @@
 @use "../styles/blink-styles.scss" as *;
 @use "../styles/mixins.scss" as *;
 @use "../styles/material-reset.scss" as *;
+@use "../styles/fonts.scss" as *;
 
 $margin-between-cards: 20px;
 
@@ -81,9 +82,9 @@ $margin-between-cards: 20px;
         }
 
         .chat-tab {
-            
             .labels {
                 span {
+                    font-family: $default-font;
                     color: var(--active-text-color-6);
                 }
             }

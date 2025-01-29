@@ -7,9 +7,9 @@
 
         <div class="form-wrapper">
             <h3 class="bk-heading-h3">Sign Up Here</h3>
-            <mat-stepper linear="true" orientation="vertical">
+            <mat-stepper orientation="vertical">
                 <mat-step [stepControl]="registerForm">
-                    <ng-template matStepLabel>Step 1</ng-template>
+                    <ng-template matStepLabel>Enter primary info</ng-template>
                     <ng-template matStepContent>
                         <form name="signup-form" (ngSubmit)="handleFormSubmit()" [formGroup]="registerForm">
                             <mat-form-field>
@@ -36,13 +36,11 @@
                                 <mat-label>Enter new password</mat-label>
                                 <input type="password" matInput formControlName="password" required>
                                 <mat-error *ngIf="password?.errors?.['required']">Input mandatory</mat-error>
-                                <mat-error *ngIf="password?.errors?.['minlength']">Minimum length of 8 charecters
-                                    required</mat-error>
-                                <mat-error *ngIf="password?.errors?.['pattern']">At least one capital letter and one number
-                                    required</mat-error>
+                                <mat-error *ngIf="password?.errors?.['minlength']">Minimum length of 8 charecters required</mat-error>
+                                <mat-error *ngIf="password?.errors?.['pattern']">At least one capital letter and one number required</mat-error>
                             </mat-form-field>
         
-                            <mat-form-field>
+                            <mat-form-field [ngClass]="{'confirm-password': password?.errors?.['pattern']}">
                                 <mat-label>Confirm new password</mat-label>
                                 <input type="password" matInput formControlName="confirmPassword" required>
                                 <mat-error *ngIf="confirmPassword?.errors?.['required']">Input mandatory</mat-error>
@@ -55,10 +53,8 @@
                 </mat-step>
 
                 <mat-step>
-                    <ng-template matStepLabel>Step 2</ng-template>
+                    <ng-template matStepLabel>Pick your avatar</ng-template>
                     <ng-template matStepContent>
-                        <h4>Select your avatar</h4>
-
                         <div class="avatars-wrapper">
                             <button *ngFor="let avatar of avatarsList" (click)="selectAvatar(avatar)">
                                 <img [src]="avatar" alt="avatar">

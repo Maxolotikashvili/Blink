@@ -1,3 +1,5 @@
+@use './fonts.scss' as *;
+
 mat-form-field {
     width: 100%; 
 
@@ -63,4 +65,25 @@ mat-card {
 
 .mat-mdc-tab-body.mat-mdc-tab-body-active {
     overflow-y: hidden !important;
+}
+
+.mdc-snackbar__surface {
+    min-width: 22vw !important;
+    background: var(--active-icon-background) !important;
+    padding: 8px;
+}
+
+.mat-mdc-snack-bar-label {
+    font-family: $default-font !important;
+    color: var(--active-icon-color) !important;
+}
+
+.mdc-button__label {
+    font-family: $default-font;
+}
+
+.mat-mdc-snack-bar-action {
+    .mdc-button__label {
+        color: var(--active-icon-color) !important;
+    }
 }

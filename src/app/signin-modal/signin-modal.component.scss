@@ -1,6 +1,7 @@
 @use "../styles/global-styles.scss" as *;
 @use "../styles/mixins.scss" as *;
 @use "../styles/material-reset.scss" as *;
+@use "../styles/fonts.scss" as *;
 
 $margin-between-inputs: 20px;
 
@@ -18,6 +19,10 @@ $margin-between-inputs: 20px;
         box-shadow:  0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
         gap: $margin-between-inputs * 2;
         background-color: #ffffff;
+
+        * {
+            font-family: $default-font;
+        }
 
         h3 {
             color: var(--static-heading-color);
