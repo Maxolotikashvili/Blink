@@ -11,8 +11,8 @@
         @include flex-center();
         flex-flow: column;
         justify-content: space-evenly;
-        width: 40%;
-        height: 50%;
+        width: 30%;
+        height: 40%;
         padding: var(--chat-widgets-padding);
         border-radius: var(--widget-border-radius);
         background: var(--active-app-background);
