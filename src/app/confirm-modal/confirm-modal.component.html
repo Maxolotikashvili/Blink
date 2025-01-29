@@ -1,0 +1,25 @@
+<div class="confirm-modal-wrapper">
+    <div class="modal-wrapper">
+        <app-x-mark [size]="'default'" [color]="'var(--active-text-color-11)'" [isForBurger]="false"></app-x-mark>
+
+        <h3 class="confirmation-heading">
+            <ng-container *ngIf="modalData.action === 'delete'">Delete friend</ng-container>
+            <ng-container *ngIf="modalData.action === 'logout'">Logout</ng-container>
+        </h3>
+
+        <div class="text-buttons-wrapper">
+
+            <p class="bk-text-m data-text">
+                <ng-container *ngIf="modalData.action === 'delete' && modalData.lastSelectedFriend">Are you sure you
+                    want to
+                    delete {{modalData.lastSelectedFriend.username}} from your friends list?</ng-container>
+                <ng-container *ngIf="modalData.action === 'logout'">Confirm log out?</ng-container>
+            </p>
+
+            <div class="buttons-wrapper">
+                <button mat-button (click)="performProceedAction()">Proceed</button>
+                <button mat-button (click)="performCancelAction()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

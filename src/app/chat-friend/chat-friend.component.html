@@ -2,19 +2,21 @@
     <img class="bk-img-l" [src]="data.friend.avatar" alt="friend-avatar" *ngIf="data.friend">
 
     <div class="img-wrapper"
-        [ngClass]="{'two-images-wrapper': groupChat.users.length < 3, 'many-images-wrapper': groupChat.users.length > 2}" *ngIf="groupChat">
-        <img class="bk-img-s" *ngFor="let image of groupChat.users | slice: 0:3" [src]="image.avatar" alt="friend-avatar">
+        [ngClass]="{'two-images-wrapper': groupChat.users.length < 3, 'many-images-wrapper': groupChat.users.length > 2}"
+        *ngIf="groupChat">
+        <img class="bk-img-s" *ngFor="let image of groupChat.users | slice: 0:3" [src]="image.avatar"
+            alt="friend-avatar">
         <span class="bk-text-m" *ngIf="groupChat.users.length > 3">+{{groupChat.users.length - 3}}</span>
     </div>
 
     <span class="bk-text-xxl friend-name" *ngIf="data.friend"> {{data.friend.username}} </span>
-    
+
     <ng-container *ngIf="groupChat">
         <div class="groupchat-heading-wrapper">
             <span class="bk-text-xl" *ngFor="let friend of groupChat.users.slice(0, 3); let last = last">
                 {{friend.username}}<span *ngIf="!last">,</span>
             </span>
-            
+
             <span class="bk-text-l" *ngIf="groupChat.users.length > 3">+{{groupChat.users.length - 3}}</span>
         </div>
     </ng-container>
@@ -26,11 +28,15 @@
     <ul>
         <li class="friend-utility">
             <button (click)="controlChatSound()">
-                <div class="svg-icon" *ngIf="groupChat" [ngClass]="{'is-muted': data.groupChat?.isMuted, 'not-muted': !data.groupChat?.isMuted}"></div>
-                <div class="svg-icon" *ngIf="data.friend" [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
-                <div class="mute-line" [ngClass]="{'mute-line-active': data.friend?.isMuted || data.groupChat?.isMuted}"></div>
+                <div class="svg-icon" *ngIf="groupChat"
+                    [ngClass]="{'is-muted': data.groupChat?.isMuted, 'not-muted': !data.groupChat?.isMuted}"></div>
+                <div class="svg-icon" *ngIf="data.friend"
+                    [ngClass]="{'is-muted': data.friend.isMuted, 'not-muted': !data.friend.isMuted}"></div>
+                <div class="mute-line"
+                    [ngClass]="{'mute-line-active': data.friend?.isMuted || data.groupChat?.isMuted}"></div>
             </button>
-            <span class="name-on-hover bk-text-xs"> {{data.groupChat?.isMuted || data.friend?.isMuted ? 'Unmute' : 'Mute'}} </span>
+            <span class="name-on-hover bk-text-xs"> {{data.groupChat?.isMuted || data.friend?.isMuted ? 'Unmute' :
+                'Mute'}} </span>
         </li>
         <li class="friend-utility">
             <button (click)="clearChat()">
@@ -54,8 +60,8 @@
 </div>
 
 <div class="users-wrapper" *ngIf="groupChat">
-    <h6 class="bk-text-l bk-text-normal">Users: </h6>
-    <span>You,</span>
+    <h6 class="bk-text-m bk-text-normal">Users: </h6>
+    <span class="bk-text-m">You,</span>
     <span class="bk-text-m" *ngFor="let user of groupChat.users; let last = last">
         {{ user.username }}<span *ngIf="!last">,</span>
     </span>

@@ -150,7 +150,6 @@ export class AuthService {
         const currentUser = this.userSubject.value;
         currentUser.friendsList = currentUser.friendsList.filter((friends) => friends.userId !== friend.userId);
         this.chatService.updateLastSelectedFriend('');
-
         this.userSubject.next({ ...currentUser });
         return this.http.delete<{ message: string }>(`${API_URL}/users/delete_friend?friendId=${friend.userId}`);
     }
@@ -175,7 +174,6 @@ export class AuthService {
 
     public updateUserNotifications(notification: Notification) {
         const currentUser: User = this.userSubject.value;
-        console.log(notification);
 
         if (currentUser.userId && notification.type === 'connection') {
             if (currentUser.friendsList) {

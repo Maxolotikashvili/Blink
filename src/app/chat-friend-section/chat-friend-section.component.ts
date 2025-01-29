@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
-import { combineLatest, map, merge, Observable, Subscription, switchMap } from 'rxjs';
+import { combineLatest, map, merge, Observable, of, Subscription, switchMap } from 'rxjs';
 import { Friend, LastSelectedFriend } from '../model/friend.model';
 import { ChatService } from '../services/chat.service';
 import { GroupChat, LastSelectedGroupChat } from '../model/groupchat.model';
@@ -53,14 +53,17 @@ export class ChatFriendsSectionComponent implements OnInit, OnDestroy {
           }
         }
 
-        return new Observable<void>;
+        return of('' as const);
       })
-    ).subscribe((data: LastSelectedFriend | LastSelectedGroupChat | void) => {
+    ).subscribe((data: LastSelectedFriend | LastSelectedGroupChat | '') => {
       if (data && 'userId' in data) {
         this.groupChat = undefined;
         this.friend = data;
       } else if (data && 'chatId' in data) {
         this.groupChat = data;
+        this.friend = undefined;
+      } else {
+        this.groupChat = undefined;
         this.friend = undefined;
       }
     })

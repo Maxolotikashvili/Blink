@@ -1,9 +1,9 @@
 import { CommonModule, formatDate } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../shared-modules/materia.module';
 import { SocketService } from '../services/socket.service';
 import { FriendMessage, LastSelectedFriend, Message } from '../model/friend.model';
-import { map, merge, Observable, Subscription } from 'rxjs';
+import { map, merge, Observable, of, Subscription, switchMap } from 'rxjs';
 import { ChatService } from '../services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
@@ -33,7 +33,8 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private socketService: SocketService,
     private authService: AuthService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -50,25 +51,46 @@ export class ChatTextAreaComponent implements OnInit, OnDestroy {
   }
 
   private getLastSelectedChat() {
-    const mergedObservables = merge(this.chatService.lastSelectedFriend$, this.chatService.lastSelectedGroupChat$)
-    const subscription = mergedObservables.subscribe((lastSelectedChat) => {
-      if (lastSelectedChat) {
-        if ('chatId' in lastSelectedChat && lastSelectedChat.chatId === this.groupChat?.chatId || 'userId' in lastSelectedChat && lastSelectedChat.userId === this.friend?.userId) {
-          return
+    const mergedObservables = merge(
+      this.chatService.lastSelectedFriend$, 
+      this.chatService.lastSelectedGroupChat$
+    ).pipe(
+      map((mergedData) => {
+        if (!mergedData) {
+          return '' as const; 
         }
-
+        return mergedData;
+      })
+    );
+    
+    const subscription = mergedObservables.subscribe((lastSelectedChat: LastSelectedFriend | LastSelectedGroupChat | '') => {
+      if (lastSelectedChat === '') {
+        this.friend = undefined;
+        this.groupChat = undefined;
+        this.chatList = [];
+        return;
+      }
+  
+      if (lastSelectedChat) {
+        if (
+          ('chatId' in lastSelectedChat && lastSelectedChat.chatId === this.groupChat?.chatId) || 
+          ('userId' in lastSelectedChat && lastSelectedChat.userId === this.friend?.userId)
+        ) {
+          return;
+        }
+    
         if ('chatId' in lastSelectedChat) {
           this.groupChat = lastSelectedChat;
           this.friend = undefined;
-        } else {
+        } else if ('userId' in lastSelectedChat) {
           this.friend = lastSelectedChat;
           this.groupChat = undefined;
         }
-
+    
         this.fetchMessages(lastSelectedChat);
       }
-    })
-
+    });
+    
     this.activeSubscriptions.add(subscription);
   }
 
