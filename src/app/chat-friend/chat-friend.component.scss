@@ -4,156 +4,174 @@
 $margin-from-divider: 30px;
 $image-size: 90px;
 
-.profile-wrapper {
-    @include flex-center();
-    flex-flow: column;
-    margin-bottom: 20px;
 
-    .friend-name {
-        color: var(--active-text-color-11);
+    .profile-wrapper {
+        @include flex-center();
+        flex-flow: column;
+        margin-bottom: 20px;
+
+        .friend-name {
+            color: var(--active-text-color-11);
+        }
+
+        .groupchat-heading-wrapper {
+            display: inline-block;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            text-align: center;
+
+            span {
+                color: var(--active-text-color-11);
+                display: inline;
+                width: $image-size;
+            }
+
+            span:not(:nth-child(1)) {
+                margin-left: 8px;
+            }
+        }
+
+        .img-wrapper {
+            @include flex-center();
+            width: 210px;
+            gap: 10px;
+            margin-bottom: 10px;
+
+            img {
+                width: $image-size;
+                height: $image-size;
+                border-radius: 50%;
+            }
+        }
+
+        .many-images-wrapper {
+            position: relative;
+            height: $image-size;
+            margin-bottom: 10px;
+
+            img {
+                position: absolute;
+                top: 50%;
+            }
+
+            img:nth-child(1) {
+                left: 0%;
+                transform: translate(0, -50%);
+                z-index: 3;
+            }
+
+            img:nth-child(2) {
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+            }
+
+            img:nth-child(3) {
+                left: 100%;
+                transform: translate(-100%, -50%);
+                z-index: 1;
+            }
+        }
+
+        .bio {
+            color: var(--active-text-color-11);
+        }
     }
 
-    .groupchat-heading-wrapper {
-        display: inline-block;
+    .friend-utility-wrapper {
+        @include flex-center();
+        border-top: 1px solid var(--active-widget-conture-color);
+        border-bottom: 1px solid var(--active-widget-conture-color);
+        height: 140px;
+
+        ul {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            width: 100%;
+            padding: 24px 3vw 0 3vw;
+
+            li {
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+                width: 50px;
+                gap: 4px;
+
+                button {
+                    position: relative;
+                    @include flex-center();
+                    border: none;
+                    background: var(--active-icon-background);
+                    border-radius: 50%;
+                    transition: background var(--global-transition-parameters);
+                    cursor: pointer;
+
+                    .not-muted,
+                    .is-muted {
+                        -webkit-mask: url('/icons/sound.svg') no-repeat center;
+                        mask: url('/icons/sound.svg') no-repeat center;
+                    }
+
+                    .mute-line {
+                        width: 100%;
+                        height: 2px;
+                        transform-origin: left;
+                        background: rgb(237, 0, 0);
+                        @include position-center();
+                        transform: rotate(-45deg) translate(-50%, -50%) scaleY(0);
+                        transition: transform 0.2s ease;
+                    }
+
+                    .mute-line-active {
+                        transform: rotate(-45deg) translate(-50%, -50%) scaleY(1);
+                    }
+
+                    .delete-chat {
+                        -webkit-mask: url('/icons/clear-chat.svg') no-repeat center;
+                        mask: url('/icons/clear-chat.svg') no-repeat center;
+                    }
+
+                    .delete-friend {
+                        -webkit-mask: url('/icons/delete-friend.svg') no-repeat center;
+                        mask: url('/icons/delete-friend.svg') no-repeat center;
+                        transform: scale(0.8);
+                    }
+
+                    .leave-groupchat {
+                        -webkit-mask: url('/icons/leave-group-chat.svg') no-repeat center;
+                        mask: url('/icons/leave-group-chat.svg') no-repeat center;
+                    }
+                }
+
+                span {
+                    text-align: center;
+                    color: var(--active-text-color-10);
+                }
+            }
+        }
+    }
+
+    .users-wrapper {
+        @include flex-center();
+        gap: 5px;
         width: 100%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        text-align: center;
+        padding: 10px 0 0 10px;
+        flex-wrap: wrap;
+
+        h6 {
+            color: var(--active-text-color-11);
+        }
 
         span {
             color: var(--active-text-color-11);
-            display: inline;
-            width: $image-size;
-        }
-
-        span:not(:nth-child(1)) {
-            margin-left: 8px;
         }
     }
 
-    .img-wrapper {
-        @include flex-center();
-        width: 210px;
-        gap: 10px;
-        margin-bottom: 10px;
-
-        img {
-            width: $image-size;
-            height: $image-size;
-            border-radius: 50%;
-        }
+    .no-friend {
+        @include position-center();
+        width: max-content;
+        text-align: left;
     }
-
-    .many-images-wrapper {
-        position: relative;
-        height: $image-size;
-        margin-bottom: 10px;
-
-        img {
-            position: absolute;
-            top: 50%;
-        }
-
-        img:nth-child(1) {
-            left: 0%;
-            transform: translate(0, -50%);
-            z-index: 3;
-        }
-
-        img:nth-child(2) {
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
-
-        img:nth-child(3) {
-            left: 100%;
-            transform: translate(-100%, -50%);
-            z-index: 1;
-        }
-    }
-
-    .bio {
-        color: var(--active-text-color-11);
-    }
-}
-
-.friend-utility-wrapper {
-    @include flex-center();
-    border-top: 1px solid var(--active-widget-conture-color);
-    border-bottom: 1px solid var(--active-widget-conture-color);
-    height: 140px;
-
-    ul {
-        display: flex;
-        justify-content: space-around;
-        align-items: baseline;
-        width: 100%;
-        padding-top: 24px;
-
-        li {
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            width: 50px;
-            gap: 4px;
-
-            button {
-                position: relative;
-                @include flex-center();
-                border: none;
-                background: var(--active-icon-background);
-                border-radius: 50%;
-                transition: background var(--global-transition-parameters);
-                cursor: pointer;
-
-                .not-muted, .is-muted {
-                    -webkit-mask: url('/icons/sound.svg') no-repeat center;
-                    mask: url('/icons/sound.svg') no-repeat center;
-                }
-
-                .mute-line {
-                    width: 100%;
-                    height: 2px;
-                    transform-origin: left;
-                    background: rgb(237, 0, 0);
-                    @include position-center();
-                    transform: rotate(-45deg) translate(-50%, -50%) scaleY(0);
-                    transition: transform 0.2s ease;
-                }
-
-                .mute-line-active {
-                    transform: rotate(-45deg) translate(-50%, -50%) scaleY(1);
-                }
-
-                .delete-chat {
-                    -webkit-mask: url('/icons/clear-chat.svg') no-repeat center;
-                    mask: url('/icons/clear-chat.svg') no-repeat center;
-                }
-
-                .delete-friend {
-                    -webkit-mask: url('/icons/delete-friend.svg') no-repeat center;
-                    mask: url('/icons/delete-friend.svg') no-repeat center;
-                    transform: scale(0.8);
-                }
-
-                .leave-groupchat {
-                    -webkit-mask: url('/icons/leave-group-chat.svg') no-repeat center;
-                    mask: url('/icons/leave-group-chat.svg') no-repeat center; 
-                }
-            }
-
-            span {
-                text-align: center;
-                color: var(--active-text-color-10);
-            }
-        }
-    }
-}
-
-.no-friend {
-    @include position-center();
-    width: max-content;
-    text-align: left;
-}

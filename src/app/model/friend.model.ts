@@ -20,7 +20,7 @@ export interface Message {
     senderAvatar?: string,
     timeStamp: Date,
     text: string
-    isSeenBy: {email: User['email'], username: User['username']}[],
+    isSeenBy: {email: User['email'], username: User['username'], avatar: User['avatar']}[],
 }
 export interface FriendMessage {
     type: 'friendText',

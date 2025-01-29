@@ -4,7 +4,6 @@
 $margin-from-divider: 30px;
 
 .friend-section-component-wrapper {
-    position: relative;
     width: 100%;
     height: 100%;
     padding: var(--chat-widgets-padding);
@@ -15,10 +14,10 @@ $margin-from-divider: 30px;
     user-select: none;
 
     .no-data {
-        width: max-content;
-        word-wrap: break-word;
-        @include position-center();
-        text-align: left;
+        @include flex-center();
+        height: 100%;
+        width: 100%;
+        text-align: center;
         color: var(--active-text-color-11);
     }
 }

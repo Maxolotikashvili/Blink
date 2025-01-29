@@ -1,0 +1,48 @@
+@use '../styles/fonts.scss' as *;
+@use '../styles/mixins.scss' as *;
+
+.confirm-modal-wrapper {
+    width: 100%;
+    height: 100%;
+    @include flex-center();
+
+    .modal-wrapper {
+        position: relative;
+        @include flex-center();
+        flex-flow: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 40%;
+        height: 30%;
+        padding: 30px;
+        border-radius: var(--widget-border-radius);
+        background: var(--active-app-background);
+        font-family: $default-font;
+
+        .confirmation-heading {
+            font-family: inherit;
+            color: var(--active-text-color-11);
+        }
+
+        .text-buttons-wrapper {
+            @include flex-center();
+            flex-flow: column;
+            gap: 20px;
+            height: 50%;
+
+            p {
+                font-family: inherit;
+                color: var(--active-text-color-11);
+            }
+
+            .buttons-wrapper {
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    color: var(--active-text-color-11) !important;
+                }
+            }
+        }
+    }
+}

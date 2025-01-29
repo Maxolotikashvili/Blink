@@ -4,9 +4,13 @@ import { GroupChat, LastSelectedGroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { matSnackDuration } from '../styles/active-theme-variables';
+import { User } from '../model/user.model';
+import { ModalService } from '../services/modal.service';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { ConfirmModalService } from '../services/confirm-modal.service';
 
 @Component({
   selector: 'app-chat-friend',
@@ -18,10 +22,15 @@ import { matSnackDuration } from '../styles/active-theme-variables';
 export class ChatFriendComponent implements OnDestroy, OnChanges {
   @Input() data!: { friend?: LastSelectedFriend, groupChat?: LastSelectedGroupChat };
   private subscriptions: Subscription = new Subscription();
-
   public groupChat: LastSelectedGroupChat | undefined;
+  public userId!: Observable<User['userId']>;
 
-  constructor(private authService: AuthService, private matSnack: MatSnackBar, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private authService: AuthService,
+    private matSnack: MatSnackBar,
+    private confirmModalService: ConfirmModalService,
+    private modalService: ModalService
+  ) { }
 
   ngOnChanges(): void {
     this.removeUserFromGroupChatUsers();
@@ -38,7 +47,7 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
 
   public controlChatSound() {
     let state!: boolean;
-    let param!: {friendId: Friend['userId']} | {chatId: GroupChat['chatId']};
+    let param!: { friendId: Friend['userId'] } | { chatId: GroupChat['chatId'] };
 
     if (this.data.friend) {
       state = this.data.friend.isMuted ? false : true;
@@ -77,31 +86,25 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
 
   public deleteFriend() {
     if (this.data.friend) {
-      const subscription = this.authService.deleteFriend(this.data.friend).subscribe({
-        next: (res: { message: string }) => {
-          this.matSnack.open(res.message, 'Dismiss', { duration: matSnackDuration });
-        },
+      this.confirmModalService.data = {
+        action: 'delete',
+        lastSelectedFriend: this.data.friend
+      }
 
-        error: (err) => {
-          this.matSnack.open(err.detail ? err.detail : `Error deleting ${this.data.friend?.username}, try again later`, 'Dismiss', { duration: matSnackDuration });
-          console.error(err);
-        }
-      })
-
-      this.subscriptions.add(subscription);
+      this.modalService.openModal(ConfirmModalComponent);
     }
   }
 
   public leaveGroupChat() {
     if (!this.groupChat?.chatId) return;
-    
-    this.authService.deleteGroupChatFromUsersChatsList(this.groupChat?.chatId);
+
     const subscription = this.authService.leaveGroupChat(this.groupChat?.chatId!).subscribe({
       next: () => {
+        this.authService.deleteGroupChatFromUsersChatsList(this.groupChat?.chatId!);
         this.matSnack.open(`You have left the group chat`, 'Dismiss', { duration: matSnackDuration });
       },
 
-      error: (error) => { 
+      error: (error) => {
         this.matSnack.open(error.detail ? error.detail : `Error leaving chat, try again later`, 'Dismiss', { duration: matSnackDuration })
       }
     })

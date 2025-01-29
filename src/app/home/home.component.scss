@@ -18,6 +18,10 @@ $component-padding: 40px;
         padding-inline: $component-padding;
         height: $header-height;
 
+        .logo {
+            width: 150px;
+        }
+
         * {
             font-family: $default-font;
         }
