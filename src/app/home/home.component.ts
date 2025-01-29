@@ -17,10 +17,9 @@ export class HomeComponent {
   isModalOpened$!: Observable<boolean>;
 
   contributorsList: {imageUrl: string, name: string, occupation: string}[] = [
-    {imageUrl: 'maxo-lotikashvili.jpeg', name: 'Maxo Lotikashvili', occupation: 'Full-stack developer'},
-    {imageUrl: 'maxo-lotikashvili.jpeg', name: 'Nini Meskhoradze', occupation: 'Front-end developer'},
-    {imageUrl: 'maxo-lotikashvili.jpeg', name: 'Ani Merabishvili', occupation: 'Mathematician'},
-    {imageUrl: 'maxo-lotikashvili.jpeg', name: 'Tako Lotikashvili', occupation: 'Designer'},
+    {imageUrl: 'maxo-lotikashvili.jpg', name: 'Maxo Lotikashvili', occupation: 'Full-stack developer'},
+    {imageUrl: 'nini-meskhoradze.jpg', name: 'Nini Meskhoradze', occupation: 'Front-end developer'},
+    {imageUrl: 'ani-merabishvili.jpg', name: 'Ani Merabishvili', occupation: 'Mathematician'}
   ]
   constructor(private modalService: ModalService) {
     this.isModalOpened$ = modalService.isModalOpened$;
