@@ -11,9 +11,11 @@
     
     <ng-container *ngIf="groupChat">
         <div class="groupchat-heading-wrapper">
-            <span class="bk-text-l" *ngFor="let friend of groupChat.users; let last = last">
+            <span class="bk-text-xl" *ngFor="let friend of groupChat.users.slice(0, 3); let last = last">
                 {{friend.username}}<span *ngIf="!last">,</span>
             </span>
+            
+            <span class="bk-text-l" *ngIf="groupChat.users.length > 3">+{{groupChat.users.length - 3}}</span>
         </div>
     </ng-container>
 
@@ -49,4 +51,12 @@
             <span class="name-on-hover bk-text-xs">Leave chat</span>
         </li>
     </ul>
+</div>
+
+<div class="users-wrapper" *ngIf="groupChat">
+    <h6 class="bk-text-l bk-text-normal">Users: </h6>
+    <span>You,</span>
+    <span class="bk-text-m" *ngFor="let user of groupChat.users; let last = last">
+        {{ user.username }}<span *ngIf="!last">,</span>
+    </span>
 </div>

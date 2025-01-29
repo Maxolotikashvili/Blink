@@ -4,9 +4,10 @@ import { GroupChat, LastSelectedGroupChat } from '../model/groupchat.model';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { matSnackDuration } from '../styles/active-theme-variables';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-chat-friend',
@@ -18,9 +19,9 @@ import { matSnackDuration } from '../styles/active-theme-variables';
 export class ChatFriendComponent implements OnDestroy, OnChanges {
   @Input() data!: { friend?: LastSelectedFriend, groupChat?: LastSelectedGroupChat };
   private subscriptions: Subscription = new Subscription();
-
   public groupChat: LastSelectedGroupChat | undefined;
-
+  public userId!: Observable<User['userId']>;
+  
   constructor(private authService: AuthService, private matSnack: MatSnackBar, private cdr: ChangeDetectorRef) { }
 
   ngOnChanges(): void {
@@ -35,10 +36,10 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
       }
     }
   }
-
+  
   public controlChatSound() {
     let state!: boolean;
-    let param!: {friendId: Friend['userId']} | {chatId: GroupChat['chatId']};
+    let param!: { friendId: Friend['userId'] } | { chatId: GroupChat['chatId'] };
 
     if (this.data.friend) {
       state = this.data.friend.isMuted ? false : true;
@@ -94,14 +95,14 @@ export class ChatFriendComponent implements OnDestroy, OnChanges {
 
   public leaveGroupChat() {
     if (!this.groupChat?.chatId) return;
-    
+
     this.authService.deleteGroupChatFromUsersChatsList(this.groupChat?.chatId);
     const subscription = this.authService.leaveGroupChat(this.groupChat?.chatId!).subscribe({
       next: () => {
         this.matSnack.open(`You have left the group chat`, 'Dismiss', { duration: matSnackDuration });
       },
 
-      error: (error) => { 
+      error: (error) => {
         this.matSnack.open(error.detail ? error.detail : `Error leaving chat, try again later`, 'Dismiss', { duration: matSnackDuration })
       }
     })

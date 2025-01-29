@@ -24,15 +24,16 @@
         <button class="chat-wrapper" [ngClass]="{'active-friend-chat': selectedChat === groupChat.chatId}" *ngFor="let groupChat of data.groupChatList" (click)="updateLastSelectedGroupChat(groupChat.chatId)">
             <div class="avatar-name-wrapper groupchat-avatar-name-wrapper">
                 <div class="avatar-wrapper">
-                    <div class="bk-img-s friend-image" *ngFor="let user of groupChat.users | slice: 0:3" [ngStyle]="{'background-image': 'url('+user.avatar+')'}"></div>
+                    <div class="bk-img-s friend-image" *ngFor="let user of groupChat.users.slice(0, 3)" [ngStyle]="{'background-image': 'url('+user.avatar+')'}"></div>
                 </div>
                 
                 <div class="text-wrapper">
                     <div class="heading-wrapper dots">
-                        <h5 class="bk-text-m bk-text-normal" *ngFor="let users of groupChat.users">
+                        <h5 class="bk-text-m bk-text-normal" *ngFor="let users of groupChat.users.slice(0, 3); let last = last">
+                            <span *ngIf="users.username !== 'user'">{{users.username}}<span *ngIf="!last">,</span></span>
                             <span *ngIf="users.username === 'user'">You</span>
-                            <span *ngIf="users.username !== 'user'">{{users.username}},</span>
                         </h5>
+                        <span class="bk-text-m bk-text-normal" *ngIf="groupChat.users.length > 3"> +{{groupChat.users.length - 3}}</span>
                     </div>
                     
                     <p class="bk-text-s no-messages" *ngIf="groupChat.messages.length === 0">No messages yet</p>
@@ -47,6 +48,5 @@
             <span class="bk-text-xxs date" *ngIf="groupChat.messages.length > 0 && !(groupChat.messages | unseenGroupTextsLength)">{{groupChat.messages[groupChat.messages.length - 1].timeStamp | chatDate}}</span>
             <div class="bk-notification-circle" *ngIf="groupChat.messages | unseenGroupTextsLength"> {{groupChat.messages | unseenGroupTextsLength}} </div>
         </button>
-
     }
 </div>

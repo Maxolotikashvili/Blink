@@ -87,10 +87,10 @@ $image-size: 90px;
 
     ul {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: baseline;
         width: 100%;
-        padding-top: 24px;
+        padding: 24px 3vw 0 3vw;
 
         li {
             display: flex;
@@ -149,6 +149,21 @@ $image-size: 90px;
                 color: var(--active-text-color-10);
             }
         }
+    }
+}
+
+.users-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 24px 3vw 0 3.7vw;
+
+    h6 {
+        color: var(--active-text-color-11);
+    }
+
+    span {
+        color: var(--active-text-color-11);
     }
 }
 

@@ -22,9 +22,9 @@
                 <img class="seen" [src]="friend?.avatar" *ngIf="message.lastSeen">
 
                 <div class="is-seen-by-wrapper" *ngIf="message.isSeenBy && message.isSeenBy.length > 0">
-                    <span class="bk-text-s">seen by:</span>
-                    <div class="bk-text-s seen" *ngFor="let seenBy of message.isSeenBy; let last = last">
-                        <span>{{seenBy.username}}<span *ngIf="message.isSeenBy.length > 1 && !last">,</span></span>
+                    <div class="bk-text-s seen" *ngFor="let seenBy of message.isSeenBy.slice(0, 5); let last = last">
+                        <img class="bk-img-xs" [src]="seenBy.avatar" alt="avatar">
+                        <span *ngIf="message.isSeenBy.length > 5">+{{message.isSeenBy.length - 5}}</span>
                     </div>
                 </div>
             </div>

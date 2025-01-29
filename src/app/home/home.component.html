@@ -1,6 +1,8 @@
 <div class="blur-content-wrapper" [ngStyle]="{'filter': (isModalOpened$ | async) ? 'blur(5px)' : ''}">
     <header ng-cloak>
-        <a href="">Blink</a>
+        <a routerLink="/home">
+            <img class="logo" src="icons/blink-logo.png" alt="Logo">
+        </a>
 
         <nav>
             <ul>
