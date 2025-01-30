@@ -2,10 +2,22 @@
     height: 48vh;
     overflow-y: auto;
 
-    @media only screen and (max-height: 800px) {
-        height: 38vh;
+    @media only screen and (max-height: 880px) {
+        height: 44vh;
     }
 
+    @media only screen and (max-height: 800px) {
+        height: 40vh;
+    }
+
+    @media only screen and (max-height: 750px) {
+        height: 33vh;
+    }
+
+    @media only screen and (max-height: 700px) {
+        height: 27vh;
+    }
+ 
     .chat-wrapper {
         position: relative;
         width: 100%;
