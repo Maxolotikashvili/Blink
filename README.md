@@ -1,1 +1,1 @@
-Fast, lightweight chat application built on Angular 19 and Python
+Fast, lightweight chat application built on Angular 19 and Python fastapi
