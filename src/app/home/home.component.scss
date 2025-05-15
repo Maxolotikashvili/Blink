@@ -58,43 +58,4 @@ $component-padding: 40px;
             width: 50%;
         }
     }
-
-    .about-us-section {
-        height: 100%;
-    }
-
-    .contributors-section {
-        display: flex;
-        flex-flow: column;
-        align-items: flex-start;
-        justify-content: center;
-
-        .contributors-wrapper {
-            width: 100%;
-            margin-top: $gap-between-texts * 2;
-            display: flex;
-            justify-content: space-around;
-
-            .contributor {
-                @include flex-center();
-                flex-flow: column;
-                gap: 20px;
-
-                img {
-                    display: block;
-                }
-
-                .text-wrapper {
-                    display: flex;
-                    flex-flow: column;
-                    align-items: center;
-
-                    h5,
-                    span {
-                        color: var(--static-heading-color);
-                    }
-                }
-            }
-        }
-    }
 }
